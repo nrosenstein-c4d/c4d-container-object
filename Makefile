@@ -17,7 +17,7 @@ include ../api/c4d.mak
 BASEDIR_SRC = src
 
 # Basename of the target library.
-TARGET_NAME = myplugin
+TARGET_NAME = containerobject
 
 # Collect a list of all source-files from the source-files directory.
 SOURCES = $(wildcard $(BASEDIR_SRC)/*.cpp)
