@@ -18,4 +18,5 @@
 *.idb
 *.idp
 *.exp
+*.ilk
 vc100*
