@@ -1,0 +1,17 @@
+STRINGTABLE Ocontainer {
+    Ocontainer "Container Object";
+
+    OCONTAINER_PACKUP "Pack Up";
+    OCONTAINER_UNPACK "Unpack";
+    OCONTAINER_NHIDDENCHILDREN "Hidden Children:  ";
+
+    OCONTAINER_HIDETAGS "Hide Tags";
+    OCONTAINER_SHOWTAGS "Show Tags";
+    OCONTAINER_NHIDDENTAGS "Hidden Tags:  ";
+
+    OCONTAINER_G_ICON "Icon";
+        OCONTAINER_LOADCUSTOMICON "Load Custom Icon";
+        OCONTAINER_CLEARCUSTOMICON "Clear Custom Icon";
+        OCONTAINER_HINTCOLOR "Hint Color";
+        OCONTAINER_HINTTHICKNESS "Hint Thickness";
+}

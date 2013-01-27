@@ -1,0 +1,6 @@
+STRINGTABLE {
+    IDC_OCONTAINER "Container";
+    IDC_LOADCUSTOMICONDIALOG "Load custom icon";
+    IDC_OUTOFMEMORY "Out of memory";
+    IDC_INVALIDIMAGE "Invalid image file.";
+}
