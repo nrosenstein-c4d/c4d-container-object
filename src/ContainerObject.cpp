@@ -19,10 +19,16 @@
  * Change the passed bit for all objects on the same level. Returns the
  * number of objects that have been modified.
  */
-LONG ChangeNBitRow(GeListNode* node, NBIT bit, NBITCONTROL value) {
+LONG ChangeNBitRow(GeListNode* node, NBIT bit, NBITCONTROL value,
+                   Bool recursively=TRUE, Bool recursiveAdd=FALSE) {
     LONG count = 0;
     for (; node; node=node->GetNext()) {
         node->ChangeNBit(bit, value);
+        GeListNode* child = node->GetDown();
+        if (recursively && child) {
+            LONG subCount = ChangeNBitRow(child, bit, value, recursively);
+            if (recursiveAdd) count += subCount;
+        }
         count++;
     }
     return count;
