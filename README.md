@@ -16,7 +16,6 @@ After downloading this package from github, one may delete the following files
 as they are not necessary to run the plugin, only to compile it.
 
 - `src/*`
-- `include/*`
 - `Makefile`
 - `.gitignore`
 - `.gitattributes`
