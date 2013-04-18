@@ -7,10 +7,9 @@ also allows to give it a custom-icon for more customization.
 
 ## Installation
 
-Currently, the Windows build is included for the x86 and x64 architecture. Mac
-and Linux builds are not available and there is few chance that there will
-ever be builds for these platforms, as long as no-one will be as friendly and
-will build it. (I do not own a Mac and have too few experience with Linux)
+Currently, the Windows build is included for the x86 and x64 architecture. The
+Mac build of the current version was done by Michael Hantelmann. In the future,
+I will hopefully be able to compile plugins for Mac myself.
 
 After downloading this package from github, one may delete the following files
 as they are not necessary to run the plugin, only to compile it.
