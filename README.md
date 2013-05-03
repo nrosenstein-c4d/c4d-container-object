@@ -5,6 +5,8 @@ functions as a container for other objects. It is similar to Cinemas' built-in
 *Null-Object*, but enables the user to hide its child-objects and tags. It
 also allows to give it a custom-icon for more customization.
 
+[!image.png]
+
 ## Installation
 
 Currently, the Windows build is included for the x86 and x64 architecture. The
