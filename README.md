@@ -41,8 +41,8 @@ told we're going to build for x64.
 
 ## Legal
 
-The plugins' and the its source-code are licensed under the GNU General Public
-License. The plugins' icon (`res/Ocontainer.png`) is obtained from
+The plugins' and the its source-code are licensed under the GNU Lesser General
+Public License. The plugins' icon (`res/Ocontainer.png`) is obtained from
 [findicons.com][2].
 
   [1]: https://github.com/NiklasRosenstein/c4d-make

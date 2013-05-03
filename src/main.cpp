@@ -1,7 +1,7 @@
 /**
  * coding: utf-8
  * Copyright (C) 2013, Niklas Rosenstein
- * Licensed under the GNU General Public License.
+ * Licensed under the GNU Lesser General Public License.
  */
 
 #include <c4d.h>
