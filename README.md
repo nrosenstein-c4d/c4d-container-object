@@ -23,14 +23,14 @@ as they are not necessary to run the plugin, only to compile it.
 
 ## Custom Compilation
 
-The included builds are built against the R14 API.
-
-The included `Makefile` is ready to compile the plugin from the command-line
-using the `make` utility. However, the makefile is dependant on the Cinema 4D
-Makefile collection which can be downloaded from [here][1].
+The included builds are built against the R14 API. If you want to compile the plugin
+for another version of Cinema 4D, you can choose between either using the Visual
+Studio IDE (Windows), the XCode IDE (Mac) or my custom makefile collection that can
+be found [here][1] (currently, Windows only). I can not give support for the IDE's as
+I'm not using any of them. Please check the [plugincafe][3] and ask there.
 
 This is an example for how to build on Windows x86. The Visual C++ compiler
-is the only compatible compiler.
+is the only compatible compiler at this time (May 2013).
 
     vcvarsall x86
     make plugin
@@ -38,7 +38,7 @@ is the only compatible compiler.
 To compile for 64-bit, this needs to be adjusted slighty. The makefile must be
 told we're going to build for x64.
 
-    vcvarsall amd64
+    vcvarsall x86_amd64
     make plugin C4D_ARCHITECTURE=x64
 
 ## Legal
@@ -49,4 +49,5 @@ Public License. The plugins' icon (`res/Ocontainer.png`) is obtained from
 
   [1]: https://github.com/NiklasRosenstein/c4d-make
   [2]: http://findicons.com/
+  [3]: http://plugincafe.com/forum
 
