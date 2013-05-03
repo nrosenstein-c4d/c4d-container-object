@@ -41,7 +41,7 @@ plugin: $(TARGET)
 
 # Description: Link all object-files into a dynamic library.
 $(TARGET): $(DIRS) $(OBJECTS)
-	$(call C4D_LINK,$@) $(OBJECTS)
+	$(call C4D_LINK_DLL,$@) $(OBJECTS)
 
 # Description: Compile *.cpp files into object-files.
 $(C4D_OBJECTS_DIR)/%.$(C4D_SUFFIX_OBJ): $(BASEDIR_SRC)/%.cpp
