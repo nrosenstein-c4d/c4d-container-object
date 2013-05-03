@@ -23,6 +23,8 @@ as they are not necessary to run the plugin, only to compile it.
 
 ## Custom Compilation
 
+The included builds are built against the R14 API.
+
 The included `Makefile` is ready to compile the plugin from the command-line
 using the `make` utility. However, the makefile is dependant on the Cinema 4D
 Makefile collection which can be downloaded from [here][1].
