@@ -1,0 +1,6 @@
+STRINGTABLE {
+    IDC_OCONTAINER "Container";
+    IDC_LOADCUSTOMICONDIALOG "Eigenes Icon laden";
+    IDC_OUTOFMEMORY "Speicher reicht nicht aus";
+    IDC_INVALIDIMAGE "Ungültiges Bildformat.";
+}
