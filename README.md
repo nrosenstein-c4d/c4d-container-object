@@ -9,9 +9,8 @@ also allows to give it a custom-icon for more customization.
 
 ## Installation
 
-Currently, the Windows build is included for the x86 and x64 architecture. The
-Mac build of the current version was done by Michael Hantelmann. In the future,
-I will hopefully be able to compile plugins for Mac myself.
+The plugin binaries in this repository are available for Mac OS and Windows (32-
+& 64-Bit). The Mac build was done by Michael Hantelmann (thanks for that). 
 
 After downloading this package from github, one may delete the following files
 as they are not necessary to run the plugin, only to compile it.
@@ -21,13 +20,21 @@ as they are not necessary to run the plugin, only to compile it.
 - `.gitignore`
 - `.gitattributes`
 
+## Compatibility
+
+The plugin binaries are compatible with R13+ on Windows and R14+ on Mac OS. If you
+need the plugin for other versions, you can try to compile the plugin on your own
+(see below).
+
 ## Custom Compilation
 
 The included builds are built against the R14 API. If you want to compile the plugin
 for another version of Cinema 4D, you can choose between either using the Visual
 Studio IDE (Windows), the XCode IDE (Mac) or my custom makefile collection that can
-be found [here][1] (currently, Windows only). I can not give support for the IDE's as
-I'm not using any of them. Please check the [plugincafe][3] and ask there.
+be found [here][1]. I can not give support for the IDE's as I'm not using any of them
+myself. Please check the [plugincafe][3] and ask there.
+
+### Using the `c4d-make` makefiles
 
 This is an example for how to build on Windows x86. The Visual C++ compiler
 is the only compatible compiler at this time (May 2013).
@@ -40,6 +47,10 @@ told we're going to build for x64.
 
     vcvarsall x86_amd64
     make plugin C4D_ARCHITECTURE=x64
+
+On Mac, you do not have to invoke the `vcvarsall` command, but can invoke make directly.
+
+    make plugin
 
 ## Legal
 
