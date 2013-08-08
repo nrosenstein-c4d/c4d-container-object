@@ -7,7 +7,7 @@ STRINGTABLE Ocontainer {
 
     OCONTAINER_HIDETAGS "Tags verstecken";
     OCONTAINER_SHOWTAGS "Tags zeigen";
-    OCONTAINER_NHIDDENTAGS "Versteckte Objekte/Tags:  ";
+    OCONTAINER_NHIDDENTAGS "Versteckte Tags:  ";
 
     OCONTAINER_G_ICON "Icon";
         OCONTAINER_LOADCUSTOMICON "Eigenes Icon laden";
