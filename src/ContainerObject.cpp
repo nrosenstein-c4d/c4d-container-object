@@ -358,7 +358,9 @@ class ContainerObject : public ObjectData {
         if (dest->customIcon) {
             BaseBitmap::Free(dest->customIcon);
         }
-        dest->customIcon = customIcon->GetClone();
+        if (customIcon) {
+            dest->customIcon = customIcon->GetClone();
+        }
         return result;
     }
 
