@@ -11,7 +11,7 @@
 #include "../res/c4d_symbols.h"
 
 /**
- * Obtain the numeric if of a DescID object.
+ * Obtain the numeric id of a DescID.
  */
 #define GetDescID(x) ((x)[(x).GetDepth() - 1].id)
 
@@ -19,8 +19,8 @@
  * Change the passed bit for all objects on the same level. Returns the
  * number of objects that have been modified.
  */
-LONG ChangeNBitRow(GeListNode* node, NBIT bit, NBITCONTROL value,
-                   Bool recursively=TRUE, Bool recursiveAdd=FALSE) {
+static LONG ChangeNBitRow(GeListNode* node, NBIT bit, NBITCONTROL value,
+                          Bool recursively=TRUE, Bool recursiveAdd=FALSE) {
     LONG count = 0;
     for (; node; node=node->GetNext()) {
         node->ChangeNBit(bit, value);
@@ -37,7 +37,8 @@ LONG ChangeNBitRow(GeListNode* node, NBIT bit, NBITCONTROL value,
 /**
  * Count the number of children that have the passed bitvalue.
  */
-LONG CountNBits(GeListNode* node, NBIT bit, Bool value, Bool stopFirst=FALSE) {
+static LONG CountNBits(GeListNode* node, NBIT bit, Bool value,
+                       Bool stopFirst=FALSE) {
     LONG count = 0;
     for (; node; node=node->GetNext()) {
         Bool nodeValue = node->GetNBit(bit);
@@ -48,6 +49,17 @@ LONG CountNBits(GeListNode* node, NBIT bit, Bool value, Bool stopFirst=FALSE) {
     }
     return count;
 }
+
+/**
+ * Hide/Unhide a hierarchy-level of objects as required for the container
+ * object. Returns the number of objects being hidden (only top-level).
+ */
+static LONG ProcessLevel(GeListNode* first, NBITCONTROL mode) {
+    LONG count = ChangeNBitRow(first, NBIT_OHIDE, mode, TRUE, FALSE);
+    ChangeNBitRow(first, NBIT_NO_DD, mode, TRUE, FALSE);
+    return count;
+}
+
 
 /**
  * Implements the behavior of the Container object.
@@ -79,27 +91,24 @@ class ContainerObject : public ObjectData {
         LONG setStringId = -1;
         switch (id) {
         case OCONTAINER_HIDETAGS: {
-            count = ChangeNBitRow(op->GetFirstTag(), NBIT_OHIDE,
-                NBITCONTROL_SET);
+            count = ProcessLevel(op->GetFirstTag(), NBITCONTROL_SET);
             setStringId = OCONTAINER_NHIDDENTAGS;
             break;
         }
         case OCONTAINER_SHOWTAGS: {
             count = 0;
-            ChangeNBitRow(op->GetFirstTag(), NBIT_OHIDE,
-                    NBITCONTROL_CLEAR);
+            ProcessLevel(op->GetFirstTag(), NBITCONTROL_CLEAR);
             setStringId = OCONTAINER_NHIDDENTAGS;
             break;
         }
         case OCONTAINER_PACKUP: {
-            count = ChangeNBitRow(op->GetDown(), NBIT_OHIDE,
-                    NBITCONTROL_SET);
+            count = ProcessLevel(op->GetDown(), NBITCONTROL_SET);
             setStringId = OCONTAINER_NHIDDENCHILDREN;
             break;
         }
         case OCONTAINER_UNPACK: {
             count = 0;
-            ChangeNBitRow(op->GetDown(), NBIT_OHIDE, NBITCONTROL_CLEAR);
+            ProcessLevel(op->GetDown(), NBITCONTROL_CLEAR);
             setStringId = OCONTAINER_NHIDDENCHILDREN;
             break;
         }
@@ -288,14 +297,18 @@ class ContainerObject : public ObjectData {
         // Read the custom icon from the HyperFile.
         Bool hasImage;
         if (!hf->ReadBool(&hasImage)) return FALSE;
-        if (customIcon) {
-            customIcon->FlushAll();
-        }
-        else {
-            customIcon = BaseBitmap::Alloc();
-        }
+
         if (hasImage) {
+            if (customIcon) {
+                customIcon->FlushAll();
+            }
+            else {
+                customIcon = BaseBitmap::Alloc();
+            }
             if (!hf->ReadImage(customIcon)) return FALSE;
+        }
+        else if (customIcon) {
+            BaseBitmap::Free(customIcon);
         }
 
         return result;
