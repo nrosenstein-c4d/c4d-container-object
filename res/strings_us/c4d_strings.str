@@ -7,7 +7,10 @@ STRINGTABLE {
     IDC_LOADCONTAINER_INVALIDFILE "The selected file could not be loaded.";
     IDC_PASSWORDSDONTMATCH "The passwords do not match.";
 
-    IDC_CREATECONTAINER_HELP "Create a Container Object from a scenefile.";
+    IDC_COMMAND_LOADCONTAINER_TITLE "Load Container...";
+    IDC_COMMAND_LOADCONTAINER_HELP "Create a Container Object from a scenefile.";
 
-    ID_COMMAND_CREATECONTAINER "Load Container...";
+    IDC_COMMAND_PREPARECONTAINER_TITLE "Prepare Container...";
+    IDC_COMMAND_PREPARECONTAINER_HELP "Prepare a Container for distribution to users without the Container Object plugin (loosing the custom icon).";
+
 }

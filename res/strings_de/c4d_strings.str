@@ -7,7 +7,9 @@ STRINGTABLE {
     IDC_LOADCONTAINER_LOADTITLE "Die ausgewählte Datei konnte nicht geladen werden";
     IDC_PASSWORDSDONTMATCH "Die Passwörter stimmen nicht überein.";
 
-    IDC_CREATECONTAINER_HELP "Erstellt ein Container Objekt aus einer Szenendatei.";
+    IDC_COMMAND_LOADCONTAINER_TITLE "Lade Container...";
+    IDC_COMMAND_LOADCONTAINER_HELP "Erstellt ein Container Objekt aus einer Szenendatei.";
 
-    ID_COMMAND_CREATECONTAINER "Lade Container...";
+    IDC_COMMAND_PREPARECONTAINER_TITLE "Container Vorbereiten...";
+    IDC_COMMAND_PREPARECONTAINER_HELP "Bereitet den selektierten Container für die Weitergabe an Benutzer ohne das Plugin vor. (Verlust des eigenen Icons).";
 }
