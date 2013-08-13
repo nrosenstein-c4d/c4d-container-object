@@ -3,6 +3,13 @@
  * All rights reserved.
  *
  * Licensed under the GNU Lesser General Public License.
+ *
+ * Todo
+ * ====
+ *
+ * - Using `CopyBranchesTo()` with `@move_dont_copy` set to
+ * `FALSE` does not retain the BaseLink connections. Would
+ * be interesting to know.
  */
 
 #include <c4d.h>
@@ -17,7 +24,7 @@
  * object, assuming it can find matching branches.
  */
 static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
-        AliasTrans* at, Bool children) {
+        AliasTrans* at, Bool children, Bool move_dont_copy) {
     if (!src || !dst) return NULL;
 
     BranchInfo branches_src[20];
@@ -40,7 +47,16 @@ static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
 
             if (valid) {
                 // Now copy the source branch to the destination branch.
-                branch_src.head->CopyTo(branch_dst.head, flags, at);
+                if (move_dont_copy) {
+                    GeListNode* node = branch_src.head->GetFirst();
+                    if (node) {
+                        node->Remove();
+                        branch_dst.head->InsertLast(node);
+                    }
+                }
+                else {
+                    branch_src.head->CopyTo(branch_dst.head, flags, at);
+                }
                 break;
             }
         }
@@ -52,7 +68,14 @@ static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
         GeListNode* child = src->GetDownLast();
         while (child) {
             GeListNode* pred = child->GetPred();
-            GeListNode* clone = (GeListNode*) child->GetClone(flags, at);
+            GeListNode* clone;
+            if (move_dont_copy) {
+                child->Remove();
+                clone = child;
+            }
+            else {
+                clone = (GeListNode*) child->GetClone(flags, at);
+            }
             if (clone) clone->InsertUnder(dst);
             child = pred;
         }
@@ -133,7 +156,7 @@ public:
         if (load_stuff) {
             load_flags |= SCENEFILTER_MATERIALS;
         }
-        BaseDocument* scene = LoadDocument(flname, load_flags, NULL);
+        AutoFree<BaseDocument> scene(LoadDocument(flname, load_flags, NULL));
 
         // Check if the document could be loaded and show an error
         // dialog in that case.
@@ -145,6 +168,7 @@ public:
         // This will be the Container Object inserted into the document
         // by this command.
         BaseObject* container = NULL;
+        AliasTrans* at = NULL; // @FUTURE_EXT_OP
 
         // Grab the first object and chose what to do with it.
         BaseObject* first = scene->GetFirstObject();
@@ -164,14 +188,14 @@ public:
             // top-level object in the loaded scene, we will replace it
             // by the container.
             if (first->IsInstanceOf(Onull) && !first->GetNext()) {
-                CopyUserdataTo(first, container, NULL);
+                CopyUserdataTo(first, container, at);
 
                 // Transfer all base-links to the new container instead
                 // of the original Null-Object.
                 first->TransferGoal(container, FALSE);
 
                 // Move all branches to the new container object.
-                CopyBranchesTo(first, container, COPYFLAGS_0, NULL, TRUE);
+                CopyBranchesTo(first, container, COPYFLAGS_0, at, TRUE, TRUE);
             }
             else {
                 // Remove all objects from the document and insert it
@@ -206,9 +230,6 @@ public:
             mat = next;
         }
 
-        // Free the loaded document since it is not necessary anymore.
-        BaseDocument::Free(scene);
-
         // Reset all bits of the container.
         container->SetAllBits(0);
 
@@ -216,6 +237,7 @@ public:
         doc->InsertObject(container, NULL, NULL);
         doc->AddUndo(UNDOTYPE_NEW, container);
         doc->SetActiveObject(container);
+        if (at) at->Translate(TRUE);
 
         // Update the Cinema 4D UI.
         EventAdd();
@@ -249,20 +271,12 @@ public:
         if (!GetState(doc)) return FALSE;
 
         BaseObject* op = doc->GetActiveObject();
+        AliasTrans* at = NULL; // @FUTURE_EXT_OP
 
         // Allocate a Null-Object serving as replacement
-        // for the Container object.
+        // for the Container-Object.
         BaseObject* root = BaseObject::Alloc(Onull);
         if (!root) return FALSE;
-
-        // Add an undo at the time the selected Container object
-        // is at its original state before it is removed from
-        // the document.
-        doc->AddUndo(UNDOTYPE_DELETE, op);
-
-        // Copy all the branches and user-data to the new Null-Object.
-        CopyBranchesTo(op, root, COPYFLAGS_0, NULL, TRUE);
-        CopyUserdataTo(op, root, NULL);
 
         // Copy the name and bits to the Null-Object and redirect
         // all links to it.
@@ -270,12 +284,21 @@ public:
         root->SetAllBits(op->GetAllBits());
         op->TransferGoal(root, FALSE);
 
+        // Copy all the branches and user-data to the new Null-Object.
+        CopyBranchesTo(op, root, COPYFLAGS_0, at, TRUE, TRUE);
+        CopyUserdataTo(op, root, at);
+
         // Insert the Null-Object after the container and remove
         // the latter.
         root->InsertAfter(op);
         doc->AddUndo(UNDOTYPE_NEW, root);
+
+        // Remove the original Container-Object.
+        doc->AddUndo(UNDOTYPE_DELETE, op);
         op->Remove();
         BaseObject::Free(op);
+
+        if (at) at->Translate(TRUE);
 
         // Update the Cinema 4D UI.
         EventAdd();
