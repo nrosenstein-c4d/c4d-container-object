@@ -54,11 +54,12 @@ On Mac, you do not have to invoke the `vcvarsall` command, but can invoke make d
 
 ## Legal
 
-The plugins' and the its source-code are licensed under the GNU Lesser General
-Public License. The plugins' icon (`res/Ocontainer.png`) is obtained from
-[findicons.com][2].
+The plugin and its source-code is licensed under the GNU Lesser General
+Public License. See the `LICENSE` file for more information.
+
+Thanks to [Rafi for the `res/Ocontainer.png` icon](http://www.graphicsfuel.com/2010/11/cardboard-box-psd-icon).
+
 
   [1]: https://github.com/NiklasRosenstein/c4d-make
-  [2]: http://findicons.com/
   [3]: http://plugincafe.com/forum
 
