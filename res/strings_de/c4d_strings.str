@@ -3,4 +3,6 @@ STRINGTABLE {
     IDC_LOADCUSTOMICONDIALOG "Eigenes Icon laden";
     IDC_OUTOFMEMORY "Speicher reicht nicht aus";
     IDC_INVALIDIMAGE "Ungültiges Bildformat.";
+    IDC_LOADCONTAINER_LOADTITLE "Wähle eine Szenendatei";
+    IDC_LOADCONTAINER_LOADTITLE "Die ausgewählte Datei konnte nicht geladen werden";
 }

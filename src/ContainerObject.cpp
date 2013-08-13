@@ -1,7 +1,8 @@
 /**
- * coding: utf-8
  * Copyright (C) 2013, Niklas Rosenstein
- * Licensed under the GNU Lesser General Public License..
+ * All rights reserved.
+ *
+ * Licensed under the GNU Lesser General Public License.
  */
 
 #include <c4d.h>
@@ -9,6 +10,8 @@
 #include <lib_iconcollection.h>
 #include <Ocontainer.h>
 #include "../res/c4d_symbols.h"
+
+#define CONTAINEROBJECT_VERSION 1000
 
 /**
  * Obtain the numeric id of a DescID.
@@ -294,6 +297,8 @@ class ContainerObject : public ObjectData {
         Bool result = ObjectData::Read(node, hf, level);
         if (!result) return result;
 
+        // VERSION 0
+
         // Read the custom icon from the HyperFile.
         Bool hasImage;
         if (!hf->ReadBool(&hasImage)) return FALSE;
@@ -311,6 +316,8 @@ class ContainerObject : public ObjectData {
             BaseBitmap::Free(customIcon);
         }
 
+        // VERSION 1000
+
         return result;
     }
 
@@ -318,12 +325,16 @@ class ContainerObject : public ObjectData {
         Bool result = ObjectData::Write(node, hf);
         if (!result) return result;
 
+        // VERSION 0
+
         // Write the custom icon to the HyperFile.
         if (!hf->WriteBool(customIcon != NULL)) return FALSE;
         if (customIcon) {
             if (!hf->WriteImage(customIcon, FILTER_PNG, NULL, SAVEBIT_ALPHA))
                     return FALSE;
         }
+
+        // VERSION 1000
 
         return result;
     }
@@ -367,12 +378,13 @@ class ContainerObject : public ObjectData {
 };
 
 Bool RegisterContainerObject() {
-    AutoBitmap icon("Ocontainer.png");
-    const LONG flags = 0;
-    const LONG disklevel = 0;
-    const String description("Ocontainer");
     return RegisterObjectPlugin(
-        Ocontainer, GeLoadString(IDC_OCONTAINER), flags,
-        ContainerObject::Alloc, description, icon, disklevel);
+            Ocontainer,
+            GeLoadString(IDC_OCONTAINER),
+            0,
+            ContainerObject::Alloc,
+            "Ocontainer",
+            AutoBitmap("Ocontainer.png"),
+            CONTAINEROBJECT_VERSION);
 }
 

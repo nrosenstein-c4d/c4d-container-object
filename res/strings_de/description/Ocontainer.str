@@ -1,6 +1,8 @@
 STRINGTABLE Ocontainer {
     Ocontainer "Container Objekt";
 
+    // VERSION 0
+
     OCONTAINER_PACKUP "Verpacken";
     OCONTAINER_UNPACK "Entpacken";
     OCONTAINER_NHIDDENCHILDREN "Verstecke Unterobjekte:  ";

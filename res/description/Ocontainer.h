@@ -5,6 +5,8 @@
     enum {
         Ocontainer = 1029700,
 
+        // VERSION 0
+
         OCONTAINER_PACKUP = 2001,
         OCONTAINER_UNPACK,
         OCONTAINER_NHIDDENCHILDREN,

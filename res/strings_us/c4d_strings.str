@@ -3,4 +3,10 @@ STRINGTABLE {
     IDC_LOADCUSTOMICONDIALOG "Load custom icon";
     IDC_OUTOFMEMORY "Out of memory";
     IDC_INVALIDIMAGE "Invalid image file.";
+    IDC_LOADCONTAINER_LOADTITLE "Select a Scenefile";
+    IDC_LOADCONTAINER_INVALIDFILE "The selected file could not be loaded.";
+
+    IDC_CREATECONTAINER_HELP "Create a Container Object from a scenefile.";
+
+    ID_COMMAND_CREATECONTAINER "Create Container...";
 }
