@@ -10,6 +10,8 @@
  * - Using `CopyBranchesTo()` with `@move_dont_copy` set to
  * `FALSE` does not retain the BaseLink connections. Would
  * be interesting to know.
+ * - Undoing the `PrepareContainer` command deletes all child
+ * objects of the container.
  */
 
 #include <c4d.h>
