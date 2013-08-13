@@ -355,6 +355,13 @@ class ContainerObject : public ObjectData {
             return;
         }
 
+        BaseDocument* doc = op->GetDocument();
+        if (doc) {
+            doc->StartUndo();
+            doc->AddUndo(UNDOTYPE_CHANGE_SMALL, op);
+            doc->EndUndo();
+        }
+
         if (!m_protected) {
             String password;
             if (!RenameDialog(&password)) return;
@@ -367,6 +374,14 @@ class ContainerObject : public ObjectData {
                 return;
             }
 
+            // Pack the container up.
+            DescriptionCommand data;
+            data.id = OCONTAINER_PACKUP;
+            op->Message(MSG_DESCRIPTION_COMMAND, &data);
+            data.id = OCONTAINER_HIDETAGS;
+            op->Message(MSG_DESCRIPTION_COMMAND, &data);
+
+            // Store the password hash.
             String hashed = HashString(password);
             m_protected = TRUE;
             m_protectionHash = hashed;
@@ -382,6 +397,13 @@ class ContainerObject : public ObjectData {
             else {
                 m_protected = FALSE;
             }
+
+            // Unpack the container.
+            DescriptionCommand data;
+            data.id = OCONTAINER_UNPACK;
+            op->Message(MSG_DESCRIPTION_COMMAND, &data);
+            data.id = OCONTAINER_SHOWTAGS;
+            op->Message(MSG_DESCRIPTION_COMMAND, &data);
         }
 
         #if API_VERSION < 13000
