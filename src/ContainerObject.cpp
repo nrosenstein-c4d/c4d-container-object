@@ -422,7 +422,9 @@ class ContainerObject : public ObjectData {
         if (!result) return result;
 
         BaseContainer* bc = ((BaseObject*) node)->GetDataInstance();
-        bc->SetLong(OCONTAINER_HINTTHICKNESS, 2);
+        bc->SetString(OCONTAINER_NHIDDENCHILDREN, "0");
+        bc->SetString(OCONTAINER_NHIDDENTAGS, "0");
+        bc->SetLong(OCONTAINER_HINTTHICKNESS, 0);
         bc->SetVector(OCONTAINER_HINTCOLOR, Vector(0.7, 1.0, 0.15));
 
         if (m_customIcon) BaseBitmap::Free(m_customIcon);
