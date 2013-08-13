@@ -16,11 +16,6 @@
 #define CONTAINEROBJECT_ICONSIZE 64
 
 /**
- * Obtain the numeric id of a DescID.
- */
-#define GetDescID(x) ((x)[(x).GetDepth() - 1].id)
-
-/**
  * Change the passed bit for all objects on the same level. Returns the
  * number of objects that have been modified.
  */
@@ -149,7 +144,7 @@ class ContainerObject : public ObjectData {
         BaseDocument* doc = op->GetDocument();
         AutoUndo auto_undo(doc);
 
-        LONG id = GetDescID(cmdData->id);
+        LONG id = cmdData->id[0].id;
 
         LONG count;
         LONG setStringId = -1;
