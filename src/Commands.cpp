@@ -105,7 +105,9 @@ public:
                 move_first = first->GetDownLast();
                 tag_first = first->GetFirstTag();
 
-                // TODO: Replace all links to the replaced null-object.
+                // Transfer all baselinks to the new container instead
+                // of the original Null-Object.
+                first->TransferGoal(container, FALSE);
             }
             else {
                 // Remove all objects from the document and insert it
