@@ -74,8 +74,10 @@ public:
                 MessageDialog(GeLoadString(IDC_OUTOFMEMORY));
                 return FALSE;
             }
+            container->SetName(first->GetName());
 
             BaseObject* move_first = NULL;
+            BaseTag* tag_first = NULL;
 
             // If the first object is a Null-Object and the only
             // top-level object in the loaded scene, we will replace it
@@ -95,12 +97,13 @@ public:
                 if (bc_src && bc_dst) {
                     const BaseContainer* src = bc_src->GetContainerInstance(
                             ID_USERDATA);
-                    bc_dst->SetContainer(ID_USERDATA, *src);
+                    if (src) bc_dst->SetContainer(ID_USERDATA, *src);
                 }
 
                 // Cause all child-objects of the null to be moved to
                 // the container.
                 move_first = first->GetDownLast();
+                tag_first = first->GetFirstTag();
 
                 // TODO: Replace all links to the replaced null-object.
             }
@@ -119,6 +122,15 @@ public:
                 child = pred;
             }
 
+            // Move all tags to the container.
+            BaseTag* tag_pred = NULL;
+            while (tag_first) {
+                BaseTag* tag_next = tag_first->GetNext();
+                tag_first->Remove();
+                container->InsertTag(tag_first, tag_pred);
+                tag_pred = tag_first;
+                tag_first = tag_next;
+            }
         }
         else {
             MessageDialog(IDC_LOADCONTAINER_INVALIDFILE);

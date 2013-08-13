@@ -5,4 +5,9 @@ STRINGTABLE {
     IDC_INVALIDIMAGE "Ungültiges Bildformat.";
     IDC_LOADCONTAINER_LOADTITLE "Wähle eine Szenendatei";
     IDC_LOADCONTAINER_LOADTITLE "Die ausgewählte Datei konnte nicht geladen werden";
+    IDC_PASSWORDSDONTMATCH "Die Passwörter stimmen nicht überein.";
+
+    IDC_CREATECONTAINER_HELP "Erstellt ein Container Objekt aus einer Szenendatei.";
+
+    ID_COMMAND_CREATECONTAINER "Lade Container...";
 }

@@ -3,13 +3,14 @@ STRINGTABLE Ocontainer {
 
     // VERSION 0
 
-    OCONTAINER_PACKUP "Pack Up";
-    OCONTAINER_UNPACK "Unpack";
-    OCONTAINER_NHIDDENCHILDREN "Hidden Children:  ";
+    OCONTAINER_G_ACTIONS "Actions";
+        OCONTAINER_PACKUP "Pack Up";
+        OCONTAINER_UNPACK "Unpack";
+        OCONTAINER_NHIDDENCHILDREN "Hidden Children:  ";
 
-    OCONTAINER_HIDETAGS "Hide Tags";
-    OCONTAINER_SHOWTAGS "Show Tags";
-    OCONTAINER_NHIDDENTAGS "Hidden Tags:  ";
+        OCONTAINER_HIDETAGS "Hide Tags";
+        OCONTAINER_SHOWTAGS "Show Tags";
+        OCONTAINER_NHIDDENTAGS "Hidden Tags:  ";
 
     OCONTAINER_G_ICON "Icon";
         OCONTAINER_LOADCUSTOMICON "Load Custom Icon";
