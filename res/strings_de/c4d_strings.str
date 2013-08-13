@@ -10,6 +10,6 @@ STRINGTABLE {
     IDC_COMMAND_LOADCONTAINER_TITLE "Lade Container...";
     IDC_COMMAND_LOADCONTAINER_HELP "Erstellt ein Container Objekt aus einer Szenendatei.";
 
-    IDC_COMMAND_PREPARECONTAINER_TITLE "Container Vorbereiten...";
+    IDC_COMMAND_PREPARECONTAINER_TITLE "Container Vorbereiten";
     IDC_COMMAND_PREPARECONTAINER_HELP "Bereitet den selektierten Container für die Weitergabe an Benutzer ohne das Plugin vor. (Verlust des eigenen Icons).";
 }
