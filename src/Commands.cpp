@@ -26,7 +26,7 @@
  * object, assuming it can find matching branches.
  */
 static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
-        AliasTrans* at, Bool children, Bool move_dont_copy) {
+        AliasTrans* at, Bool children, Bool move_dont_copy, Bool undos_on_copy=TRUE) {
     if (!src || !dst) return NULL;
 
     BranchInfo branches_src[20];
@@ -72,6 +72,10 @@ static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
             GeListNode* pred = child->GetPred();
             GeListNode* clone;
             if (move_dont_copy) {
+                if (undos_on_copy) {
+                    BaseDocument* doc = child->GetDocument();
+                    if (doc) doc->AddUndo(UNDOTYPE_CHANGE, child);
+                }
                 child->Remove();
                 clone = child;
             }
@@ -117,6 +121,25 @@ static Bool CopyUserdataTo(C4DAtom* src, C4DAtom* dst, AliasTrans* at) {
     return TRUE;
 }
 
+/**
+ * Copies all bits from one object to another.
+ */
+static Bool CopyBitsTo(GeListNode* src, GeListNode* dst, Bool bits=TRUE, Bool nbits=TRUE) {
+    if (!src || !dst) return FALSE;
+
+    if (nbits) {
+        for (int bit=NBIT_0; bit < (int) NBIT_MAX; bit++) {
+            NBITCONTROL mode = src->GetNBit((NBIT) bit) ? NBITCONTROL_SET : NBITCONTROL_CLEAR;
+            dst->ChangeNBit((NBIT) bit, mode);
+        }
+    }
+    if (bits && src->IsInstanceOf(Tbaselist2d) && dst->IsInstanceOf(Tgelistnode)) {
+        BaseList2D* nsrc = (BaseList2D*) src;
+        BaseList2D* ndst = (BaseList2D*) dst;
+        ndst->SetAllBits(nsrc->GetAllBits());
+    }
+    return TRUE;
+}
 
 /**
  * This command creates a new container object from a .c4d file.
@@ -283,12 +306,12 @@ public:
         // Copy the name and bits to the Null-Object and redirect
         // all links to it.
         root->SetName(op->GetName());
-        root->SetAllBits(op->GetAllBits());
         op->TransferGoal(root, FALSE);
 
         // Copy all the branches and user-data to the new Null-Object.
         CopyBranchesTo(op, root, COPYFLAGS_0, at, TRUE, TRUE);
         CopyUserdataTo(op, root, at);
+        CopyBitsTo(op, root);
 
         // Insert the Null-Object after the container and remove
         // the latter.
