@@ -7,7 +7,7 @@ STRINGTABLE {
     IDC_LOADCONTAINER_LOADTITLE "Die ausgewählte Datei konnte nicht geladen werden";
     IDC_PASSWORDSDONTMATCH "Die Passwörter stimmen nicht überein.";
 
-    IDC_COMMAND_LOADCONTAINER_TITLE "Lade Container...";
+    IDC_COMMAND_LOADCONTAINER_TITLE "In Container laden...";
     IDC_COMMAND_LOADCONTAINER_HELP "Erstellt ein Container Objekt aus einer Szenendatei.";
 
     IDC_COMMAND_PREPARECONTAINER_TITLE "Container Vorbereiten";
