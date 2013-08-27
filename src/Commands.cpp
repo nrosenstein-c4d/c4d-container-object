@@ -33,6 +33,12 @@ static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
     BranchInfo branches_dst[20];
     LONG branchcount_src = src->GetBranchInfo(branches_src, 20, GETBRANCHINFO_0);
     LONG branchcount_dst = dst->GetBranchInfo(branches_dst, 20, GETBRANCHINFO_0);
+    BaseDocument* doc_src = NULL;
+    BaseDocument* doc_dst = NULL;
+    if (undos_on_copy) {
+        doc_src = src->GetDocument();
+        doc_dst = dst->GetDocument();
+    }
 
     // Iterate over the source branches and find the matching destination
     // branches.
@@ -52,11 +58,14 @@ static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
                 if (move_dont_copy) {
                     GeListNode* node = branch_src.head->GetFirst();
                     if (node) {
+                        if (doc_src) doc_src->AddUndo(UNDOTYPE_DELETE, node);
+                        if (doc_dst) doc_dst->AddUndo(UNDOTYPE_NEW, node);
                         node->Remove();
                         branch_dst.head->InsertLast(node);
                     }
                 }
                 else {
+                    if (doc_dst) doc_dst->AddUndo(UNDOTYPE_CHANGE, branch_dst.head);
                     branch_src.head->CopyTo(branch_dst.head, flags, at);
                 }
                 break;
@@ -306,7 +315,7 @@ public:
         // Copy the name and bits to the Null-Object and redirect
         // all links to it.
         root->SetName(op->GetName());
-        op->TransferGoal(root, FALSE);
+        op->TransferGoal(root, TRUE);
 
         // Copy all the branches and user-data to the new Null-Object.
         CopyBranchesTo(op, root, COPYFLAGS_0, at, TRUE, TRUE);
