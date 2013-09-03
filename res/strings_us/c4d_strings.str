@@ -10,8 +10,8 @@ STRINGTABLE {
     IDC_COMMAND_LOADCONTAINER_TITLE "Load to Container...";
     IDC_COMMAND_LOADCONTAINER_HELP "Create a Container Object from a scenefile.";
 
-    IDC_COMMAND_PREPARECONTAINER_TITLE "Prepare Container";
-    IDC_COMMAND_PREPARECONTAINER_HELP "Prepare a Container for distribution to users without the Container Object plugin (loosing the custom icon).";
+    IDC_COMMAND_CONVERTCONTAINER_TITLE "Convert Container";
+    IDC_COMMAND_CONVERTCONTAINER_HELP "Convert a Container to a Null-Object.";
 
     IDC_PROTECTED_PREFIX "Protected";
 }

@@ -15,6 +15,13 @@
 #define CONTAINEROBJECT_VERSION 1000
 #define CONTAINEROBJECT_ICONSIZE 64
 
+/** 
+ * This preprocessor definition defines whether it is required to hold
+ * the CTRL qualifier while double-clicking on the container's icon to
+ * protected/unprotect it.
+ */
+#define CONTAINEROBJECT_COPTIONS_CTRLEDIT 0
+
 /**
  * Change the passed bit for all objects on the same level. Returns the
  * number of objects that have been modified.
@@ -346,14 +353,16 @@ class ContainerObject : public ObjectData {
      * Called on MSG_EDIT.
      */
     void OnEdit(BaseObject* op) {
-        // Only perform the action if CTRL is pressed.
-        BaseContainer state;
-        if (!GetInputState(BFM_INPUT_KEYBOARD, QCTRL, state)) {
-            return;
-        }
-        if (!(state.GetLong(BFM_INPUT_QUALIFIER) & QCTRL)) {
-            return;
-        }
+        #if CONTAINEROBJECT_COPTIONS_CTRLEDIT
+            // Only perform the action if CTRL is pressed.
+            BaseContainer state;
+            if (!GetInputState(BFM_INPUT_KEYBOARD, QCTRL, state)) {
+                return;
+            }
+            if (!(state.GetLong(BFM_INPUT_QUALIFIER) & QCTRL)) {
+                return;
+            }
+        #endif
 
         BaseDocument* doc = op->GetDocument();
         if (doc) {

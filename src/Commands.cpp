@@ -10,8 +10,6 @@
  * - Using `CopyBranchesTo()` with `@move_dont_copy` set to
  * `FALSE` does not retain the BaseLink connections. Would
  * be interesting to know.
- * - Undoing the `PrepareContainer` command deletes all child
- * objects of the container.
  */
 
 #include <c4d.h>
@@ -19,7 +17,7 @@
 #include "../res/c4d_symbols.h"
 
 #define ID_COMMAND_LOADCONTAINER     1030970
-#define ID_COMMAND_PREPARECONTAINER  1030971
+#define ID_COMMAND_CONVERTCONTAINER  1030971
 
 /**
  * This function copies all branches of an object to another
@@ -162,7 +160,7 @@ public:
                 ID_COMMAND_LOADCONTAINER,
                 GeLoadString(IDC_COMMAND_LOADCONTAINER_TITLE),
                 PLUGINFLAG_COMMAND_HOTKEY,
-                AutoBitmap("cmd-loadcontainer.tif"),
+                AutoBitmap("cmd-loadcontainer.png"),
                 GeLoadString(IDC_COMMAND_LOADCONTAINER_HELP),
                 gNew LoadContainerCommand);
     }
@@ -285,18 +283,18 @@ public:
  * reference and replacing it with a Null-Object (loosing the
  * custom icon of course).
  */
-class PrepareContainerCommand : public CommandData {
+class ConvertContainerCommand : public CommandData {
 
 public:
 
     static Bool Register() {
         return RegisterCommandPlugin(
-            ID_COMMAND_PREPARECONTAINER,
-            GeLoadString(IDC_COMMAND_PREPARECONTAINER_TITLE),
+            ID_COMMAND_CONVERTCONTAINER,
+            GeLoadString(IDC_COMMAND_CONVERTCONTAINER_TITLE),
             PLUGINFLAG_COMMAND_HOTKEY,
-            AutoBitmap("cmd-preparecontainer.tif"),
-            GeLoadString(IDC_COMMAND_PREPARECONTAINER_HELP),
-            gNew PrepareContainerCommand);
+            AutoBitmap("cmd-convertcontainer.png"),
+            GeLoadString(IDC_COMMAND_CONVERTCONTAINER_HELP),
+            gNew ConvertContainerCommand);
     }
 
     // CommandData Overrides
@@ -352,7 +350,7 @@ public:
 
 Bool RegisterCommands() {
     Bool ok = LoadContainerCommand::Register();
-    ok = PrepareContainerCommand::Register() && ok;
+    ok = ConvertContainerCommand::Register() && ok;
     return ok;
 }
 
