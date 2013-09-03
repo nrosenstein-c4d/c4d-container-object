@@ -7,9 +7,11 @@
 #include <c4d.h>
 
 extern Bool RegisterContainerObject();
+extern Bool RegisterCommands();
 
 Bool PluginStart() {
     RegisterContainerObject();
+    RegisterCommands();
     return TRUE;
 }
 

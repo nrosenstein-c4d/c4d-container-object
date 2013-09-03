@@ -5,7 +5,12 @@
 *.obj
 
 # Compiled Dynamic libraries
-# .. are allowed.
+*.dylib
+*.dylib64
+*.so
+*.so64
+*.cdl
+*.cdl64
 
 # Compiled Static libraries
 *.lai

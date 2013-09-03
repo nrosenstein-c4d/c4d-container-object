@@ -1,7 +1,8 @@
 CONTAINER Ocontainer {
     NAME Ocontainer;
     INCLUDE Obase;
-    GROUP ID_OBJECTPROPERTIES {
+    GROUP OCONTAINER_G_ACTIONS {
+        DEFAULT 1;
         GROUP {
             LAYOUTGROUP;
             COLUMNS 2;

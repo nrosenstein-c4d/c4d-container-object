@@ -3,4 +3,15 @@ STRINGTABLE {
     IDC_LOADCUSTOMICONDIALOG "Load custom icon";
     IDC_OUTOFMEMORY "Out of memory";
     IDC_INVALIDIMAGE "Invalid image file.";
+    IDC_LOADCONTAINER_LOADTITLE "Select a Scenefile";
+    IDC_LOADCONTAINER_INVALIDFILE "The selected file could not be loaded.";
+    IDC_PASSWORDSDONTMATCH "The passwords do not match.";
+
+    IDC_COMMAND_LOADCONTAINER_TITLE "Load to Container...";
+    IDC_COMMAND_LOADCONTAINER_HELP "Create a Container Object from a scenefile.";
+
+    IDC_COMMAND_CONVERTCONTAINER_TITLE "Convert Container";
+    IDC_COMMAND_CONVERTCONTAINER_HELP "Convert a Container to a Null-Object.";
+
+    IDC_PROTECTED_PREFIX "Protected";
 }
