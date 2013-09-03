@@ -1,0 +1,17 @@
+STRINGTABLE Ocontainer {
+    Ocontainer "Contenitore Ogetto";
+
+    OCONTAINER_PACKUP "Crea pacchetto";
+    OCONTAINER_UNPACK "Rimuovi pacchetto";
+    OCONTAINER_NHIDDENCHILDREN "Figli Nascosti:  ";
+
+    OCONTAINER_HIDETAGS "Nascondi Tags";
+    OCONTAINER_SHOWTAGS "Mostra Tags";
+    OCONTAINER_NHIDDENTAGS "Tags Nascosti:  ";
+
+    OCONTAINER_G_ICON "Icona";
+        OCONTAINER_LOADCUSTOMICON "Carica Icona Personalizzata";
+        OCONTAINER_CLEARCUSTOMICON "Rimuovi Icona Personalizzata";
+        OCONTAINER_HINTCOLOR "Colore Traccia";
+        OCONTAINER_HINTTHICKNESS "Spessore Traccia";
+}
