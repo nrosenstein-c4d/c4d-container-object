@@ -6,7 +6,6 @@
  */
 
 #include <c4d.h>
-#include <lib_aes.h>
 #include <lib_clipmap.h>
 #include <lib_iconcollection.h>
 #include <Ocontainer.h>
