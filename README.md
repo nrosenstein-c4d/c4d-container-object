@@ -1,6 +1,6 @@
 # Cinema 4D - Container Object
 
-*Development Version 0.2*
+*Release Version 0.2*
 
 This plugin for Cinema 4D extends MAXONs 3D application by a new object which functions as a container for other objects. It is similar to Cinemas' built-in *Null-Object*, but enables the user to hide its child-objects and tags. It also allows to give it a custom-icon for more customization.
 
@@ -19,9 +19,15 @@ This plugin for Cinema 4D extends MAXONs 3D application by a new object which fu
 
 _\** Thanks to Jet Kawa (FantaBurkey on CGSociety) for his suggestions and generously huge donation_
 
+### Found a bug?
+
+Please use the GitHub Issues page to post about bugs in the plugin.
+
 ## Installation
 
-Please download the `*.zip` file appropriate to your Cinema 4D version from the `builds/` folder and place it scontents into your Cinema 4D plugins directory.
+The Container Object plugin is available in german, english and italian language (thanks to *mad-*). If you are willing to translate the plugin into your language, please do not hesitate to contact me, or if you are familar with Git, propose a pull request.
+
+For installation, download the `*.zip` file appropriate to your Cinema 4D version from the `builds/` folder and place its contents into your Cinema 4D plugins directory. (eg. `C:/Program Files/MAXON/Cinema 4D R15/plugins/`).
 
 - `builds/ContainerObject-0.2-R13.zip`: Windows
 - `builds/ContainerObject-0.2-R14.zip`: Windows + Mac
