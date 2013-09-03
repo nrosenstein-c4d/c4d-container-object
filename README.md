@@ -33,6 +33,8 @@ For installation, download the `*.zip` file appropriate to your Cinema 4D versio
 - `builds/ContainerObject-0.2-R14.zip`: Windows + Mac
 - `builds/ContainerObject-0.2-R15.zip`: Windows + Mac
 
+By clicking on the item in the file-list, there'll be a button "View Raw" which will start the download.
+
 ## Custom Compilation
 
 If you want to compile the plugin for another version of Cinema 4D, you can choose between either using the Visual Studio IDE (Windows), the XCode IDE (Mac) or my custom makefile collection that can be found [here][1]. I can not give support for the IDE's as I'm not using any of them myself. Please check the [plugincafe][3] and ask there.
