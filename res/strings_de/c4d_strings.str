@@ -12,4 +12,6 @@ STRINGTABLE {
 
     IDC_COMMAND_PREPARECONTAINER_TITLE "Container Vorbereiten";
     IDC_COMMAND_PREPARECONTAINER_HELP "Bereitet den selektierten Container für die Weitergabe an Benutzer ohne das Plugin vor. (Verlust des eigenen Icons).";
+
+    IDC_PROTECTED_PREFIX "Geschütztes";
 }

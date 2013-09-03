@@ -13,4 +13,5 @@ STRINGTABLE {
     IDC_COMMAND_PREPARECONTAINER_TITLE "Prepare Container";
     IDC_COMMAND_PREPARECONTAINER_HELP "Prepare a Container for distribution to users without the Container Object plugin (loosing the custom icon).";
 
+    IDC_PROTECTED_PREFIX "Protected";
 }

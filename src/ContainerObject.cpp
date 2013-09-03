@@ -415,7 +415,7 @@ class ContainerObject : public ObjectData {
         EventAdd();
     }
 
-    /* ObjectData Overrides */
+    //|  NodeData Overrides
 
     virtual Bool Init(GeListNode* node) {
         Bool result = super::Init(node);
@@ -556,6 +556,13 @@ class ContainerObject : public ObjectData {
 
         flags |= DESCFLAGS_DESC_LOADED;
         return TRUE;
+    }
+
+    virtual void GetBubbleHelp(GeListNode* node, String& str) {
+        super::GetBubbleHelp(node, str);
+        if (m_protected) {
+            str = GeLoadString(IDC_PROTECTED_PREFIX) + " " + str;
+        }
     }
 
 };

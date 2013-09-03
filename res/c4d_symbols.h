@@ -16,6 +16,8 @@
 
         IDC_COMMAND_PREPARECONTAINER_TITLE,
         IDC_COMMAND_PREPARECONTAINER_HELP,
+
+        IDC_PROTECTED_PREFIX,
     };
 
 #endif // c4d_symbols_H
