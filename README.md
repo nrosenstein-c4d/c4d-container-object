@@ -25,15 +25,7 @@ Please use the GitHub Issues page to post about bugs in the plugin.
 
 ## Installation
 
-The Container Object plugin is available in german, english and italian language (thanks to *mad-*). If you are willing to translate the plugin into your language, please do not hesitate to contact me, or if you are familar with Git, propose a pull request.
-
-For installation, download the `*.zip` file appropriate to your Cinema 4D version from the `builds/` folder and place its contents into your Cinema 4D plugins directory. (eg. `C:/Program Files/MAXON/Cinema 4D R15/plugins/`).
-
-- `builds/ContainerObject-0.2-R13.zip`: Windows
-- `builds/ContainerObject-0.2-R14.zip`: Windows + Mac
-- `builds/ContainerObject-0.2-R15.zip`: Windows + Mac
-
-By clicking on the item in the file-list, there'll be a button "View Raw" which will start the download.
+Please use the ["Releases"](https://github.com/NiklasRosenstein/c4dpl-container-object/releases/) button above to find downloads for the latest version. After you have downloaded the appropriate build of the plugin, copy the contents of the `*.zip` file to your Cinema 4D plugin directory.
 
 ## Custom Compilation
 
