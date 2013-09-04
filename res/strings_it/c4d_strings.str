@@ -1,6 +1,17 @@
 STRINGTABLE {
     IDC_OCONTAINER "Contenitore";
     IDC_LOADCUSTOMICONDIALOG "Carica Icona Personalizzata";
-    IDC_OUTOFMEMORY "Fuori di Memoria";
-    IDC_INVALIDIMAGE "File di immagine non valida.";
+    IDC_OUTOFMEMORY "Memoria esaurita";
+    IDC_INVALIDIMAGE "File immagine non valido.";
+    IDC_LOADCONTAINER_LOADTITLE "Selezionare il file scena";
+    IDC_LOADCONTAINER_INVALIDFILE "Il file selezionato non può essere caricato.";
+    IDC_PASSWORDSDONTMATCH "Le password non coincidono.";
+
+    IDC_COMMAND_LOADCONTAINER_TITLE "Carica il contenitore...";
+    IDC_COMMAND_LOADCONTAINER_HELP "Crea un Oggetto Contenitore dal file scena.";
+
+    IDC_COMMAND_CONVERTCONTAINER_TITLE "Converti il contenitore";
+    IDC_COMMAND_CONVERTCONTAINER_HELP "Converti il contenitore in un Oggetto Nullo.";
+
+    IDC_PROTECTED_PREFIX "Protetto";
 }

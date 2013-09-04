@@ -1,13 +1,16 @@
 STRINGTABLE Ocontainer {
-    Ocontainer "Contenitore Ogetto";
+    Ocontainer "Oggetto Contenitore";
 
-    OCONTAINER_PACKUP "Crea pacchetto";
-    OCONTAINER_UNPACK "Rimuovi pacchetto";
-    OCONTAINER_NHIDDENCHILDREN "Figli Nascosti:  ";
+    // VERSION 0
 
-    OCONTAINER_HIDETAGS "Nascondi Tags";
-    OCONTAINER_SHOWTAGS "Mostra Tags";
-    OCONTAINER_NHIDDENTAGS "Tags Nascosti:  ";
+    OCONTAINER_G_ACTIONS "Azioni";
+        OCONTAINER_PACKUP "Crea pacchetto";
+        OCONTAINER_UNPACK "Rimuovi pacchetto";
+        OCONTAINER_NHIDDENCHILDREN "Figli Nascosti:  ";
+
+        OCONTAINER_HIDETAGS "Nascondi Tags";
+        OCONTAINER_SHOWTAGS "Mostra Tags";
+        OCONTAINER_NHIDDENTAGS "Tags Nascosti:  ";
 
     OCONTAINER_G_ICON "Icona";
         OCONTAINER_LOADCUSTOMICON "Carica Icona Personalizzata";
