@@ -16,11 +16,16 @@ This plugin for Cinema 4D extends MAXONs 3D application by a new object which fu
 
 - Select and load assets directly from the Container Object's interface **
 
-### Thanks to
+### Language Availability
 
-- \*\* *Jet Kawa* (FantaBurkey on CGSociety) for the suggestions and his donation making version 0.2 possible
-- *mad-* (from CGSociety) for the italian translation
-- *Lubomir Bezek* for the Czech translation
+- English
+- German
+- Italian (thanks to *mad-*)
+- Czech (thanks to *Lubomir Bezek*)
+
+### \*\* Special thanks to
+
+*Jet Kawa* (FantaBurkey on CGSociety) for the suggestions and his donation making version 0.2 possible.
 
 ### Found a bug?
 
