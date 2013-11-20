@@ -23,6 +23,12 @@ This plugin for Cinema 4D extends MAXONs 3D application by a new object which fu
 - Italian (thanks to *mad-*)
 - Czech (thanks to *Lubomir Bezek*)
 
+### Compatibility
+
+The Container Object plugin is SDK compatible with Cinema 4D R13+ (maybe even earlier version). The releases
+in this repository however are built against Cinema 4D R13 on **Windows** and Cinema 4D R14 on **Mac**, thus only
+compatible with these and newer releases!
+
 ### \*\* Special thanks to
 
 *Jet Kawa* (FantaBurkey on CGSociety) for the suggestions and his donation making version 0.2 possible.
