@@ -25,9 +25,9 @@ This plugin for Cinema 4D extends MAXONs 3D application by a new object which fu
 
 ### Compatibility
 
-The Container Object plugin is SDK compatible with Cinema 4D R13+ (maybe even earlier version). The releases
-in this repository however are built against Cinema 4D R13 on **Windows** and Cinema 4D R14 on **Mac**, thus only
-compatible with these and newer releases!
+The Container Object source code is compatible with at least Cinema 4D R13.
+However, due to compiler incompatabilities, this repository contains builds
+for Cinema 4D R15 **only**.
 
 ### \*\* Special thanks to
 
@@ -40,6 +40,8 @@ Please use the GitHub Issues page to post about bugs in the plugin.
 ## Installation
 
 Please use the ["Releases"](https://github.com/NiklasRosenstein/c4dpl-container-object/releases/) button above to find downloads for the latest version. After you have downloaded the appropriate build of the plugin, copy the contents of the `*.zip` file to your Cinema 4D plugin directory.
+
+> **Important**: Make sure to not download the source release, but the built plugin (the green button).
 
 ## Custom Compilation
 
