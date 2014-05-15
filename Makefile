@@ -50,7 +50,7 @@ C4D_RESOURCE_PATH = $(SUBDIR)/../resource
 
 # Include the Cinema 4D makefile collection relative to the plugin
 # directory. Must be adjusted when built from another location.
-include $(SUBDIR)/api/c4d.mak
+include $(SUBDIR)/c4dmake/c4d.mak
 
 # The base-directory for source-files.
 BASEDIR_SRC = src
