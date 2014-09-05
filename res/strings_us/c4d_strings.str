@@ -1,17 +1,19 @@
 STRINGTABLE {
-    IDC_OCONTAINER "Container";
-    IDC_LOADCUSTOMICONDIALOG "Load custom icon";
-    IDC_OUTOFMEMORY "Out of memory";
-    IDC_INVALIDIMAGE "Invalid image file.";
-    IDC_LOADCONTAINER_LOADTITLE "Select a Scenefile";
-    IDC_LOADCONTAINER_INVALIDFILE "The selected file could not be loaded.";
-    IDC_PASSWORDSDONTMATCH "The passwords do not match.";
-
-    IDC_COMMAND_LOADCONTAINER_TITLE "Load to Container...";
-    IDC_COMMAND_LOADCONTAINER_HELP "Create a Container Object from a scenefile.";
-
-    IDC_COMMAND_CONVERTCONTAINER_TITLE "Convert Container";
-    IDC_COMMAND_CONVERTCONTAINER_HELP "Convert a Container to a Null-Object.";
-
-    IDC_PROTECTED_PREFIX "Protected";
+  IDC_OCONTAINER                      "Container";
+  IDC_LOADCUSTOMICONDIALOG            "Load custom icon";
+  IDC_OUTOFMEMORY                     "Out of memory";
+  IDC_INVALIDIMAGE                    "Invalid image file.";
+  IDC_LOADCONTAINER_LOADTITLE         "Select a Scenefile";
+  IDC_LOADCONTAINER_INVALIDFILE       "The selected file could not be loaded.";
+  IDC_PASSWORDSDONTMATCH              "The entered password is not correct.";
+  IDC_COMMAND_LOADCONTAINER_TITLE     "Load to Container...";
+  IDC_COMMAND_LOADCONTAINER_HELP      "Create a Container Object from a scenefile.";
+  IDC_COMMAND_CONVERTCONTAINER_TITLE  "Convert Container";
+  IDC_COMMAND_CONVERTCONTAINER_HELP   "Convert a Container to a Null-Object.";
+  IDC_PROTECTED_PREFIX                "Protected";
+  IDC_ENTER_PASSWORD                  "Enter Password";
+  IDC_PASSWORD                        "Password:  ";
+  IDC_PASSWORD_REPEAT                 "Repeat:  ";
+  IDC_PASSWORD_EMPTY                  "The password fields must not be empty.";
+  IDC_PASSWORD_NOMATCH                "The entered passwords do not match.";
 }

@@ -1,17 +1,19 @@
 STRINGTABLE {
-    IDC_OCONTAINER "Contenitore";
-    IDC_LOADCUSTOMICONDIALOG "Carica Icona Personalizzata";
-    IDC_OUTOFMEMORY "Memoria esaurita";
-    IDC_INVALIDIMAGE "File immagine non valido.";
-    IDC_LOADCONTAINER_LOADTITLE "Selezionare il file scena";
-    IDC_LOADCONTAINER_INVALIDFILE "Il file selezionato non può essere caricato.";
-    IDC_PASSWORDSDONTMATCH "Le password non coincidono.";
-
-    IDC_COMMAND_LOADCONTAINER_TITLE "Carica il contenitore...";
-    IDC_COMMAND_LOADCONTAINER_HELP "Crea un Oggetto Contenitore dal file scena.";
-
-    IDC_COMMAND_CONVERTCONTAINER_TITLE "Converti il contenitore";
-    IDC_COMMAND_CONVERTCONTAINER_HELP "Converti il contenitore in un Oggetto Nullo.";
-
-    IDC_PROTECTED_PREFIX "Protetto";
+  IDC_OCONTAINER                      "Contenitore";
+  IDC_LOADCUSTOMICONDIALOG            "Carica Icona Personalizzata";
+  IDC_OUTOFMEMORY                     "Memoria esaurita";
+  IDC_INVALIDIMAGE                    "File immagine non valido.";
+  IDC_LOADCONTAINER_LOADTITLE         "Selezionare il file scena";
+  IDC_LOADCONTAINER_INVALIDFILE       "Il file selezionato non può essere caricato.";
+  IDC_PASSWORDSDONTMATCH              "Le password non coincidono.";
+  IDC_COMMAND_LOADCONTAINER_TITLE     "Carica il contenitore...";
+  IDC_COMMAND_LOADCONTAINER_HELP      "Crea un Oggetto Contenitore dal file scena.";
+  IDC_COMMAND_CONVERTCONTAINER_TITLE  "Converti il contenitore";
+  IDC_COMMAND_CONVERTCONTAINER_HELP   "Converti il contenitore in un Oggetto Nullo.";
+  IDC_PROTECTED_PREFIX                "Protetto";
+  IDC_ENTER_PASSWORD                  "Inserisci la password";                      // todo
+  IDC_PASSWORD                        "Password:  ";                                // todo
+  IDC_PASSWORD_REPEAT                 "Ripeti:  ";                                  // todo
+  IDC_PASSWORD_EMPTY                  "I campi password non devono essere vuoti.";  // todo
+  IDC_PASSWORD_NOMATCH                "Le password immesse non corrispondono.";     // todo
 }

@@ -1,0 +1,61 @@
+/* Copyright (C) 2014, Niklas Rosenstein
+ * All rights reserved.
+ *
+ * Licensed under the GNU Lesser General Public License.
+ */
+
+#include "AABB.h"
+
+void AABB::Expand(const Vector& point)
+{
+  if (is_init) mm.AddPoint(point * translation);
+  else
+  {
+    mm.Init(point * translation);
+    is_init = true;
+  }
+}
+
+void AABB::Expand(BaseObject* op, const Matrix& mg, Bool recursive)
+{
+  LONG exclude = ExcludeObject(op);
+  if (exclude == EXCLUDEOBJECT_HIERARCHY) return;
+  else if (exclude != EXCLUDEOBJECT_SINGLE)
+  {
+    if (detailed_measuring && op->IsInstanceOf(Opoint))
+    {
+      const Vector* points = ((PointObject*)op)->GetPointR();
+      if (!points) return;
+
+      LONG count = ((PointObject*)op)->GetPointCount();
+      for (LONG i=0; i < count; i++)
+      {
+        Expand(points[i]);
+      }
+    }
+    else
+    {
+      Vector rad = op->GetRad();
+      Vector mp  = op->GetMp();
+      Vector bbmin = mp - rad;
+      Vector bbmax = mp + rad;
+
+      Expand(mg * bbmin);
+      Expand(mg * Vector(bbmin.x, bbmin.y, bbmax.z));
+      Expand(mg * Vector(bbmax.x, bbmin.y, bbmax.z));
+      Expand(mg * Vector(bbmax.x, bbmin.y, bbmin.z));
+
+      // Top 4 points.
+      Expand(mg * bbmax);
+      Expand(mg * Vector(bbmax.x, bbmax.y, bbmin.z));
+      Expand(mg * Vector(bbmin.x, bbmax.y, bbmin.z));
+      Expand(mg * Vector(bbmin.x, bbmax.y, bbmax.z));
+    }
+  }
+
+  if (recursive)
+  {
+    for (BaseObject* child=op->GetDown(); child; child=child->GetNext())
+      Expand(child, mg * child->GetMl(), true);
+  }
+}

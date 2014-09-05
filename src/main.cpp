@@ -9,21 +9,26 @@
 extern Bool RegisterContainerObject();
 extern Bool RegisterCommands();
 
-Bool PluginStart() {
-    RegisterContainerObject();
-    RegisterCommands();
-    return TRUE;
+Bool PluginStart()
+{
+  RegisterContainerObject();
+  RegisterCommands();
+  return TRUE;
 }
 
-Bool PluginMessage(LONG msgType, void* pData) {
-    switch (msgType) {
-        case C4DPL_INIT_SYS:
-            return resource.Init();
-        default: break;
-    }
-    return TRUE;
+Bool PluginMessage(LONG msgType, void* pData)
+{
+  switch (msgType)
+  {
+    case C4DPL_INIT_SYS:
+      return ::resource.Init();
+    default:
+      break;
+  }
+  return TRUE;
 }
 
-void PluginEnd() {
+void PluginEnd()
+{
 }
 

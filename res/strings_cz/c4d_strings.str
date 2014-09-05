@@ -1,4 +1,4 @@
-STRINGTABLE 
+STRINGTABLE
 {
   IDC_OCONTAINER                      "Kontejner";
   IDC_LOADCUSTOMICONDIALOG            "Nahr\u00E1t vlastn\u00ED ikonu";
@@ -12,4 +12,10 @@ STRINGTABLE
   IDC_COMMAND_CONVERTCONTAINER_TITLE  "Konvertovat Kontejner";
   IDC_COMMAND_CONVERTCONTAINER_HELP   "Konvertovat Kontejner na objekt Osy.";
   IDC_PROTECTED_PREFIX                "Chr\u00E1n\u011Bn\u00FD";
+
+  // IDC_ENTER_PASSWORD "";       // todo
+  // IDC_PASSWORD "";             // todo
+  // IDC_PASSWORD_REPEAT "";      // todo
+  // IDC_PASSWORD_EMPTY "";       // todo
+  // IDC_PASSWORD_NOMATCH "";     // todo
 }
