@@ -1,75 +1,68 @@
-# Cinema 4D - Container Object
+# Cinema 4D Container Object Plugin
 
-*Release Version 0.2*
-
-This plugin for Cinema 4D extends MAXONs 3D application by a new object which functions as a container for other objects. It is similar to Cinemas' built-in *Null-Object*, but enables the user to hide its child-objects and tags. It also allows to give it a custom-icon for more customization.
+This plugin for MAXON Cinema 4D provides a new Object which acts as a
+container for other objects, preferrably self-contained rigs. It is
+possible to hide its child-objects and tags from the Object Manager and
+even password-protect the hierarchy.
 
 ![OM Preview](image.png)
 
-## v0.2 Features
+## Feature List
 
-- Password protection (double click on the object's icon)
-- Load a scene-file directly into a Container Object using the "Load to Container..." command **
-- Convert a Container to a Null-Object for distribution of rigs without the plugin **
+- Password Protection (double click on Object icon)
+- Convert a Scene file directly to a Container object
+- Convert a Container to a Null-Object, all Objects and Tags remain hidden
 
-### More to come (v0.3)
-
-- Select and load assets directly from the Container Object's interface **
-
-### Language Availability
+## Language Availability
 
 - English
 - German
 - Italian (thanks to *mad-*)
 - Czech (thanks to *Lubomir Bezek*)
 
-### Compatibility
+## Compatibility
 
-The Container Object source code is compatible with at least Cinema 4D R13.
-However, due to compiler incompatabilities, this repository contains builds
-for Cinema 4D R15 **only**.
+You can find plugin binaries compatible with Cinema 4D R15 and R16
+for Windows and Mac on the [releases][] page. The source code is
+compatible with Cinema 4D R13 at least.
 
-### \*\* Special thanks to
+## Bug reports and Ideas
 
-*Jet Kawa* (FantaBurkey on CGSociety) for the suggestions and his donation making version 0.2 possible.
-
-### Found a bug?
-
-Please use the GitHub Issues page to post about bugs in the plugin.
+If you found a bug in the plugin or want to populate a feature
+idea, please use the [issues][] page.
 
 ## Installation
 
-Please use the ["Releases"](https://github.com/NiklasRosenstein/c4dpl-container-object/releases/) button above to find downloads for the latest version. After you have downloaded the appropriate build of the plugin, copy the contents of the `*.zip` file to your Cinema 4D plugin directory.
+Download the latest version from the [releases][] page (but don't
+download just the source code) and copy the contents of the downloaded
+ZIP file into your Cinema 4D plugins directory.
 
-> **Important**: Make sure to not download the source release, but the built plugin (the green button).
+## Changelog
 
-## Custom Compilation
+__v0.3__ - *current stream*
 
-If you want to compile the plugin for another version of Cinema 4D, you can choose between either using the Visual Studio IDE (Windows), the XCode IDE (Mac) or my custom makefile collection that can be found [here][1]. I can not give support for the IDE's as I'm not using any of them myself. Please check the [plugincafe][3] and ask there.
+- A better Password dialog opens when locking/unlocking a container
+- The Bounding-Box of the container object is now computed from
+its child objects, making it easier to apply deformers
 
-### Using the `c4d-make` makefiles
+__v0.2__
 
-This is an example for how to build on Windows x86. The Visual C++ compiler is the only compatible compiler at this time (May 2013).
+- Added Password Protection and commands to import and convert
+a Container object
 
-    vcvarsall x86
-    make plugin
+__v0.1__
 
-To compile for 64-bit, this needs to be adjusted slighty. The makefile must be told we're going to build for x64.
-
-    vcvarsall x86_amd64
-    make plugin C4D_ARCHITECTURE=x64
-
-On Mac, you do not have to invoke the `vcvarsall` command, but can invoke make directly.
-
-    make plugin
-
-## Legal
-
-The plugin and its source-code is licensed under the GNU Lesser General Public License. See the `LICENSE` file for more information.
-
-Thanks to [Rafi for the `res/Ocontainer.png` icon](http://www.graphicsfuel.com/2010/11/cardboard-box-psd-icon).
+- Initial version
 
 
-  [1]: https://github.com/NiklasRosenstein/c4d-make
-  [3]: http://plugincafe.com/forum
+## License
+
+The plugin source and binaries are licensed under the GNU Lesser General
+Public License (visit the `LICENSE` file for more details).
+
+Thanks to [Rafi][icon url] for the plugin icon.
+
+  [releases]: https://github.com/nr-plugins/container-object/releases
+  [issues]: https://github.com/nr-plugins/container-object/issues
+  [icon url]: http://www.graphicsfuel.com/2010/11/cardboard-box-psd-icon/
 
