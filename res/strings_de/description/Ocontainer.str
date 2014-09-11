@@ -9,4 +9,5 @@ STRINGTABLE Ocontainer
   NRCONTAINER_TAGS_INFO         "Versteckte Tags:  ";
   NRCONTAINER_ICON_LOAD         "Eigenes Icon laden";
   NRCONTAINER_ICON_CLEAR        "Eigenes Icon entfernen";
+  NRCONTAINER_PROTECT           "Sch\U00FCtzen";
 }

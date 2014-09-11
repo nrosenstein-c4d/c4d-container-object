@@ -9,4 +9,5 @@ STRINGTABLE Ocontainer
   NRCONTAINER_TAGS_INFO         "Skryt\u00E9 tagy:  ";
   NRCONTAINER_ICON_LOAD         "Nahr\u00E1t vlastn\u00ED ikonu";
   NRCONTAINER_ICON_CLEAR        "Vymazat vlastn\u00ED ikonu";
+  NRCONTAINER_PROTECT           "Protected"; // todo
 }

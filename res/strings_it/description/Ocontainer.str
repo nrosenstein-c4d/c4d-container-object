@@ -9,4 +9,5 @@ STRINGTABLE Ocontainer
   NRCONTAINER_TAGS_INFO         "Tags Nascosti:  ";
   NRCONTAINER_ICON_LOAD         "Carica Icona Personalizzata";
   NRCONTAINER_ICON_CLEAR        "Rimuovi Icona Personalizzata";
+  NRCONTAINER_PROTECT           "Protetto";
 }

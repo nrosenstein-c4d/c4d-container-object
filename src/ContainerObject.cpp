@@ -79,6 +79,9 @@ public:
         ProcessLevel(op->GetDown(), NBITCONTROL_CLEAR, doc);
         setStringId = NRCONTAINER_CHILDREN_INFO;
         break;
+      case NRCONTAINER_PROTECT:
+        ToggleProtect(op);
+        break;
       case NRCONTAINER_ICON_LOAD:
       {
         if (m_protected) return;
@@ -222,7 +225,7 @@ public:
   /**
    * Called on MSG_EDIT.
    */
-  void OnEdit(BaseObject* op)
+  void ToggleProtect(BaseObject* op)
   {
     BaseDocument* doc = op->GetDocument();
     if (doc)
@@ -400,7 +403,7 @@ public:
         OnGetCustomIcon(op, (GetCustomIconData*) pData);
         break;
       case MSG_EDIT:
-        OnEdit(op);
+        ToggleProtect(op);
         break;
       default:
         break;

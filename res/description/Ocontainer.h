@@ -16,6 +16,8 @@ enum
 
   NRCONTAINER_ICON_LOAD = 2008,
   NRCONTAINER_ICON_CLEAR = 2009,
+
+  NRCONTAINER_PROTECT = 2010,
 };
 
 #endif // Ocontainer_H
