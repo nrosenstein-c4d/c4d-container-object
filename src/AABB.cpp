@@ -40,6 +40,7 @@ void AABB::Expand(BaseObject* op, const Matrix& mg, Bool recursive)
       Vector bbmin = mp - rad;
       Vector bbmax = mp + rad;
 
+      // Bottom 4 points.
       Expand(mg * bbmin);
       Expand(mg * Vector(bbmin.x, bbmin.y, bbmax.z));
       Expand(mg * Vector(bbmax.x, bbmin.y, bbmax.z));

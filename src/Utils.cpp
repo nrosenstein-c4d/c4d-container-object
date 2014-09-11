@@ -34,7 +34,7 @@ public:
 
   virtual Bool CreateLayout()
   {
-    SetTitle(GeLoadString(IDC_ENTER_PASSWORD));
+    SetTitle(GeLoadString(IDC_PASSWORD_ENTER));
     GroupBegin(0, BFH_SCALEFIT | BFV_SCALEFIT, 2, 0, "", 0);
     {
       AddStaticText(0, 0, 0, 0, GeLoadString(IDC_PASSWORD), 0);

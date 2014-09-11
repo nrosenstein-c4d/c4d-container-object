@@ -1,20 +1,12 @@
-STRINGTABLE Ocontainer {
-    Ocontainer "Container Object";
-
-    // VERSION 0
-
-    OCONTAINER_G_ACTIONS "Actions";
-        OCONTAINER_PACKUP "Pack Up";
-        OCONTAINER_UNPACK "Unpack";
-        OCONTAINER_NHIDDENCHILDREN "Hidden Children:  ";
-
-        OCONTAINER_HIDETAGS "Hide Tags";
-        OCONTAINER_SHOWTAGS "Show Tags";
-        OCONTAINER_NHIDDENTAGS "Hidden Tags:  ";
-
-    OCONTAINER_G_ICON "Icon";
-        OCONTAINER_LOADCUSTOMICON "Load Custom Icon";
-        OCONTAINER_CLEARCUSTOMICON "Clear Custom Icon";
-        OCONTAINER_HINTCOLOR "Hint Color";
-        OCONTAINER_HINTTHICKNESS "Hint Thickness";
+STRINGTABLE Ocontainer
+{
+  Ocontainer                    "Container Object";
+  NRCONTAINER_CHILDREN_HIDE     "Hide Children";
+  NRCONTAINER_CHILDREN_SHOW     "Show Children";
+  NRCONTAINER_CHILDREN_INFO     "Hidden Children:  ";
+  NRCONTAINER_TAGS_HIDE         "Hide Tags";
+  NRCONTAINER_TAGS_SHOW         "Show Tags";
+  NRCONTAINER_TAGS_INFO         "Hidden Tags:  ";
+  NRCONTAINER_ICON_LOAD         "Load Custom Icon";
+  NRCONTAINER_ICON_CLEAR        "Clear Custom Icon";
 }

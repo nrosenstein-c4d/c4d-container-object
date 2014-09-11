@@ -1,16 +1,12 @@
 STRINGTABLE Ocontainer
 {
-  Ocontainer                  "Kontejner Objekt";
-  OCONTAINER_G_ACTIONS        "Akce";
-  OCONTAINER_PACKUP           "Sbalit";
-  OCONTAINER_UNPACK           "Rozbalit";
-  OCONTAINER_NHIDDENCHILDREN  "Skryt\u00E9 podobjekty:  ";
-  OCONTAINER_HIDETAGS         "Skr\u00FDt tagy";
-  OCONTAINER_SHOWTAGS         "Zobrazit tagy";
-  OCONTAINER_NHIDDENTAGS      "Skryt\u00E9 tagy:  ";
-  OCONTAINER_G_ICON           "Ikona";
-  OCONTAINER_LOADCUSTOMICON   "Nahr\u00E1t vlastn\u00ED ikonu";
-  OCONTAINER_CLEARCUSTOMICON  "Vymazat vlastn\u00ED ikonu";
-  OCONTAINER_HINTCOLOR        "Barva n\u00E1znaku";
-  OCONTAINER_HINTTHICKNESS    "Tlou\u0161\u0165ka n\u00E1znaku";
+  Ocontainer                    "Kontejner Objekt";
+  NRCONTAINER_CHILDREN_HIDE     "Sbalit";
+  NRCONTAINER_CHILDREN_SHOW     "Rozbalit";
+  NRCONTAINER_CHILDREN_INFO     "Skryt\u00E9 podobjekty:  ";
+  NRCONTAINER_TAGS_HIDE         "Skr\u00FDt tagy";
+  NRCONTAINER_TAGS_SHOW         "Zobrazit tagy";
+  NRCONTAINER_TAGS_INFO         "Skryt\u00E9 tagy:  ";
+  NRCONTAINER_ICON_LOAD         "Nahr\u00E1t vlastn\u00ED ikonu";
+  NRCONTAINER_ICON_CLEAR        "Vymazat vlastn\u00ED ikonu";
 }

@@ -204,7 +204,7 @@ public:
     // Let the user chose a file to load.
     Filename flname;
     if (!flname.FileSelect(FILESELECTTYPE_SCENES, FILESELECT_LOAD,
-        GeLoadString(IDC_LOADCONTAINER_LOADTITLE)))
+        GeLoadString(IDC_TITLE_LOADSCENEFILE)))
     {
       return false;
     }
@@ -219,7 +219,7 @@ public:
     // dialog in that case.
     if (!scene)
     {
-      MessageDialog(GeLoadString(IDC_LOADCONTAINER_INVALIDFILE));
+      MessageDialog(GeLoadString(IDC_INFO_INVALIDSCENEFILE));
       return false;
     }
 
@@ -240,7 +240,7 @@ public:
       container = BaseObject::Alloc(Ocontainer);
       if (!container)
       {
-        MessageDialog(GeLoadString(IDC_OUTOFMEMORY));
+        MessageDialog(GeLoadString(IDC_INFO_OUTOFMEMORY));
         return false;
       }
       container->SetName(first->GetName());
@@ -278,7 +278,7 @@ public:
     }
     else
     {
-      MessageDialog(IDC_LOADCONTAINER_INVALIDFILE);
+      MessageDialog(IDC_INFO_INVALIDSCENEFILE);
       return false;
     }
 

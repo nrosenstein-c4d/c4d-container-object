@@ -1,19 +1,20 @@
-STRINGTABLE {
+STRINGTABLE
+{
   IDC_OCONTAINER                      "Container";
-  IDC_LOADCUSTOMICONDIALOG            "Eigenes Icon laden";
-  IDC_OUTOFMEMORY                     "Speicher reicht nicht aus";
-  IDC_INVALIDIMAGE                    "Ungültiges Bildformat.";
-  IDC_LOADCONTAINER_LOADTITLE         "Wähle eine Szenendatei";
-  IDC_LOADCONTAINER_LOADTITLE         "Die ausgewählte Datei konnte nicht geladen werden";
-  IDC_PASSWORDSDONTMATCH              "Die Passwörter stimmen nicht überein.";
+  IDC_TITLE_SELECTICON                "Eigenes Icon laden";
+  IDC_INFO_OUTOFMEMORY                "Speicher reicht nicht aus";
+  IDC_INFO_INVALIDIMAGE               "Ung\U00FCltiges Bildformat.";
+  IDC_TITLE_LOADSCENEFILE             "W\U00E4hle eine Szenendatei";
+  IDC_TITLE_LOADSCENEFILE             "Die ausgew\U00E4hlte Datei konnte nicht geladen werden";
   IDC_COMMAND_LOADCONTAINER_TITLE     "In Container laden...";
   IDC_COMMAND_LOADCONTAINER_HELP      "Erstellt ein Container Objekt aus einer Szenendatei.";
   IDC_COMMAND_CONVERTCONTAINER_TITLE  "Container Konvertieren";
   IDC_COMMAND_CONVERTCONTAINER_HELP   "Konvertiert den selektierten Container in ein Null-Objekt.";
-  IDC_PROTECTED_PREFIX                "Geschütztes";
-  IDC_ENTER_PASSWORD                  "Passwort eingeben";
+  IDC_PROTECTED_PREFIX                "Gesch\U00FCtztes";
+  IDC_PASSWORD_ENTER                  "Passwort eingeben";
   IDC_PASSWORD                        "Passwort:  ";
   IDC_PASSWORD_REPEAT                 "Wiederholen:  ";
   IDC_PASSWORD_EMPTY                  "Das Passwort-Feld darf nicht leer sein.";
-  IDC_PASSWORD_NOMATCH                "Die eingegebenen Passwörter stimmen nicht überein.";
+  IDC_PASSWORD_NOMATCH                "Die eingegebenen Passw\U00F6rter stimmen nicht \U00FCberein.";
+  IDC_PASSWORD_INVALID                 "Die Passw\U00F6rter stimmen nicht \U00FCberein.";
 }

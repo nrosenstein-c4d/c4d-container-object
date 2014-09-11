@@ -55,31 +55,31 @@ public:
     LONG setStringId = -1;
     switch (id)
     {
-      case OCONTAINER_HIDETAGS:
+      case NRCONTAINER_TAGS_HIDE:
         if (m_protected) return;
 
         count = ProcessLevel(op->GetFirstTag(), NBITCONTROL_SET, doc);
-        setStringId = OCONTAINER_NHIDDENTAGS;
+        setStringId = NRCONTAINER_TAGS_INFO;
         break;
-      case OCONTAINER_SHOWTAGS:
+      case NRCONTAINER_TAGS_SHOW:
         if (m_protected) return;
 
         count = 0;
         ProcessLevel(op->GetFirstTag(), NBITCONTROL_CLEAR, doc);
-        setStringId = OCONTAINER_NHIDDENTAGS;
+        setStringId = NRCONTAINER_TAGS_INFO;
         break;
-      case OCONTAINER_PACKUP:
+      case NRCONTAINER_CHILDREN_HIDE:
         count = ProcessLevel(op->GetDown(), NBITCONTROL_SET, doc);
-        setStringId = OCONTAINER_NHIDDENCHILDREN;
+        setStringId = NRCONTAINER_CHILDREN_INFO;
         break;
-      case OCONTAINER_UNPACK:
+      case NRCONTAINER_CHILDREN_SHOW:
         if (m_protected) return;
 
         count = 0;
         ProcessLevel(op->GetDown(), NBITCONTROL_CLEAR, doc);
-        setStringId = OCONTAINER_NHIDDENCHILDREN;
+        setStringId = NRCONTAINER_CHILDREN_INFO;
         break;
-      case OCONTAINER_LOADCUSTOMICON:
+      case NRCONTAINER_ICON_LOAD:
       {
         if (m_protected) return;
 
@@ -87,7 +87,7 @@ public:
         Filename flname;
         flname.SetDirectory(GeGetC4DPath(C4D_PATH_DESKTOP));
         Bool ok = flname.FileSelect(FILESELECTTYPE_IMAGES, FILESELECT_LOAD,
-            GeLoadString(IDC_LOADCUSTOMICONDIALOG));
+            GeLoadString(IDC_TITLE_SELECTICON));
 
         if (ok)
         {
@@ -99,13 +99,13 @@ public:
 
           // If it is still null here, allocation failed.
           if (!m_customIcon)
-            MessageDialog(GeLoadString(IDC_OUTOFMEMORY));
+            MessageDialog(GeLoadString(IDC_INFO_OUTOFMEMORY));
           else
           {
             IMAGERESULT res = m_customIcon->Init(flname);
             if (res != IMAGERESULT_OK)
             {
-              MessageDialog(IDC_INVALIDIMAGE);
+              MessageDialog(IDC_INFO_INVALIDIMAGE);
               BaseBitmap::Free(m_customIcon);
             }
             else
@@ -122,7 +122,7 @@ public:
         }
         break;
       }
-      case OCONTAINER_CLEARCUSTOMICON:
+      case NRCONTAINER_ICON_CLEAR:
       {
         if (m_protected) return;
 
@@ -151,9 +151,9 @@ public:
   void OnMenuPrepare(BaseObject* op)
   {
     BaseContainer* bc = op->GetDataInstance();
-    bc->SetString(OCONTAINER_NHIDDENTAGS, LongToString(
+    bc->SetString(NRCONTAINER_TAGS_INFO, LongToString(
         CountNBits(op->GetFirstTag(), NBIT_OHIDE, true)));
-    bc->SetString(OCONTAINER_NHIDDENCHILDREN, LongToString(
+    bc->SetString(NRCONTAINER_CHILDREN_INFO, LongToString(
         CountNBits(op->GetDown(), NBIT_OHIDE, true)));
   }
 
@@ -205,54 +205,6 @@ public:
 
     if (bmp)
     {
-      do
-      {
-        // Draw colored lines into the bitmap to display that
-        // objects or tags are hidden.
-        const BaseContainer* container = op->GetDataInstance();
-        LONG thickness = container->GetLong(OCONTAINER_HINTTHICKNESS);
-        if (thickness <= 0) break;
-
-        const Vector color = container->GetVector(OCONTAINER_HINTCOLOR);
-        const LONG r = (255.0 * color.x);
-        const LONG g = (255.0 * color.y);
-        const LONG b = (255.0 * color.z);
-        BaseBitmap* aph = bmp->GetInternalChannel();
-
-        thickness = (xdim / 16) * thickness;
-        LONG x, y;
-
-        // Horizontal line
-        if (CountNBits(op->GetDown(), NBIT_OHIDE, true, true))
-        {
-          for (LONG i=0; i < xdim; i++)
-          {
-            x = i;
-            for (LONG t=1; t <= thickness; t++)
-            {
-              y = yoff + ydim - t;
-              bmp->SetPixel(x, y, r, g, b);
-              if (aph) bmp->SetAlphaPixel(aph, x, y, 255);
-            }
-          }
-        }
-
-        // Vertical line
-        if (CountNBits(op->GetFirstTag(), NBIT_OHIDE, true, true))
-        {
-          for (LONG i=0; i < ydim; i++)
-          {
-            y = i;
-            for (LONG t=1; t <= thickness; t++)
-            {
-              x = xoff + xdim - t;
-              bmp->SetPixel(x, y, r, g, b);
-              if (aph) bmp->SetAlphaPixel(aph, x, y, 255);
-            }
-          }
-        }
-      } while (false);
-
       // Adjust the IconData.
       dIcon->x = xoff;
       dIcon->y = yoff;
@@ -287,9 +239,9 @@ public:
 
       // Pack the container up.
       DescriptionCommand data;
-      data.id = OCONTAINER_PACKUP;
+      data.id = NRCONTAINER_CHILDREN_HIDE;
       op->Message(MSG_DESCRIPTION_COMMAND, &data);
-      data.id = OCONTAINER_HIDETAGS;
+      data.id = NRCONTAINER_TAGS_HIDE;
       op->Message(MSG_DESCRIPTION_COMMAND, &data);
 
       // Store the password hash.
@@ -304,15 +256,15 @@ public:
 
       String hashed = HashString(password);
       if (m_protectionHash != hashed)
-        MessageDialog(GeLoadString(IDC_PASSWORDSDONTMATCH));
+        MessageDialog(GeLoadString(IDC_PASSWORD_INVALID));
       else
         m_protected = false;
 
       // Unpack the container.
       DescriptionCommand data;
-      data.id = OCONTAINER_UNPACK;
+      data.id = NRCONTAINER_CHILDREN_SHOW;
       op->Message(MSG_DESCRIPTION_COMMAND, &data);
-      data.id = OCONTAINER_SHOWTAGS;
+      data.id = NRCONTAINER_TAGS_SHOW;
       op->Message(MSG_DESCRIPTION_COMMAND, &data);
     }
 
@@ -352,10 +304,8 @@ public:
     if (!result) return result;
 
     BaseContainer* bc = ((BaseObject*) node)->GetDataInstance();
-    bc->SetString(OCONTAINER_NHIDDENCHILDREN, "0");
-    bc->SetString(OCONTAINER_NHIDDENTAGS, "0");
-    bc->SetLong(OCONTAINER_HINTTHICKNESS, 0);
-    bc->SetVector(OCONTAINER_HINTCOLOR, Vector(0.7, 1.0, 0.15));
+    bc->SetString(NRCONTAINER_CHILDREN_INFO, "0");
+    bc->SetString(NRCONTAINER_TAGS_INFO, "0");
 
     if (m_customIcon) BaseBitmap::Free(m_customIcon);
     m_protected = false;
@@ -484,13 +434,11 @@ public:
     if (!node || !desc) return false;
     if (!desc->LoadDescription(Ocontainer)) return false;
 
-    // Hide the Icon and Action groups.
+    // Hide the Objects parameter group.
     AutoAlloc<AtomArray> t_arr;
-    BaseContainer* bc_g_icon = desc->GetParameterI(OCONTAINER_G_ICON, t_arr);
-    BaseContainer* bc_g_actions = desc->GetParameterI(OCONTAINER_G_ACTIONS, t_arr);
+    BaseContainer* bc_group = desc->GetParameterI(ID_OBJECTPROPERTIES, t_arr);
 
-    if (bc_g_icon) bc_g_icon->SetBool(DESC_HIDE, m_protected);
-    if (bc_g_actions) bc_g_actions->SetBool(DESC_HIDE, m_protected);
+    if (bc_group) bc_group->SetBool(DESC_HIDE, m_protected);
 
     flags |= DESCFLAGS_DESC_LOADED;
     return true;
@@ -499,10 +447,6 @@ public:
   virtual void GetBubbleHelp(GeListNode* node, String& str)
   {
     super::GetBubbleHelp(node, str);
-    if (m_protected)
-    {
-      str = GeLoadString(IDC_PROTECTED_PREFIX) + " " + str;
-    }
   }
 
 };
