@@ -180,16 +180,19 @@ public:
 
   static Bool Register()
   {
+    AutoAlloc<BaseBitmap> bmp;
+    bmp->Init(GeGetPluginPath() + "res" + "img" + "load_container.png");
+
     return RegisterCommandPlugin(
       ID_COMMAND_LOADCONTAINER,
       GeLoadString(IDC_COMMAND_LOADCONTAINER_TITLE),
       PLUGINFLAG_COMMAND_HOTKEY,
-      AutoBitmap("cmd-loadcontainer.png"),
+      bmp,
       GeLoadString(IDC_COMMAND_LOADCONTAINER_HELP),
       gNew LoadContainerCommand);
   }
 
-  // CommandData Overrides
+  // CommandData
 
   virtual Bool Execute(BaseDocument* doc)
   {
@@ -323,16 +326,19 @@ public:
 
   static Bool Register()
   {
+    AutoAlloc<BaseBitmap> bmp;
+    bmp->Init(GeGetPluginPath() + "res" + "img" + "convert_container.png");
+
     return RegisterCommandPlugin(
       ID_COMMAND_CONVERTCONTAINER,
       GeLoadString(IDC_COMMAND_CONVERTCONTAINER_TITLE),
       PLUGINFLAG_COMMAND_HOTKEY,
-      AutoBitmap("cmd-convertcontainer.png"),
+      bmp,
       GeLoadString(IDC_COMMAND_CONVERTCONTAINER_HELP),
       gNew ConvertContainerCommand);
   }
 
-  // CommandData Overrides
+  // CommandData
 
   virtual Bool Execute(BaseDocument* doc)
   {

@@ -456,13 +456,16 @@ public:
 
 Bool RegisterContainerObject()
 {
+  AutoAlloc<BaseBitmap> bmp;
+  bmp->Init(GeGetPluginPath() + "res" + "img" + "Ocontainer.png");
+
   return RegisterObjectPlugin(
     Ocontainer,
     GeLoadString(IDC_OCONTAINER),
     0,
     ContainerObject::Alloc,
     "Ocontainer",
-    AutoBitmap("Ocontainer.png"),
+    bmp,
     CONTAINEROBJECT_VERSION);
 }
 
