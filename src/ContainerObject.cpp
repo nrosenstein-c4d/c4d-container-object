@@ -9,11 +9,11 @@
 #include <lib_iconcollection.h>
 
 #include <Ocontainer.h>
-#include "../res/c4d_symbols.h"
+#include "res/c4d_symbols.h"
 
-#include "Utils.h"
-#include "AABB.h"
-#include "NBitFiddling.h"
+#include "Utils/Misc.h"
+#include "Utils/AABB.h"
+#include "Utils/NBitFiddling.h"
 
 static const LONG CONTAINEROBJECT_VERSION = 1000;
 static const LONG CONTAINEROBJECT_ICONSIZE = 64;

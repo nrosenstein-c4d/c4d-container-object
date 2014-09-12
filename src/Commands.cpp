@@ -14,7 +14,7 @@
 
 #include <c4d.h>
 #include <Ocontainer.h>
-#include "../res/c4d_symbols.h"
+#include "res/c4d_symbols.h"
 
 #define ID_COMMAND_LOADCONTAINER     1030970
 #define ID_COMMAND_CONVERTCONTAINER  1030971

@@ -60,7 +60,7 @@ BASEDIR_INCLUDE = include
 TARGET_NAME = containerobject
 
 # Collect a list of all source-files from the source-files directory.
-SOURCES = $(wildcard $(BASEDIR_SRC)/*.cpp)
+SOURCES = $(wildcard $(BASEDIR_SRC)/*.cpp) $(wildcard $(BASEDIR_SRC)/*/*.cpp)
 
 # Generate the list of object files from the source-file. The object
 # files will be put into an obj/{platform}[-dbg] directory.
@@ -71,7 +71,7 @@ OBJECTS = $(call C4D_GEN_OBJECTNAMES,$(C4D_OBJECTS_DIR)/,$(BASEDIR_SRC)/,$(SOURC
 DIRS = $(sort $(dir $(OBJECTS)))
 
 # A list of additional include directories. Will be prefixed later.
-INCLUDES = res/description/ $(BASEDIR_INCLUDE)/
+INCLUDES = ./ res/description/ $(BASEDIR_INCLUDE)/
 
 # Determine the Python Framework's base.
 # --------------------------------------

@@ -8,8 +8,7 @@
 
 #include <c4d.h>
 
-/* Simple hash function.
- */
+/* Hashes a Cinema 4D string into another string. */
 inline String HashString(const String& input)
 {
   static const LONG key_length = 128;
@@ -40,11 +39,14 @@ inline String HashString(const String& input)
   return copy;
 }
 
+/* Converts a Cinema 4D Vector to a string. */
 inline String VectorToString(const Vector& v)
 {
   return "(" + RealToString(v.x) + ", " + RealToString(v.y) + ", " + RealToString(v.z) + ")";
 }
 
+/* Returns `true` if the passed object is controlled
+ * by a generator object, `false` if it is not. */
 inline Bool IsControlledByGenerator(BaseObject* op)
 {
   if (!op->GetBit(BIT_CONTROLOBJECT))
@@ -79,8 +81,7 @@ T* GetNextNode(T* op, T const* origin=nullptr, Bool allowDepthwalk=true)
 }
 
 /* RAII based automatic undo encapsulation for BaseDocument::StartUndo()
- * and BaseDocument::EndUndo().
- */
+ * and BaseDocument::EndUndo(). */
 class AutoUndo
 {
   BaseDocument* m_doc;
@@ -97,8 +98,7 @@ public:
   }
 };
 
-/* Cinema 4D node hierarchy iterator.
- */
+/* Cinema 4D node hierarchy iterator. */
 template <typename T>
 class NodeIterator
 {
@@ -144,4 +144,8 @@ public:
   }
 };
 
+/* Opens a dialog to let the user enter a password. If `singleField`
+ * is set to true, only a single input field is displayed. If set to
+ * `false`, a second field is displayed and both values must match
+ * before the password is accepted. */
 Bool PasswordDialog(String* out, Bool singleField=false);

@@ -4,8 +4,8 @@
  * Licensed under the GNU Lesser General Public License.
  */
 
-#include "Utils.h"
-#include "../res/c4d_symbols.h"
+#include "Misc.h"
+#include "res/c4d_symbols.h"
 
 class _PasswordDialog : public GeDialog
 {
