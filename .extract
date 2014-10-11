@@ -1,0 +1,10 @@
+
+res/
+README.md
+LICENSE
+image.png
+
+== OPTIONAL ==
+
+containerobject.cdl64
+containerobject.dylib
