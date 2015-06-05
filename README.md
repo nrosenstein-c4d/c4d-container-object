@@ -44,6 +44,9 @@ __v0.3__ - *current stream*
 - A better Password dialog opens when locking/unlocking a container
 - The Bounding-Box of the container object is now computed from
 its child objects, making it easier to apply deformers
+- Fixed issue that hidden objects (and therefore code that produced
+copies of hidden objects) were not draggable in the Object Manager.
+- Removed Info text fields in Attribute Manager
 
 __v0.2__
 
