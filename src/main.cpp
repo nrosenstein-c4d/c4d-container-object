@@ -1,8 +1,10 @@
-/**
- * coding: utf-8
- * Copyright (C) 2013, Niklas Rosenstein
- * Licensed under the GNU Lesser General Public License.
- */
+/// Copyright (C) 2013-2015, Niklas Rosenstein
+/// All rights reserved.
+///
+/// Licensed under the GNU Lesser General Public License.
+///
+/// \file main.cpp
+/// \lastmodified 2015/05/06
 
 #include <c4d.h>
 

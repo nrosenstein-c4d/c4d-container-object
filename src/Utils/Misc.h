@@ -1,14 +1,18 @@
-/* Copyright (C) 2013-2014, Niklas Rosenstein
- * All rights reserved.
- *
- * Licensed under the GNU Lesser General Public License.
- */
+/// Copyright (C) 2013-2015, Niklas Rosenstein
+/// All rights reserved.
+///
+/// Licensed under the GNU Lesser General Public License.
+///
+/// \file Utils/Misc.h
+/// \lastmodified 2015/05/06
 
 #pragma once
 
 #include <c4d.h>
 
-/* Hashes a Cinema 4D string into another string. */
+/// ***************************************************************************
+/// Hashes a Cinema 4D String into another String.
+/// ***************************************************************************
 inline String HashString(const String& input)
 {
   static const LONG key_length = 128;
@@ -39,14 +43,18 @@ inline String HashString(const String& input)
   return copy;
 }
 
-/* Converts a Cinema 4D Vector to a string. */
+/// ***************************************************************************
+/// Converts a Cinema 4D Vector to a string.
+/// ***************************************************************************
 inline String VectorToString(const Vector& v)
 {
   return "(" + RealToString(v.x) + ", " + RealToString(v.y) + ", " + RealToString(v.z) + ")";
 }
 
-/* Returns `true` if the passed object is controlled
- * by a generator object, `false` if it is not. */
+/// ***************************************************************************
+/// Returns `true` if the passed object is controlled
+/// by a generator object, `false` if it is not.
+/// ***************************************************************************
 inline Bool IsControlledByGenerator(BaseObject* op)
 {
   if (!op->GetBit(BIT_CONTROLOBJECT))
@@ -58,6 +66,8 @@ inline Bool IsControlledByGenerator(BaseObject* op)
   return (cache == nullptr);
 }
 
+/// ***************************************************************************
+/// ***************************************************************************
 template <typename T>
 T* GetNextNode(T* op, T const* origin=nullptr, Bool allowDepthwalk=true)
 {
@@ -80,8 +90,10 @@ T* GetNextNode(T* op, T const* origin=nullptr, Bool allowDepthwalk=true)
   return nullptr;
 }
 
-/* RAII based automatic undo encapsulation for BaseDocument::StartUndo()
- * and BaseDocument::EndUndo(). */
+/// ***************************************************************************
+/// RAII based automatic undo encapsulation for BaseDocument::StartUndo()
+/// and BaseDocument::EndUndo().
+/// ***************************************************************************
 class AutoUndo
 {
   BaseDocument* m_doc;
@@ -98,7 +110,9 @@ public:
   }
 };
 
-/* Cinema 4D node hierarchy iterator. */
+/// ***************************************************************************
+/// Cinema 4D node hierarchy iterator.
+/// ***************************************************************************
 template <typename T>
 class NodeIterator
 {
@@ -144,8 +158,10 @@ public:
   }
 };
 
-/* Opens a dialog to let the user enter a password. If `singleField`
- * is set to true, only a single input field is displayed. If set to
- * `false`, a second field is displayed and both values must match
- * before the password is accepted. */
+/// ***************************************************************************
+/// Opens a dialog to let the user enter a password. If `singleField`
+/// is set to true, only a single input field is displayed. If set to
+/// `false`, a second field is displayed and both values must match
+/// before the password is accepted.
+/// ***************************************************************************
 Bool PasswordDialog(String* out, Bool singleField=false);

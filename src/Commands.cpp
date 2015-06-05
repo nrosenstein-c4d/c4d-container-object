@@ -1,28 +1,28 @@
-/**
- * Copyright (C) 2013, Niklas Rosenstein
- * All rights reserved.
- *
- * Licensed under the GNU Lesser General Public License.
- *
- * Todo
- * ====
- *
- * - Using `CopyBranchesTo()` with `@move_dont_copy` set to
- * `false` does not retain the BaseLink connections. Would
- * be interesting to know.
- */
+/// Copyright (C) 2013-2015, Niklas Rosenstein
+/// All rights reserved.
+///
+/// Licensed under the GNU Lesser General Public License.
+///
+/// \file Commands.cpp
+/// \lastmodified 2015/05/06
+///
+/// ## Todo
+///
+/// - Using CopyBranchesTo() with #move_dont_copy set to
+///   false does not retain the BaseLink connections. Would
+///   be interesting to know why.
 
 #include <c4d.h>
 #include <Ocontainer.h>
 #include "res/c4d_symbols.h"
 
-#define ID_COMMAND_LOADCONTAINER     1030970
-#define ID_COMMAND_CONVERTCONTAINER  1030971
+static const LONG ID_COMMAND_LOADCONTAINER    = 1030970;
+static const LONG ID_COMMAND_CONVERTCONTAINER = 1030971;
 
-/**
- * This function copies all branches of an object to another
- * object, assuming it can find matching branches.
- */
+/// ***************************************************************************
+/// This function copies all branches of an object to another
+/// object, assuming it can find matching branches.
+/// ***************************************************************************
 static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
     AliasTrans* at, Bool children, Bool move_dont_copy, Bool undos_on_copy=true)
 {
@@ -112,9 +112,9 @@ static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
   return true;
 }
 
-/**
- * Copies the user-data from one object to another.
- */
+/// ***************************************************************************
+/// Copies the user-data from one object to another.
+/// ***************************************************************************
 static Bool CopyUserdataTo(C4DAtom* src, C4DAtom* dst, AliasTrans* at)
 {
   if (!src || !dst) return false;
@@ -147,9 +147,9 @@ static Bool CopyUserdataTo(C4DAtom* src, C4DAtom* dst, AliasTrans* at)
   return true;
 }
 
-/**
- * Copies all bits from one object to another.
- */
+/// ***************************************************************************
+/// Copies all bits from one object to another.
+/// ***************************************************************************
 static Bool CopyBitsTo(GeListNode* src, GeListNode* dst, Bool bits=true, Bool nbits=true)
 {
   if (!src || !dst) return false;
@@ -171,9 +171,9 @@ static Bool CopyBitsTo(GeListNode* src, GeListNode* dst, Bool bits=true, Bool nb
   return true;
 }
 
-/**
- * This command creates a new container object from a .c4d file.
- */
+/// ***************************************************************************
+/// This command creates a new container object from a .c4d file.
+/// ***************************************************************************
 class LoadContainerCommand : public CommandData
 {
 public:
@@ -315,11 +315,11 @@ public:
 
 };
 
-/**
- * Prepare a Container Object by removing the container object
- * reference and replacing it with a Null-Object (loosing the
- * custom icon of course).
- */
+/// ***************************************************************************
+/// Prepare a Container Object by removing the container object
+/// reference and replacing it with a Null-Object (loosing the
+/// custom icon of course).
+/// ***************************************************************************
 class ConvertContainerCommand : public CommandData
 {
 public:
@@ -387,16 +387,13 @@ public:
     return CMD_ENABLED;
   }
 
-
 };
 
-
+/// ***************************************************************************
+/// ***************************************************************************
 Bool RegisterCommands()
 {
   Bool ok = LoadContainerCommand::Register();
   ok = ConvertContainerCommand::Register() && ok;
   return ok;
 }
-
-
-

@@ -1,12 +1,16 @@
-/* Copyright (C) 2013-2014, Niklas Rosenstein
- * All rights reserved.
- *
- * Licensed under the GNU Lesser General Public License.
- */
+/// Copyright (C) 2013-2015, Niklas Rosenstein
+/// All rights reserved.
+///
+/// Licensed under the GNU Lesser General Public License.
+///
+/// \file Utils/Misc.cpp
+/// \lastmodified 2015/05/06
 
 #include "Misc.h"
 #include "res/c4d_symbols.h"
 
+/// ***************************************************************************
+/// ***************************************************************************
 class _PasswordDialog : public GeDialog
 {
 
@@ -95,6 +99,8 @@ public:
 
 };
 
+/// ***************************************************************************
+/// ***************************************************************************
 Bool PasswordDialog(String* out, Bool singleField)
 {
   _PasswordDialog dlg(singleField);

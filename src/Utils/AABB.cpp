@@ -1,11 +1,15 @@
-/* Copyright (C) 2014, Niklas Rosenstein
- * All rights reserved.
- *
- * Licensed under the GNU Lesser General Public License.
- */
+/// Copyright (C) 2013-2015, Niklas Rosenstein
+/// All rights reserved.
+///
+/// Licensed under the GNU Lesser General Public License.
+///
+/// \file Utils/AABB.cpp
+/// \lastmodified 2015/05/06
 
 #include "AABB.h"
 
+/// ***************************************************************************
+/// ***************************************************************************
 void AABB::Expand(const Vector& point)
 {
   if (is_init) mm.AddPoint(point * translation);
@@ -16,6 +20,8 @@ void AABB::Expand(const Vector& point)
   }
 }
 
+/// ***************************************************************************
+/// ***************************************************************************
 void AABB::Expand(BaseObject* op, const Matrix& mg, Bool recursive)
 {
   LONG exclude = ExcludeObject(op);
