@@ -1,26 +1,55 @@
-/* Copyright (C) 2013-2014, Niklas Rosenstein
- * All rights reserved.
- *
- * Licensed under the GNU Lesser General Public License.
- */
+/// Copyright (C) 2013-2015, Niklas Rosenstein
+/// All rights reserved.
+///
+/// Licensed under the GNU Lesser General Public License.
+///
+/// \file ContainerObject.cpp
+/// \lastmodified 2015/05/06
+/// \brief Implements the Cinema 4D Container Object plugin.
 
+/// Cinema 4D Includes
 #include <c4d.h>
 #include <lib_clipmap.h>
 #include <lib_iconcollection.h>
 
+/// Resource Symbols
 #include <Ocontainer.h>
 #include "res/c4d_symbols.h"
 
 #include "Utils/Misc.h"
 #include "Utils/AABB.h"
-#include "Utils/NBitFiddling.h"
 
-static const LONG CONTAINEROBJECT_VERSION = 1000;
+static const LONG CONTAINEROBJECT_VERSION = 1001;
 static const LONG CONTAINEROBJECT_ICONSIZE = 64;
 
-/**
- * Implements the behavior of the Container object.
- */
+/// ***************************************************************************
+/// This function recursive hides or unhides a node and all its following
+/// nodes in the same hierarchy level and below object manager and timeline.
+/// Only direct children are hidden or revealed, no other branches.
+/// @param[in] root The node to start with.
+/// @param[in] hide \c true if the hierarchy should be hidden, \c false
+///     if it should be revealed by this function.
+/// @param[in] doc The BaseDocument to add undos to, if desired. Pass
+///     \c nullptr if no undos should be created.
+/// ***************************************************************************
+static void HideHierarchy(BaseList2D* root, Bool hide, BaseDocument* doc)
+{
+  while (root) {
+    if (doc) doc->AddUndo(UNDOTYPE_BITS, root);
+    const NBITCONTROL control = (hide ? NBITCONTROL_SET : NBITCONTROL_CLEAR);
+    root->ChangeNBit(NBIT_OHIDE, control);
+    root->ChangeNBit(NBIT_TL1_HIDE, control);
+    root->ChangeNBit(NBIT_TL2_HIDE, control);
+    root->ChangeNBit(NBIT_TL3_HIDE, control);
+    root->ChangeNBit(NBIT_TL4_HIDE, control);
+    root->ChangeNBit(NBIT_THIDE, control);
+    HideHierarchy(static_cast<BaseList2D*>(root->GetDown()), hide, doc);
+    root = root->GetNext();
+  }
+}
+
+/// ***************************************************************************
+/// ***************************************************************************
 class ContainerObject : public ObjectData
 {
   typedef ObjectData super;
@@ -31,60 +60,39 @@ class ContainerObject : public ObjectData
 
 public:
 
-  /**
-   * Static function for allocating an instance of our ObjectData
-   * subclass, required for registration so that Cinema can create
-   * instances of this class for new BaseObjects' of our plugin.
-   */
-  static NodeData* Alloc()
-  {
-    return gNew ContainerObject;
-  }
+  static NodeData* Alloc() { return gNew ContainerObject; }
 
-  /**
-   * Invoked in Message() for the MSG_DESCRIPTION_COMMAND message type.
-   */
+  /// Called from Message() for MSG_DESCRIPTION_COMMAND.
   void OnDescriptionCommand(BaseObject* op, DescriptionCommand* cmdData)
   {
     BaseDocument* doc = op->GetDocument();
-    AutoUndo auto_undo(doc);
+    const AutoUndo au(doc);
+    const LONG id = cmdData->id[0].id;
 
-    LONG id = cmdData->id[0].id;
-
-    LONG count = 0;
-    LONG setStringId = -1;
     switch (id)
     {
       case NRCONTAINER_TAGS_HIDE:
-        if (m_protected) return;
-
-        count = ProcessLevel(op->GetFirstTag(), NBITCONTROL_SET, doc);
-        setStringId = NRCONTAINER_TAGS_INFO;
+        if (!m_protected)
+          HideHierarchy(op->GetFirstTag(), true, doc);
         break;
       case NRCONTAINER_TAGS_SHOW:
-        if (m_protected) return;
-
-        count = 0;
-        ProcessLevel(op->GetFirstTag(), NBITCONTROL_CLEAR, doc);
-        setStringId = NRCONTAINER_TAGS_INFO;
+        if (!m_protected)
+          HideHierarchy(op->GetFirstTag(), false, doc);
         break;
       case NRCONTAINER_CHILDREN_HIDE:
-        count = ProcessLevel(op->GetDown(), NBITCONTROL_SET, doc);
-        setStringId = NRCONTAINER_CHILDREN_INFO;
+        if (!m_protected)
+          HideHierarchy(op->GetDown(), true, doc);
         break;
       case NRCONTAINER_CHILDREN_SHOW:
-        if (m_protected) return;
-
-        count = 0;
-        ProcessLevel(op->GetDown(), NBITCONTROL_CLEAR, doc);
-        setStringId = NRCONTAINER_CHILDREN_INFO;
+        if (!m_protected)
+          HideHierarchy(op->GetDown(), false, doc);
         break;
       case NRCONTAINER_PROTECT:
         ToggleProtect(op);
         break;
       case NRCONTAINER_ICON_LOAD:
       {
-        if (m_protected) return;
+        if (m_protected) break;
 
         // Ask the user for an image-file.
         Filename flname;
@@ -127,8 +135,7 @@ public:
       }
       case NRCONTAINER_ICON_CLEAR:
       {
-        if (m_protected) return;
-
+        if (m_protected) break;
         if (m_customIcon)
         {
           // TODO: We possibly require a flag for removing the icon
@@ -138,31 +145,10 @@ public:
         }
         break;
       }
-    } // switch
-
-    if (setStringId >= 0)
-    {
-      if (doc) doc->AddUndo(UNDOTYPE_CHANGE_SMALL, op);
-      BaseContainer* container = op->GetDataInstance();
-      container->SetString(setStringId, LongToString(count));
     }
   }
 
-  /**
-    * Invoked in Message() for the MSG_MENUPREPARE message type.
-    */
-  void OnMenuPrepare(BaseObject* op)
-  {
-    BaseContainer* bc = op->GetDataInstance();
-    bc->SetString(NRCONTAINER_TAGS_INFO, LongToString(
-        CountNBits(op->GetFirstTag(), NBIT_OHIDE, true)));
-    bc->SetString(NRCONTAINER_CHILDREN_INFO, LongToString(
-        CountNBits(op->GetDown(), NBIT_OHIDE, true)));
-  }
-
-  /**
-   * Called from Message() on MSG_GETCUSTOMICON.
-   */
+  /// Called from Message() for MSG_GETCUSTOMICON.
   void OnGetCustomIcon(BaseObject* op, GetCustomIconData* data)
   {
     IconData* dIcon = data->dat;
@@ -222,9 +208,8 @@ public:
     }
   }
 
-  /**
-   * Called on MSG_EDIT.
-   */
+  /// Called from Message() for MSG_EDIT (when a user double-clicks
+  /// the object icon). Toggles the protection state of the container.
   void ToggleProtect(BaseObject* op)
   {
     BaseDocument* doc = op->GetDocument();
@@ -271,26 +256,22 @@ public:
       op->Message(MSG_DESCRIPTION_COMMAND, &data);
     }
 
-    #if API_VERSION < 13000
-      op->SetDirty(DIRTYFLAGS_DESCRIPTION);
-    #else
-      op->Message(MSG_CHANGE);
-    #endif
-
+    op->Message(MSG_CHANGE);
+    op->SetDirty(DIRTYFLAGS_DESCRIPTION);
     EventAdd();
   }
 
-  //| ObjectData Overrides
+  // ObjectData Overrides
 
   virtual void GetDimension(BaseObject* op, Vector* mp, Vector* rad)
   {
-    /* Find the Minimum/Maximum of the object's bounding
-     * box by all hidden child-objects in its hierarchy. */
+    // Find the Minimum/Maximum of the object's bounding
+    // box by all hidden child-objects in its hierarchy.
     AABB bbox;
     for (NodeIterator<BaseObject> it(op->GetDown(), op); it; ++it)
     {
-      /* We skip objects that are being controlled by
-       * a generator object. */
+      // We skip objects that are being controlled by
+      // a generator object.
       if (it->GetInfo() & OBJECT_GENERATOR && !IsControlledByGenerator(*it))
         bbox.Expand(*it, it->GetMg(), false);
     }
@@ -299,21 +280,16 @@ public:
     *rad = bbox.GetSize();
   }
 
-  //|  NodeData Overrides
+  //  NodeData Overrides
 
   virtual Bool Init(GeListNode* node)
   {
     Bool result = super::Init(node);
     if (!result) return result;
 
-    BaseContainer* bc = ((BaseObject*) node)->GetDataInstance();
-    bc->SetString(NRCONTAINER_CHILDREN_INFO, "0");
-    bc->SetString(NRCONTAINER_TAGS_INFO, "0");
-
     if (m_customIcon) BaseBitmap::Free(m_customIcon);
     m_protected = false;
     m_protectionHash = "";
-
     return result;
   }
 
@@ -396,9 +372,6 @@ public:
       case MSG_DESCRIPTION_COMMAND:
         OnDescriptionCommand(op, (DescriptionCommand*) pData);
         break;
-      case MSG_MENUPREPARE:
-        OnMenuPrepare(op);
-        break;
       case MSG_GETCUSTOMICON:
         OnGetCustomIcon(op, (GetCustomIconData*) pData);
         break;
@@ -454,6 +427,8 @@ public:
 
 };
 
+/// ***************************************************************************
+/// ***************************************************************************
 Bool RegisterContainerObject()
 {
   AutoAlloc<BaseBitmap> bmp;

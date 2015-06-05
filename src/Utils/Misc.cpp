@@ -101,4 +101,3 @@ Bool PasswordDialog(String* out, Bool singleField)
   dlg.Open(DLG_TYPE_MODAL, 0);
   return dlg.GetResult(out);
 }
-

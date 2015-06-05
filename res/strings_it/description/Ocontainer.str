@@ -3,10 +3,8 @@ STRINGTABLE Ocontainer
   Ocontainer                    "Contenitore";
   NRCONTAINER_CHILDREN_HIDE     "Crea pacchetto";
   NRCONTAINER_CHILDREN_SHOW     "Rimuovi pacchetto";
-  NRCONTAINER_CHILDREN_INFO     "Figli Nascosti:  ";
   NRCONTAINER_TAGS_HIDE         "Nascondi Tags";
   NRCONTAINER_TAGS_SHOW         "Mostra Tags";
-  NRCONTAINER_TAGS_INFO         "Tags Nascosti:  ";
   NRCONTAINER_ICON_LOAD         "Carica Icona";
   NRCONTAINER_ICON_CLEAR        "Rimuovi Icona";
   NRCONTAINER_PROTECT           "Protetto";

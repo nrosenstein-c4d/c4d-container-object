@@ -3,10 +3,8 @@ STRINGTABLE Ocontainer
   Ocontainer                    "Kontejner";
   NRCONTAINER_CHILDREN_HIDE     "Skr\U00FDt D\U011Bti"; // todo
   NRCONTAINER_CHILDREN_SHOW     "Zobrazit D\U011Bti";   // todo
-  NRCONTAINER_CHILDREN_INFO     "Skryt\u00E9 podobjekty:  ";
   NRCONTAINER_TAGS_HIDE         "Skr\u00FDt tagy";
   NRCONTAINER_TAGS_SHOW         "Zobrazit tagy";
-  NRCONTAINER_TAGS_INFO         "Skryt\u00E9 tagy:  ";
   NRCONTAINER_ICON_LOAD         "Nahr\u00E1t vlastn\u00ED ikonu";
   NRCONTAINER_ICON_CLEAR        "Vymazat vlastn\u00ED ikonu";
   NRCONTAINER_PROTECT           "Chr\U00E1nit";         // todo

@@ -3,10 +3,8 @@ STRINGTABLE Ocontainer
   Ocontainer                    "Container";
   NRCONTAINER_CHILDREN_HIDE     "Hide Children";
   NRCONTAINER_CHILDREN_SHOW     "Show Children";
-  NRCONTAINER_CHILDREN_INFO     "Hidden Children:  ";
   NRCONTAINER_TAGS_HIDE         "Hide Tags";
   NRCONTAINER_TAGS_SHOW         "Show Tags";
-  NRCONTAINER_TAGS_INFO         "Hidden Tags:  ";
   NRCONTAINER_ICON_LOAD         "Load Icon";
   NRCONTAINER_ICON_CLEAR        "Clear Icon";
   NRCONTAINER_PROTECT           "Protect";
