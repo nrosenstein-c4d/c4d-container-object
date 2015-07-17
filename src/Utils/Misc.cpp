@@ -107,3 +107,30 @@ Bool PasswordDialog(String* out, Bool singleField)
   dlg.Open(DLG_TYPE_MODAL, 0);
   return dlg.GetResult(out);
 }
+
+/// ***************************************************************************
+/// ***************************************************************************
+Bool FindMenuResource(const String& name, const String& subtitle, BaseContainer** bc)
+{
+  BaseContainer* menu = GetMenuResource(name);
+  if (!menu) return false;
+  return FindMenuResource(*menu, subtitle, bc);
+}
+
+/// ***************************************************************************
+/// ***************************************************************************
+Bool FindMenuResource(BaseContainer& menu, const String& subtitle, BaseContainer** bc)
+{
+  if (menu.GetString(MENURESOURCE_SUBTITLE) == subtitle) {
+    *bc = &menu;
+    return true;
+  }
+  Int32 index = 0;
+  GeData* data = nullptr;
+  while ((data = menu.GetIndexData(index++)) != nullptr) {
+    BaseContainer* submenu = data->GetContainer();
+    if (submenu && FindMenuResource(*submenu, subtitle, bc))
+      return true;
+  }
+  return false;
+}

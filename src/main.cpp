@@ -7,15 +7,16 @@
 /// \lastmodified 2015/05/06
 
 #include <c4d.h>
+#include "Utils/Misc.h"
 
-extern Bool RegisterContainerObject();
+extern Bool RegisterContainerObject(Bool prePass);
 extern Bool RegisterCommands();
 
 Bool PluginStart()
 {
-  RegisterContainerObject();
+  RegisterContainerObject(false);
   RegisterCommands();
-  return TRUE;
+  return false;
 }
 
 Bool PluginMessage(LONG msgType, void* pData)
@@ -24,10 +25,13 @@ Bool PluginMessage(LONG msgType, void* pData)
   {
     case C4DPL_INIT_SYS:
       return ::resource.Init();
+    case C4DPL_BUILDMENU:
+      RegisterContainerObject(true);
+      break;
     default:
       break;
   }
-  return TRUE;
+  return true;
 }
 
 void PluginEnd()

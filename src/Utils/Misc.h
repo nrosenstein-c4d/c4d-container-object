@@ -4,7 +4,7 @@
 /// Licensed under the GNU Lesser General Public License.
 ///
 /// \file Utils/Misc.h
-/// \lastmodified 2015/05/06
+/// \lastmodified 2015/07/17
 
 #pragma once
 
@@ -165,3 +165,10 @@ public:
 /// before the password is accepted.
 /// ***************************************************************************
 Bool PasswordDialog(String* out, Bool singleField=false);
+
+
+/// ***************************************************************************
+/// Searches for the container with the specified \p subtitle name.
+/// ***************************************************************************
+Bool FindMenuResource(const String& name, const String& subtitle, BaseContainer** bc);
+Bool FindMenuResource(BaseContainer& menu, const String& subtitle, BaseContainer** bc);

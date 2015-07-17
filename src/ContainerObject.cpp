@@ -4,7 +4,7 @@
 /// Licensed under the GNU Lesser General Public License.
 ///
 /// \file ContainerObject.cpp
-/// \lastmodified 2015/05/06
+/// \lastmodified 2015/07/17
 /// \brief Implements the Cinema 4D Container Object plugin.
 
 /// Cinema 4D Includes
@@ -445,8 +445,17 @@ public:
 
 /// ***************************************************************************
 /// ***************************************************************************
-Bool RegisterContainerObject()
+Bool RegisterContainerObject(Bool prePass)
 {
+  if (prePass) {
+    BaseContainer* menu = nullptr;
+    FindMenuResource("M_EDITOR", "IDS_MENU_OBJECT", &menu);
+    if (menu) {
+      menu->InsData(MENURESOURCE_SEPERATOR, true);
+      menu->InsData(MENURESOURCE_COMMAND, "PLUGIN_CMD_" + String::IntToString(Ocontainer));
+    }
+  }
+
   AutoAlloc<BaseBitmap> bmp;
   bmp->Init(GeGetPluginPath() + "res" + "img" + "Ocontainer.png");
 
