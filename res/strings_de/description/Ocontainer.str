@@ -7,5 +7,6 @@ STRINGTABLE Ocontainer
   NRCONTAINER_TAGS_SHOW         "Tags zeigen";
   NRCONTAINER_ICON_LOAD         "Icon laden";
   NRCONTAINER_ICON_CLEAR        "Icon entfernen";
-  NRCONTAINER_PROTECT           "Sch\U00FCtzen";
+  NRCONTAINER_PROTECT           "Sch\u00FCtzen";
+  NRCONTAINER_VISITDEV          "Entwicklerwebsite besuchen";
 }

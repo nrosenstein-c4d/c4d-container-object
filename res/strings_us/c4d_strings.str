@@ -16,4 +16,5 @@ STRINGTABLE {
   IDC_PASSWORD_REPEAT                 "Repeat:  ";
   IDC_PASSWORD_EMPTY                  "The password fields must not be empty.";
   IDC_PASSWORD_NOMATCH                "The entered passwords do not match.";
+  IDS_CONTAINER_INFO                  "Container Plugin by Niklas Rosenstein (https://niklasrosenstein.com/)";
 }

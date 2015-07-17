@@ -145,6 +145,11 @@ public:
         }
         break;
       }
+      case NRCONTAINER_VISITDEV:
+      {
+        GeOpenHTML("http://niklasrosenstein.com/");
+        break;
+      }
     }
   }
 
@@ -263,7 +268,7 @@ public:
 
   // ObjectData Overrides
 
-  virtual void GetDimension(BaseObject* op, Vector* mp, Vector* rad)
+  virtual void GetDimension(BaseObject* op, Vector* mp, Vector* rad) override
   {
     // Find the Minimum/Maximum of the object's bounding
     // box by all hidden child-objects in its hierarchy.
@@ -282,24 +287,23 @@ public:
 
   //  NodeData Overrides
 
-  virtual Bool Init(GeListNode* node)
+  virtual Bool Init(GeListNode* node) override
   {
-    Bool result = super::Init(node);
-    if (!result) return result;
+    if (!node || !super::Init(node)) return false;
 
     if (m_customIcon) BaseBitmap::Free(m_customIcon);
     m_protected = false;
     m_protectionHash = "";
-    return result;
+    return true;
   }
 
-  virtual void Free(GeListNode* node)
+  virtual void Free(GeListNode* node) override
   {
     super::Free(node);
     if (m_customIcon) BaseBitmap::Free(m_customIcon);
   }
 
-  virtual Bool Read(GeListNode* node, HyperFile* hf, LONG level)
+  virtual Bool Read(GeListNode* node, HyperFile* hf, LONG level) override
   {
     Bool result = super::Read(node, hf, level);
     if (!result) return result;
@@ -335,7 +339,7 @@ public:
     return result;
   }
 
-  virtual Bool Write(GeListNode* node, HyperFile* hf)
+  virtual Bool Write(GeListNode* node, HyperFile* hf) override
   {
     Bool result = super::Write(node, hf);
     if (!result) return result;
@@ -361,7 +365,7 @@ public:
     return result;
   }
 
-  virtual Bool Message(GeListNode* node, LONG msgType, void* pData)
+  virtual Bool Message(GeListNode* node, LONG msgType, void* pData) override
   {
     Bool result = super::Message(node, msgType, pData);
     if (!result) return result;
@@ -385,7 +389,7 @@ public:
   }
 
   virtual Bool CopyTo(NodeData* nDest, GeListNode* node, GeListNode* destNode,
-        COPYFLAGS flags, AliasTrans* at)
+        COPYFLAGS flags, AliasTrans* at) override
   {
     Bool result = super::CopyTo(nDest, node, destNode, flags, at);
     if (!result) return result;
@@ -405,7 +409,7 @@ public:
   }
 
   virtual Bool GetDDescription(GeListNode* node, Description* desc,
-        DESCFLAGS_DESC& flags)
+        DESCFLAGS_DESC& flags) override
   {
     if (!node || !desc) return false;
     if (!desc->LoadDescription(Ocontainer)) return false;
@@ -420,7 +424,19 @@ public:
     return true;
   }
 
-  virtual void GetBubbleHelp(GeListNode* node, String& str)
+  virtual Bool GetDParameter(GeListNode* node, const DescID& id, GeData& data,
+        DESCFLAGS_GET& flags) override
+  {
+    switch (id[0].id) {
+      case NRCONTAINER_INFO:
+        data.SetString(GeLoadString(IDS_CONTAINER_INFO));
+        flags |= DESCFLAGS_GET_PARAM_GET;
+        return true;
+    }
+    return super::GetDParameter(node, id, data, flags);
+  }
+
+  virtual void GetBubbleHelp(GeListNode* node, String& str) override
   {
     super::GetBubbleHelp(node, str);
   }

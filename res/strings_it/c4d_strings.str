@@ -16,4 +16,5 @@ STRINGTABLE {
   IDC_PASSWORD_EMPTY                  "I campi password non devono essere vuoti.";  // todo
   IDC_PASSWORD_NOMATCH                "Le password immesse non corrispondono.";     // todo
   IDC_PASSWORD_INVALID                "Le password non coincidono.";
+  IDS_CONTAINER_INFO                  "Container Plugin by Niklas Rosenstein (https://niklasrosenstein.com/)";
 }
