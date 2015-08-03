@@ -1,3 +1,5 @@
+# @creator.unit.name = nr.c4d.container_object
+#
 # Copyright (C) 2013-2015, Niklas Rosenstein
 # All rights reserved.
 #
@@ -23,13 +25,11 @@ define('Libs', '')
 define('ProjectName', 'container-object')
 define('Plugin', '$(c4d:cdl $ProjectPath/$ProjectName)')
 
-@target
+@target()
 def objects():
   for fin, fout in foreach_split('$Sources', '$Objects'):
     objects.add('$fin', '$fout', '$(c4d:compile $@) $"< $(c4d:include $Includes)')
 
-@target
+@target(objects, 'maxon.c4d:library')
 def plugin():
-  plugin.requires('objects')
-  plugin.requires('maxon.c4d:library')
   plugin.add('$Objects', '$Plugin', '$(c4d:link $@) $!Libs $!<')
