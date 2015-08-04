@@ -29,9 +29,12 @@ define('Plugin', '$(c4d:cdl $ProjectPath/$ProjectName)')
 
 @target()
 def objects():
-  for fin, fout in foreach_split('$Sources', '$Objects'):
-    objects.add('$fin', '$fout', '$(c4d:compile $@) $"< $(c4d:include $Includes)')
+  objects.build_each('$Sources', '$Objects', '$(c4d:compile $@) $"< $(c4d:include $Includes)')
 
 @target(objects, 'maxon.c4d:library')
 def plugin():
   plugin.add('$Objects', '$Plugin', '$(c4d:link $@) $!Libs $!<')
+
+@task(plugin, 'maxon.c4d:run')
+def run():
+  pass
