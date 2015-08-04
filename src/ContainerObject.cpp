@@ -290,10 +290,17 @@ public:
   virtual Bool Init(GeListNode* node) override
   {
     if (!node || !super::Init(node)) return false;
-
     if (m_customIcon) BaseBitmap::Free(m_customIcon);
     m_protected = false;
     m_protectionHash = "";
+    BaseContainer* bc = ((BaseList2D*) node)->GetDataInstance();
+    if (!bc) return false;
+    bc->SetString(NRCONTAINER_INFO_NAME, "");
+    bc->SetString(NRCONTAINER_INFO_VERSION, "");
+    bc->SetString(NRCONTAINER_INFO_URL, "");
+    bc->SetString(NRCONTAINER_INFO_AUTHOR, "");
+    bc->SetString(NRCONTAINER_INFO_AUTHOR_EMAIL, "");
+    bc->SetString(NRCONTAINER_INFO_DESCRIPTION, "");
     return true;
   }
 
@@ -428,12 +435,48 @@ public:
         DESCFLAGS_GET& flags) override
   {
     switch (id[0].id) {
-      case NRCONTAINER_INFO:
+      case NRCONTAINER_DEVINFO:
         data.SetString(GeLoadString(IDS_CONTAINER_INFO));
         flags |= DESCFLAGS_GET_PARAM_GET;
         return true;
     }
     return super::GetDParameter(node, id, data, flags);
+  }
+
+  virtual Bool SetDParameter(GeListNode* node, const DescID& id,
+        const GeData& data, DESCFLAGS_SET& flags) override
+  {
+    switch (id[0].id) {
+      case NRCONTAINER_INFO_NAME:
+      case NRCONTAINER_INFO_VERSION:
+      case NRCONTAINER_INFO_URL:
+      case NRCONTAINER_INFO_AUTHOR:
+      case NRCONTAINER_INFO_AUTHOR_EMAIL:
+      case NRCONTAINER_INFO_DESCRIPTION:
+        if (this->m_protected) {
+          // Don't allow to override the existing values.
+          flags |= DESCFLAGS_SET_PARAM_SET;
+          return true;
+        }
+        break;
+    }
+    return super::SetDParameter(node, id, data, flags);
+  }
+
+  virtual Bool GetDEnabling(GeListNode* node, const DescID& id,
+        const GeData& t_data, DESCFLAGS_ENABLE flags,
+        const BaseContainer* itemdesc) override
+  {
+    switch (id[0].id) {
+      case NRCONTAINER_INFO_NAME:
+      case NRCONTAINER_INFO_VERSION:
+      case NRCONTAINER_INFO_URL:
+      case NRCONTAINER_INFO_AUTHOR:
+      case NRCONTAINER_INFO_AUTHOR_EMAIL:
+      case NRCONTAINER_INFO_DESCRIPTION:
+        return !this->m_protected;
+    }
+    return super::GetDEnabling(node, id, t_data, flags, itemdesc);
   }
 
   virtual void GetBubbleHelp(GeListNode* node, String& str) override

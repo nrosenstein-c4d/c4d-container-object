@@ -5,6 +5,8 @@
 #
 # Licensed under the GNU Lesser General Public License.
 
+define('maxon.c4d:legacy', '')
+
 workspace.path.append(eval('$ProjectPath/..'))
 load('maxon.c4d', 'c4d')
 

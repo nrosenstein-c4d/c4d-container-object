@@ -9,4 +9,11 @@ STRINGTABLE Ocontainer
   NRCONTAINER_ICON_CLEAR        "Clear Icon";
   NRCONTAINER_PROTECT           "Protect";
   NRCONTAINER_VISITDEV          "Go to the developer's website";
+  NRCONTAINER_INFO              "Info";
+  NRCONTAINER_INFO_NAME         "Name";
+  NRCONTAINER_INFO_VERSION      "Version";
+  NRCONTAINER_INFO_URL          "URL";
+  NRCONTAINER_INFO_AUTHOR       "Author";
+  NRCONTAINER_INFO_AUTHOR_EMAIL "Author Email";
+  NRCONTAINER_INFO_DESCRIPTION  "Description";
 }

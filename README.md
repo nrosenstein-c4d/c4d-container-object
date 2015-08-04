@@ -39,7 +39,11 @@ ZIP file into your Cinema 4D plugins directory.
 
 ## Changelog
 
-__v0.3__ - *current stream*
+__v1.0.0__ (in development)
+
+- Added "Info" tab that is protected when the Container is protected.
+
+__v0.3__
 
 - A better Password dialog opens when locking/unlocking a container
 - The Bounding-Box of the container object is now computed from
