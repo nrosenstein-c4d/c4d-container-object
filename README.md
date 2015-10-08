@@ -1,68 +1,48 @@
-# Cinema 4D Container Object Plugin
+# Container Object for Cinema 4D
 
-This plugin for MAXON Cinema 4D provides a new Object which acts as a
-container for other objects, preferrably self-contained rigs. It is
-possible to hide its child-objects and tags from the Object Manager and
-even password-protect the hierarchy.
+This Cinema 4D plugin allows you to collapse complete rigs into a single
+object and give them a nice icon. The rig can also be password protected.
 
-![OM Preview](image.png)
+![Object Manager Preview](http://i.imgur.com/oqxDAix.png)
 
-## Feature List
+> __Note__: This is open source software. No warranties given. Use at your
+> own risk.  
+> __Disclaimer__: This object does not prevent anyone with the right
+> knowledge to access or modify your rig.
+
+__Features__
 
 - Password Protection (double click on Object icon)
 - Convert a Scene file directly to a Container object
 - Convert a Container to a Null-Object, all Objects and Tags remain hidden
 
-## Language Availability
+Checkout the [Changelog](CHANGELOG.md)!
+
+__Languages__
 
 - English
 - German
 - Italian (thanks to *mad-*)
 - Czech (thanks to *Lubomir Bezek*)
 
-## Compatibility
+__Download & Installation__
 
-You can find plugin binaries compatible with Cinema 4D R15 and R16
-for Windows and Mac on the [releases][] page. The source code is
-compatible with Cinema 4D R13 at least.
+Head over the the [releases][] page and choose the latest release
+matching your operating system and Cinema 4D version. Extract the
+downloaded archvie to the Cinema 4D plugins directory and you're done.
 
-## Bug reports and Ideas
+> Plugins are usually upwards compatible. An R15 build might work in R17,
+> however, if there is also an R16 build, you should assume that the R15
+> version will not work in R16 and any newer versions. Native (non-Python)
+> plugins are never downwards compatible.
 
-If you found a bug in the plugin or want to populate a feature
-idea, please use the [issues][] page.
+__Questions, Bugs & Ideas__
 
-## Installation
+Please use the [Issue Tracker][issues] to keep track of any bugs you
+have encountered, questions that arise or ideas that you have for the
+plugin or contact me directly.
 
-Download the latest version from the [releases][] page (but don't
-download just the source code) and copy the contents of the downloaded
-ZIP file into your Cinema 4D plugins directory.
-
-## Changelog
-
-__v1.0.0__ (in development)
-
-- Added "Info" tab that is protected when the Container is protected.
-
-__v0.3__
-
-- A better Password dialog opens when locking/unlocking a container
-- The Bounding-Box of the container object is now computed from
-its child objects, making it easier to apply deformers
-- Fixed issue that hidden objects (and therefore code that produced
-copies of hidden objects) were not draggable in the Object Manager.
-- Removed Info text fields in Attribute Manager
-
-__v0.2__
-
-- Added Password Protection and commands to import and convert
-a Container object
-
-__v0.1__
-
-- Initial version
-
-
-## License
+__License__
 
 The plugin source and binaries are licensed under the GNU Lesser General
 Public License (visit the `LICENSE` file for more details).
@@ -72,4 +52,3 @@ Thanks to [Rafi][icon url] for the plugin icon.
   [releases]: https://github.com/nr-plugins/container-object/releases
   [issues]: https://github.com/nr-plugins/container-object/issues
   [icon url]: http://www.graphicsfuel.com/2010/11/cardboard-box-psd-icon/
-
