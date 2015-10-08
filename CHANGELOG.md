@@ -7,6 +7,10 @@ __v0.4__ (current development)
 - Removed Hide/Show Children/Tags buttons
 - Container password can be empty
 - Containers without password can be unprotected without entering no password
+- Removed "Load to Container" command
+- Added "Null2Container" command to convert a rig in a Null-Object to a container
+- Renamed "Convert Container" command to "Container2Null"
+- New Icons
 
 __v0.3__
 

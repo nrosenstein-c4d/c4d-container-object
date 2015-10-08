@@ -172,170 +172,51 @@ static Bool CopyBitsTo(GeListNode* src, GeListNode* dst, Bool bits=true, Bool nb
 }
 
 /// ***************************************************************************
-/// This command creates a new container object from a .c4d file.
+// Replaces an object in the hierarchy with another.
 /// ***************************************************************************
-class LoadContainerCommand : public CommandData
+static Bool ReplaceObjects(
+  BaseObject* old_op, BaseObject* new_op,
+  BaseDocument* doc, AliasTrans* at)
+{
+  new_op->SetName(old_op->GetName());
+  old_op->TransferGoal(new_op, true);
+
+  // Copy all the branches and user-data to the new Null-Object.
+  CopyBranchesTo(old_op, new_op, COPYFLAGS_0, at, true, true);
+  CopyUserdataTo(old_op, new_op, at);
+  CopyBitsTo(old_op, new_op);
+
+  new_op->InsertAfter(old_op);
+  if (doc)
+    doc->AddUndo(UNDOTYPE_NEW, new_op);
+
+  if (doc)
+    doc->AddUndo(UNDOTYPE_DELETE, old_op);
+  old_op->Remove();
+
+  if (at)
+    at->Translate(true);
+  return true;
+}
+
+/// ***************************************************************************
+/// ***************************************************************************
+class Null2ContainerCommand : public CommandData
 {
 public:
 
   static Bool Register()
   {
     AutoAlloc<BaseBitmap> bmp;
-    bmp->Init(GeGetPluginPath() + "res" + "img" + "load_container.png");
+    bmp->Init(GeGetPluginPath() + "res" + "img" + "null2container.png");
 
     return RegisterCommandPlugin(
       ID_COMMAND_LOADCONTAINER,
-      GeLoadString(IDS_COMMAND_LOADCONTAINER_TITLE),
+      GeLoadString(IDS_COMMAND_NULL2CONTAINER_TITLE),
       PLUGINFLAG_COMMAND_HOTKEY,
       bmp,
-      GeLoadString(IDS_COMMAND_LOADCONTAINER_HELP),
-      gNew LoadContainerCommand);
-  }
-
-  // CommandData
-
-  virtual Bool Execute(BaseDocument* doc)
-  {
-    if (!doc) return false;
-
-    // Check for pressed qualifiers. If the CTRL key is hold,
-    // even materials and that kind of stuff should be loaded.
-    BaseContainer input;
-    GetInputState(BFM_INPUT_KEYBOARD, 0, input);
-    Bool load_stuff = input.GetLong(BFM_INPUT_QUALIFIER) & QCTRL;
-
-    // Let the user chose a file to load.
-    Filename flname;
-    if (!flname.FileSelect(FILESELECTTYPE_SCENES, FILESELECT_LOAD,
-        GeLoadString(IDS_TITLE_LOADSCENEFILE)))
-    {
-      return false;
-    }
-
-    // Load the selected file.
-    SCENEFILTER load_flags = SCENEFILTER_OBJECTS;
-    if (load_stuff)
-      load_flags |= SCENEFILTER_MATERIALS;
-    AutoFree<BaseDocument> scene(LoadDocument(flname, load_flags, nullptr));
-
-    // Check if the document could be loaded and show an error
-    // dialog in that case.
-    if (!scene)
-    {
-      MessageDialog(GeLoadString(IDS_INFO_INVALIDSCENEFILE));
-      return false;
-    }
-
-    // This will be the Container Object inserted into the document
-    // by this command.
-    BaseObject* container = nullptr;
-    AliasTrans* at = nullptr; // @FUTURE_EXT_OP
-
-    // Grab the first object and chose what to do with it.
-    BaseObject* first = scene->GetFirstObject();
-    if (first && first->IsInstanceOf(Ocontainer) && !first->GetNext())
-    {
-      first->Remove();
-      container = first;
-    }
-    else if (first)
-    {
-      container = BaseObject::Alloc(Ocontainer);
-      if (!container)
-      {
-        MessageDialog(GeLoadString(IDS_INFO_OUTOFMEMORY));
-        return false;
-      }
-      container->SetName(first->GetName());
-
-      // If the first object is a Null-Object and the only
-      // top-level object in the loaded scene, we will replace it
-      // by the container.
-      if (first->IsInstanceOf(Onull) && !first->GetNext())
-      {
-        CopyUserdataTo(first, container, at);
-
-        // Transfer all base-links to the new container instead
-        // of the original Null-Object.
-        first->TransferGoal(container, false);
-
-        // Move all branches to the new container object.
-        CopyBranchesTo(first, container, COPYFLAGS_0, at, true, true);
-      }
-      else
-      {
-        // Remove all objects from the document and insert it
-        // under the container.
-        BaseObject* child = first;
-        BaseObject* prev = nullptr;
-        while (child)
-        {
-          BaseObject* next = child->GetNext();
-          child->Remove();
-          doc->InsertObject(child, container, prev);
-          prev = child;
-          child = next;
-        }
-
-      }
-    }
-    else
-    {
-      MessageDialog(IDS_INFO_INVALIDSCENEFILE);
-      return false;
-    }
-
-    // Copy all materials from the loaded document into the active
-    // document.
-    BaseMaterial* mat = scene->GetFirstMaterial();
-    BaseMaterial* prev = nullptr;
-    while (mat)
-    {
-      BaseMaterial* next = mat->GetNext();
-      mat->Remove();
-      doc->InsertMaterial(mat, prev);
-      doc->AddUndo(UNDOTYPE_NEW, mat);
-      prev = mat;
-      mat = next;
-    }
-
-    // Reset all bits of the container.
-    container->SetAllBits(0);
-
-    // And insert it into the document (including an undo step).
-    doc->InsertObject(container, nullptr, nullptr);
-    doc->AddUndo(UNDOTYPE_NEW, container);
-    doc->SetActiveObject(container);
-    if (at) at->Translate(true);
-
-    // Update the Cinema 4D UI.
-    EventAdd();
-    return true;
-  }
-
-};
-
-/// ***************************************************************************
-/// Prepare a Container Object by removing the container object
-/// reference and replacing it with a Null-Object (loosing the
-/// custom icon of course).
-/// ***************************************************************************
-class ConvertContainerCommand : public CommandData
-{
-public:
-
-  static Bool Register()
-  {
-    AutoAlloc<BaseBitmap> bmp;
-    bmp->Init(GeGetPluginPath() + "res" + "img" + "convert_container.png");
-
-    return RegisterCommandPlugin(
-      ID_COMMAND_CONVERTCONTAINER,
-      GeLoadString(IDS_COMMAND_CONVERTCONTAINER_TITLE),
-      PLUGINFLAG_COMMAND_HOTKEY,
-      bmp,
-      GeLoadString(IDS_COMMAND_CONVERTCONTAINER_HELP),
-      gNew ConvertContainerCommand);
+      GeLoadString(IDS_COMMAND_NULL2CONTAINER_HELP),
+      gNew Null2ContainerCommand);
   }
 
   // CommandData
@@ -346,35 +227,58 @@ public:
 
     BaseObject* op = doc->GetActiveObject();
     AliasTrans* at = nullptr; // @FUTURE_EXT_OP
+    BaseObject* root = BaseObject::Alloc(Ocontainer);
+    if (!root) return false;
 
-    // Allocate a Null-Object serving as replacement
-    // for the Container-Object.
+    ReplaceObjects(op, root, doc, at);
+    BaseObject::Free(op);
+    EventAdd();
+    return true;
+  }
+
+  virtual LONG GetState(BaseDocument* doc)
+  {
+    if (!doc) return 0;
+    BaseObject* op = doc->GetActiveObject();
+    if (!op || !op->IsInstanceOf(Onull)) return 0;
+    return CMD_ENABLED;
+  }
+
+};
+
+/// ***************************************************************************
+/// ***************************************************************************
+class Container2NullCommand : public CommandData
+{
+public:
+
+  static Bool Register()
+  {
+    AutoAlloc<BaseBitmap> bmp;
+    bmp->Init(GeGetPluginPath() + "res" + "img" + "container2null.png");
+
+    return RegisterCommandPlugin(
+      ID_COMMAND_CONVERTCONTAINER,
+      GeLoadString(IDS_COMMAND_CONTAINER2NULL_TITLE),
+      PLUGINFLAG_COMMAND_HOTKEY,
+      bmp,
+      GeLoadString(IDS_COMMAND_CONTAINER2NULL_HELP),
+      gNew Container2NullCommand);
+  }
+
+  // CommandData
+
+  virtual Bool Execute(BaseDocument* doc)
+  {
+    if (!GetState(doc)) return false;
+
+    BaseObject* op = doc->GetActiveObject();
+    AliasTrans* at = nullptr; // @FUTURE_EXT_OP
     BaseObject* root = BaseObject::Alloc(Onull);
     if (!root) return false;
 
-    // Copy the name and bits to the Null-Object and redirect
-    // all links to it.
-    root->SetName(op->GetName());
-    op->TransferGoal(root, true);
-
-    // Copy all the branches and user-data to the new Null-Object.
-    CopyBranchesTo(op, root, COPYFLAGS_0, at, true, true);
-    CopyUserdataTo(op, root, at);
-    CopyBitsTo(op, root);
-
-    // Insert the Null-Object after the container and remove
-    // the latter.
-    root->InsertAfter(op);
-    doc->AddUndo(UNDOTYPE_NEW, root);
-
-    // Remove the original Container-Object.
-    doc->AddUndo(UNDOTYPE_DELETE, op);
-    op->Remove();
+    ReplaceObjects(op, root, doc, at);
     BaseObject::Free(op);
-
-    if (at) at->Translate(true);
-
-    // Update the Cinema 4D UI.
     EventAdd();
     return true;
   }
@@ -393,7 +297,15 @@ public:
 /// ***************************************************************************
 Bool RegisterCommands()
 {
-  Bool ok = LoadContainerCommand::Register();
-  ok = ConvertContainerCommand::Register() && ok;
-  return ok;
+  if (!Null2ContainerCommand::Register())
+  {
+    GePrint("Null2Container could not be registered.");
+    return false;
+  }
+  if (!Container2NullCommand::Register())
+  {
+    GePrint("Container2Null could not be registered.");
+    return false;
+  }
+  return true;
 }

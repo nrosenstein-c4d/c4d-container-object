@@ -5,10 +5,10 @@ STRINGTABLE {
   IDS_INFO_INVALIDIMAGE               "Invalid image file.";
   IDS_TITLE_LOADSCENEFILE             "Select a Scenefile";
   IDS_INFO_INVALIDSCENEFILE           "The selected file could not be loaded.";
-  IDS_COMMAND_LOADCONTAINER_TITLE     "Load to Container...";
-  IDS_COMMAND_LOADCONTAINER_HELP      "Create a Container Object from a scenefile.";
-  IDS_COMMAND_CONVERTCONTAINER_TITLE  "Convert Container";
-  IDS_COMMAND_CONVERTCONTAINER_HELP   "Convert a Container to a Null-Object.";
+  IDS_COMMAND_NULL2CONTAINER_TITLE    "Null2Container";
+  IDS_COMMAND_NULL2CONTAINER_HELP     "Convert a Null-Object that contains a rig to a Container Object.";
+  IDS_COMMAND_CONTAINER2NULL_TITLE    "Container2Null";
+  IDS_COMMAND_CONTAINER2NULL_HELP     "Convert a Container Object to a Null-Object.";
   IDS_PROTECTED_PREFIX                "Protected";
   IDS_PASSWORD_ENTER                  "Enter Password";
   IDS_PASSWORD                        "Password:  ";

@@ -515,7 +515,7 @@ Bool RegisterContainerObject(Bool prePass)
   }
 
   AutoAlloc<BaseBitmap> bmp;
-  bmp->Init(GeGetPluginPath() + "res" + "img" + "Ocontainer.png");
+  bmp->Init(GeGetPluginPath() + "res" + "img" + "ocontainer.png");
 
   return RegisterObjectPlugin(
     Ocontainer,
