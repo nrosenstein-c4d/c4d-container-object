@@ -164,7 +164,7 @@ public:
 /// `false`, a second field is displayed and both values must match
 /// before the password is accepted.
 /// ***************************************************************************
-Bool PasswordDialog(String* out, Bool singleField=false);
+Bool PasswordDialog(String* out, Bool singleField=false, Bool allowEmpty=false);
 
 
 /// ***************************************************************************

@@ -12,9 +12,9 @@ object and give them a nice icon. The rig can also be password protected.
 
 __Features__
 
-- Password Protection (double click on Object icon)
-- Convert a Scene file directly to a Container object
-- Convert a Container to a Null-Object, all Objects and Tags remain hidden
+- Password Protection (double-click object icon to remove protection)
+- Hide Objects, Tags and Materials
+- Convert existing rigs to Containers, keeping all user data connected
 
 Checkout the [Changelog](CHANGELOG.md)!
 

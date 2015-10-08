@@ -185,10 +185,10 @@ public:
 
     return RegisterCommandPlugin(
       ID_COMMAND_LOADCONTAINER,
-      GeLoadString(IDC_COMMAND_LOADCONTAINER_TITLE),
+      GeLoadString(IDS_COMMAND_LOADCONTAINER_TITLE),
       PLUGINFLAG_COMMAND_HOTKEY,
       bmp,
-      GeLoadString(IDC_COMMAND_LOADCONTAINER_HELP),
+      GeLoadString(IDS_COMMAND_LOADCONTAINER_HELP),
       gNew LoadContainerCommand);
   }
 
@@ -207,7 +207,7 @@ public:
     // Let the user chose a file to load.
     Filename flname;
     if (!flname.FileSelect(FILESELECTTYPE_SCENES, FILESELECT_LOAD,
-        GeLoadString(IDC_TITLE_LOADSCENEFILE)))
+        GeLoadString(IDS_TITLE_LOADSCENEFILE)))
     {
       return false;
     }
@@ -222,7 +222,7 @@ public:
     // dialog in that case.
     if (!scene)
     {
-      MessageDialog(GeLoadString(IDC_INFO_INVALIDSCENEFILE));
+      MessageDialog(GeLoadString(IDS_INFO_INVALIDSCENEFILE));
       return false;
     }
 
@@ -243,7 +243,7 @@ public:
       container = BaseObject::Alloc(Ocontainer);
       if (!container)
       {
-        MessageDialog(GeLoadString(IDC_INFO_OUTOFMEMORY));
+        MessageDialog(GeLoadString(IDS_INFO_OUTOFMEMORY));
         return false;
       }
       container->SetName(first->GetName());
@@ -281,7 +281,7 @@ public:
     }
     else
     {
-      MessageDialog(IDC_INFO_INVALIDSCENEFILE);
+      MessageDialog(IDS_INFO_INVALIDSCENEFILE);
       return false;
     }
 
@@ -331,10 +331,10 @@ public:
 
     return RegisterCommandPlugin(
       ID_COMMAND_CONVERTCONTAINER,
-      GeLoadString(IDC_COMMAND_CONVERTCONTAINER_TITLE),
+      GeLoadString(IDS_COMMAND_CONVERTCONTAINER_TITLE),
       PLUGINFLAG_COMMAND_HOTKEY,
       bmp,
-      GeLoadString(IDC_COMMAND_CONVERTCONTAINER_HELP),
+      GeLoadString(IDS_COMMAND_CONVERTCONTAINER_HELP),
       gNew ConvertContainerCommand);
   }
 

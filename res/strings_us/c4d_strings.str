@@ -1,20 +1,19 @@
 STRINGTABLE {
-  IDC_OCONTAINER                      "Container";
-  IDC_TITLE_SELECTICON                "Load custom icon";
-  IDC_INFO_OUTOFMEMORY                "Out of memory";
-  IDC_INFO_INVALIDIMAGE               "Invalid image file.";
-  IDC_TITLE_LOADSCENEFILE             "Select a Scenefile";
-  IDC_INFO_INVALIDSCENEFILE           "The selected file could not be loaded.";
-  IDC_PASSWORD_INVALID                "Invalid password.";
-  IDC_COMMAND_LOADCONTAINER_TITLE     "Load to Container...";
-  IDC_COMMAND_LOADCONTAINER_HELP      "Create a Container Object from a scenefile.";
-  IDC_COMMAND_CONVERTCONTAINER_TITLE  "Convert Container";
-  IDC_COMMAND_CONVERTCONTAINER_HELP   "Convert a Container to a Null-Object.";
-  IDC_PROTECTED_PREFIX                "Protected";
-  IDC_PASSWORD_ENTER                  "Enter Password";
-  IDC_PASSWORD                        "Password:  ";
-  IDC_PASSWORD_REPEAT                 "Repeat:  ";
-  IDC_PASSWORD_EMPTY                  "The password fields must not be empty.";
-  IDC_PASSWORD_NOMATCH                "The entered passwords do not match.";
-  IDS_CONTAINER_INFO                  "Container Plugin by Niklas Rosenstein (https://niklasrosenstein.com/)";
+  IDS_OCONTAINER                      "Container";
+  IDS_SELECTICON                      "Load custom icon";
+  IDS_INFO_OUTOFMEMORY                "Out of memory";
+  IDS_INFO_INVALIDIMAGE               "Invalid image file.";
+  IDS_TITLE_LOADSCENEFILE             "Select a Scenefile";
+  IDS_INFO_INVALIDSCENEFILE           "The selected file could not be loaded.";
+  IDS_COMMAND_LOADCONTAINER_TITLE     "Load to Container...";
+  IDS_COMMAND_LOADCONTAINER_HELP      "Create a Container Object from a scenefile.";
+  IDS_COMMAND_CONVERTCONTAINER_TITLE  "Convert Container";
+  IDS_COMMAND_CONVERTCONTAINER_HELP   "Convert a Container to a Null-Object.";
+  IDS_PROTECTED_PREFIX                "Protected";
+  IDS_PASSWORD_ENTER                  "Enter Password";
+  IDS_PASSWORD                        "Password:  ";
+  IDS_PASSWORD_EMPTY                  "Password must not be empty.";
+  IDS_PASSWORD_REPEAT                 "Repeat:  ";
+  IDS_PASSWORD_NOMATCH                "The passwords don't match.";
+  IDS_PASSWORD_INVALID                "Wrong password.";
 }

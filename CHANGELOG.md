@@ -3,6 +3,8 @@
 __v0.4__ (current development)
 
 - Added "Info" tab that is protected when the Container is protected.
+- Added Hide Tags and Hide Materials (see issue #9) checkboxes
+- Removed Hide/Show Children/Tags buttons
 
 __v0.3__
 

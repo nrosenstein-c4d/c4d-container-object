@@ -31,11 +31,14 @@ static const LONG CONTAINEROBJECT_ICONSIZE = 64;
 ///     if it should be revealed by this function.
 /// @param[in] doc The BaseDocument to add undos to, if desired. Pass
 ///     \c nullptr if no undos should be created.
+/// @param[in] sameLevel If \c true (default), all objects following *root*
+///     in the hierarchy will also be processed by this function.
 /// ***************************************************************************
-static void HideHierarchy(BaseList2D* root, Bool hide, BaseDocument* doc)
+static void HideHierarchy(BaseList2D* root, Bool hide, BaseDocument* doc, Bool sameLevel=true)
 {
   while (root) {
-    if (doc) doc->AddUndo(UNDOTYPE_BITS, root);
+    if (doc)
+      doc->AddUndo(UNDOTYPE_BITS, root);
     const NBITCONTROL control = (hide ? NBITCONTROL_SET : NBITCONTROL_CLEAR);
     root->ChangeNBit(NBIT_OHIDE, control);
     root->ChangeNBit(NBIT_TL1_HIDE, control);
@@ -44,9 +47,37 @@ static void HideHierarchy(BaseList2D* root, Bool hide, BaseDocument* doc)
     root->ChangeNBit(NBIT_TL4_HIDE, control);
     root->ChangeNBit(NBIT_THIDE, control);
     HideHierarchy(static_cast<BaseList2D*>(root->GetDown()), hide, doc);
+    if (!sameLevel)
+      break;
     root = root->GetNext();
   }
 }
+
+
+/// ***************************************************************************
+/// This function hides or unhides all materials used by the object *op*.
+/// If *doc* is not \c nullptr, undos will be added.
+/// ***************************************************************************
+static void HideMaterials(BaseObject* op, Bool hide, BaseDocument* doc)
+{
+  BaseTag* tag = op->GetFirstTag();
+  GeData data;
+  while (tag)
+  {
+    if (tag->GetType() == Ttexture && tag->GetParameter(TEXTURETAG_MATERIAL, data, DESCFLAGS_GET_0))
+    {
+      BaseMaterial* mat = static_cast<BaseMaterial*>(data.GetLink(doc, Mbase));
+      if (mat) HideHierarchy(mat, hide, doc, false);
+    }
+    tag = tag->GetNext();
+  }
+  BaseObject* child = op->GetDown();
+  while (child) {
+    HideMaterials(child, hide, doc);
+    child = child->GetNext();
+  }
+}
+
 
 /// ***************************************************************************
 /// ***************************************************************************
@@ -71,23 +102,7 @@ public:
 
     switch (id)
     {
-      case NRCONTAINER_TAGS_HIDE:
-        if (!m_protected)
-          HideHierarchy(op->GetFirstTag(), true, doc);
-        break;
-      case NRCONTAINER_TAGS_SHOW:
-        if (!m_protected)
-          HideHierarchy(op->GetFirstTag(), false, doc);
-        break;
-      case NRCONTAINER_CHILDREN_HIDE:
-        if (!m_protected)
-          HideHierarchy(op->GetDown(), true, doc);
-        break;
-      case NRCONTAINER_CHILDREN_SHOW:
-        if (!m_protected)
-          HideHierarchy(op->GetDown(), false, doc);
-        break;
-      case NRCONTAINER_PROTECT:
+      case NRCONTAINER_PACKUP:
         ToggleProtect(op);
         break;
       case NRCONTAINER_ICON_LOAD:
@@ -98,7 +113,7 @@ public:
         Filename flname;
         flname.SetDirectory(GeGetC4DPath(C4D_PATH_DESKTOP));
         Bool ok = flname.FileSelect(FILESELECTTYPE_IMAGES, FILESELECT_LOAD,
-            GeLoadString(IDC_TITLE_SELECTICON));
+            GeLoadString(IDS_SELECTICON));
 
         if (ok)
         {
@@ -110,13 +125,13 @@ public:
 
           // If it is still null here, allocation failed.
           if (!m_customIcon)
-            MessageDialog(GeLoadString(IDC_INFO_OUTOFMEMORY));
+            MessageDialog(GeLoadString(IDS_INFO_OUTOFMEMORY));
           else
           {
             IMAGERESULT res = m_customIcon->Init(flname);
             if (res != IMAGERESULT_OK)
             {
-              MessageDialog(IDC_INFO_INVALIDIMAGE);
+              MessageDialog(IDS_INFO_INVALIDIMAGE);
               BaseBitmap::Free(m_customIcon);
             }
             else
@@ -143,11 +158,6 @@ public:
           // still references this bitmap.
           BaseBitmap::Free(m_customIcon);
         }
-        break;
-      }
-      case NRCONTAINER_VISITDEV:
-      {
-        GeOpenHTML("http://niklasrosenstein.com/");
         break;
       }
     }
@@ -225,40 +235,38 @@ public:
       doc->EndUndo();
     }
 
+    BaseContainer const* bc = op->GetDataInstance();
+    if (!bc) return;
+
     if (!m_protected)
     {
       String password;
-      if (!PasswordDialog(&password, false)) return;
-
-      // Pack the container up.
-      DescriptionCommand data;
-      data.id = NRCONTAINER_CHILDREN_HIDE;
-      op->Message(MSG_DESCRIPTION_COMMAND, &data);
-      data.id = NRCONTAINER_TAGS_HIDE;
-      op->Message(MSG_DESCRIPTION_COMMAND, &data);
-
-      // Store the password hash.
+      if (!PasswordDialog(&password, false, true)) return;
       String hashed = HashString(password);
       m_protected = true;
       m_protectionHash = hashed;
+
+      HideHierarchy(op->GetDown(), true, doc);
+      if (bc->GetBool(NRCONTAINER_HIDE_TAGS))
+        HideHierarchy(op->GetFirstTag(), true, doc);
+      if (bc->GetBool(NRCONTAINER_HIDE_MATERIALS))
+        HideMaterials(op, true, doc);
     }
     else
     {
       String password;
-      if (!PasswordDialog(&password, true)) return;
-
+      if (!PasswordDialog(&password, true, true)) return;
       String hashed = HashString(password);
       if (m_protectionHash != hashed)
-        MessageDialog(GeLoadString(IDC_PASSWORD_INVALID));
-      else
-        m_protected = false;
+      {
+        MessageDialog(GeLoadString(IDS_PASSWORD_INVALID));
+        return;
+      }
+      m_protected = false;
 
-      // Unpack the container.
-      DescriptionCommand data;
-      data.id = NRCONTAINER_CHILDREN_SHOW;
-      op->Message(MSG_DESCRIPTION_COMMAND, &data);
-      data.id = NRCONTAINER_TAGS_SHOW;
-      op->Message(MSG_DESCRIPTION_COMMAND, &data);
+      HideHierarchy(op->GetDown(), false, doc);
+      HideHierarchy(op->GetFirstTag(), false, doc);
+      HideMaterials(op, false, doc);
     }
 
     op->Message(MSG_CHANGE);
@@ -435,8 +443,8 @@ public:
         DESCFLAGS_GET& flags) override
   {
     switch (id[0].id) {
-      case NRCONTAINER_DEVINFO:
-        data.SetString(GeLoadString(IDS_CONTAINER_INFO));
+      case NRCONTAINER_DEV_INFO:
+        data.SetString("");
         flags |= DESCFLAGS_GET_PARAM_GET;
         return true;
     }
@@ -504,7 +512,7 @@ Bool RegisterContainerObject(Bool prePass)
 
   return RegisterObjectPlugin(
     Ocontainer,
-    GeLoadString(IDC_OCONTAINER),
+    GeLoadString(IDS_OCONTAINER),
     0,
     ContainerObject::Alloc,
     "Ocontainer",
