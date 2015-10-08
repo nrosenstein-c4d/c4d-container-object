@@ -255,18 +255,25 @@ public:
     else
     {
       String password;
-      if (!PasswordDialog(&password, true, true)) return;
-      String hashed = HashString(password);
-      if (m_protectionHash != hashed)
+      Bool unlock = false;
+      String emptyPassHash = HashString("");
+      if (m_protectionHash == emptyPassHash)
       {
-        MessageDialog(GeLoadString(IDS_PASSWORD_INVALID));
-        return;
+        unlock = true;
       }
-      m_protected = false;
-
-      HideHierarchy(op->GetDown(), false, doc);
-      HideHierarchy(op->GetFirstTag(), false, doc);
-      HideMaterials(op, false, doc);
+      else if (PasswordDialog(&password, true, true))
+      {
+        unlock = (m_protectionHash == HashString(password));
+        if (!unlock)
+          MessageDialog(GeLoadString(IDS_PASSWORD_INVALID));
+      }
+      if (unlock)
+      {
+        m_protected = false;
+        HideHierarchy(op->GetDown(), false, doc);
+        HideHierarchy(op->GetFirstTag(), false, doc);
+        HideMaterials(op, false, doc);
+      }
     }
 
     op->Message(MSG_CHANGE);

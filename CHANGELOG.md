@@ -6,6 +6,7 @@ __v0.4__ (current development)
 - Added Hide Tags and Hide Materials (see issue #9) checkboxes
 - Removed Hide/Show Children/Tags buttons
 - Container password can be empty
+- Containers without password can be unprotected without entering no password
 
 __v0.3__
 
