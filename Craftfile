@@ -46,6 +46,7 @@ def archive(*args):
     include = [
       glob('res/**'),
       'README.md',
+      'CHANGELOG.md',
       'LICENSE.txt',
       Plugin.outputs[0],
     ],

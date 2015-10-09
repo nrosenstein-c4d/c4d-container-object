@@ -1,6 +1,6 @@
 # Changelog
 
-__v0.4__ (current development)
+__v1.0__
 
 - Added "Info" tab that is protected when the Container is protected.
 - Added Hide Tags and Hide Materials (see issue #9) checkboxes
