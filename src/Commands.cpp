@@ -19,6 +19,8 @@
 static const LONG ID_COMMAND_LOADCONTAINER    = 1030970;
 static const LONG ID_COMMAND_CONVERTCONTAINER = 1030971;
 
+extern Bool ContainerIsProtected(BaseObject* op);
+
 /// ***************************************************************************
 /// This function copies all branches of an object to another
 /// object, assuming it can find matching branches.
@@ -273,6 +275,7 @@ public:
     if (!GetState(doc)) return false;
 
     BaseObject* op = doc->GetActiveObject();
+    if (ContainerIsProtected(op)) return false;
     AliasTrans* at = nullptr; // @FUTURE_EXT_OP
     BaseObject* root = BaseObject::Alloc(Onull);
     if (!root) return false;
@@ -288,6 +291,7 @@ public:
     if (!doc) return 0;
     BaseObject* op = doc->GetActiveObject();
     if (!op || !op->IsInstanceOf(Ocontainer)) return 0;
+    if (ContainerIsProtected(op)) return 0;
     return CMD_ENABLED;
   }
 

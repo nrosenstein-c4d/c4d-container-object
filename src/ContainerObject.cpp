@@ -88,7 +88,7 @@ class ContainerObject : public ObjectData
   BaseBitmap* m_customIcon;
   Bool m_protected;
   String m_protectionHash;
-
+  friend Bool ContainerIsProtected(BaseObject*);
 public:
 
   static NodeData* Alloc() { return gNew ContainerObject; }
@@ -504,6 +504,16 @@ public:
 
 };
 
+
+/// ***************************************************************************
+/// ***************************************************************************
+Bool ContainerIsProtected(BaseObject* op)
+{
+  if (!op || op->GetType() != Ocontainer) return false;
+  ContainerObject* data = static_cast<ContainerObject*>(op->GetNodeData());
+  if (!data) return false;
+  return data->m_protected;
+}
 
 /// ***************************************************************************
 /// Hook to modify the container object info bitmask based on the parameters.
