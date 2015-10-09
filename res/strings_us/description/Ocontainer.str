@@ -1,20 +1,21 @@
 STRINGTABLE Ocontainer
 {
-  Ocontainer                    "Container";
+  Ocontainer  "Container";
 
-  NRCONTAINER_DEV_INFO          "Container Object - Copyright (C) 2015 Niklas Rosenstein - http://niklasrosenstein.com/";
+  NRCONTAINER_DEV_INFO  "Container Object - Copyright (C) 2015 Niklas Rosenstein - http://niklasrosenstein.com/";
 
-  NRCONTAINER_HIDE_TAGS         "Hide Tags";
-  NRCONTAINER_HIDE_MATERIALS    "Hide Materials";
-  NRCONTAINER_ICON_LOAD         "Load Icon";
-  NRCONTAINER_ICON_CLEAR        "Clear Icon";
-  NRCONTAINER_PACKUP            "Pack Up";
+  NRCONTAINER_HIDE_TAGS           "Hide Tags";
+  NRCONTAINER_HIDE_MATERIALS      "Hide Materials";
+  NRCONTAINER_GENERATOR_CHECKMARK "Generator Checkmark";
+  NRCONTAINER_ICON_LOAD           "Load Icon";
+  NRCONTAINER_ICON_CLEAR          "Clear Icon";
+  NRCONTAINER_PACKUP              "Pack Up";
 
-  NRCONTAINER_INFO              "Info";
-  NRCONTAINER_INFO_NAME         "Name";
-  NRCONTAINER_INFO_VERSION      "Version";
-  NRCONTAINER_INFO_URL          "URL";
-  NRCONTAINER_INFO_AUTHOR       "Author";
-  NRCONTAINER_INFO_AUTHOR_EMAIL "Author Email";
-  NRCONTAINER_INFO_DESCRIPTION  "Description";
+  NRCONTAINER_INFO                "Info";
+  NRCONTAINER_INFO_NAME           "Name";
+  NRCONTAINER_INFO_VERSION        "Version";
+  NRCONTAINER_INFO_URL            "URL";
+  NRCONTAINER_INFO_AUTHOR         "Author";
+  NRCONTAINER_INFO_AUTHOR_EMAIL   "Author Email";
+  NRCONTAINER_INFO_DESCRIPTION    "Description";
 }

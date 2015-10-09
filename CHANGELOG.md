@@ -11,6 +11,7 @@ __v0.4__ (current development)
 - Added "Null2Container" command to convert a rig in a Null-Object to a container
 - Renamed "Convert Container" command to "Container2Null"
 - New Icons
+- Added "Generator Checkmark" parameter
 
 __v0.3__
 

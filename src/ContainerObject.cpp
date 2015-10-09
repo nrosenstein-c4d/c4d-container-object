@@ -310,6 +310,9 @@ public:
     m_protectionHash = "";
     BaseContainer* bc = ((BaseList2D*) node)->GetDataInstance();
     if (!bc) return false;
+    bc->SetBool(NRCONTAINER_HIDE_TAGS, false);
+    bc->SetBool(NRCONTAINER_HIDE_MATERIALS, true);
+    bc->SetBool(NRCONTAINER_GENERATOR_CHECKMARK, true);
     bc->SetString(NRCONTAINER_INFO_NAME, "");
     bc->SetString(NRCONTAINER_INFO_VERSION, "");
     bc->SetString(NRCONTAINER_INFO_URL, "");
@@ -501,6 +504,25 @@ public:
 
 };
 
+
+/// ***************************************************************************
+/// Hook to modify the container object info bitmask based on the parameters.
+/// ***************************************************************************
+decltype(C4D_Object::GetInfo) _orig_GetInfo = nullptr;
+static Int32 _hook_GetInfo(GeListNode* op)
+{
+  if (op && op->GetType() == Ocontainer) {
+    GeData data;
+    op->GetParameter(NRCONTAINER_GENERATOR_CHECKMARK, data, DESCFLAGS_GET_0);
+    if (data.GetBool())
+      return OBJECT_GENERATOR;
+    else
+      return 0;
+  }
+  return _orig_GetInfo(op);
+}
+
+
 /// ***************************************************************************
 /// ***************************************************************************
 Bool RegisterContainerObject(Bool prePass)
@@ -512,7 +534,11 @@ Bool RegisterContainerObject(Bool prePass)
       menu->InsData(MENURESOURCE_SEPERATOR, true);
       menu->InsData(MENURESOURCE_COMMAND, "PLUGIN_CMD_" + String::IntToString(Ocontainer));
     }
+    return true;
   }
+
+  _orig_GetInfo = C4DOS.Bo->GetInfo;
+  C4DOS.Bo->GetInfo = _hook_GetInfo;
 
   AutoAlloc<BaseBitmap> bmp;
   bmp->Init(GeGetPluginPath() + "res" + "img" + "ocontainer.png");
@@ -520,10 +546,9 @@ Bool RegisterContainerObject(Bool prePass)
   return RegisterObjectPlugin(
     Ocontainer,
     GeLoadString(IDS_OCONTAINER),
-    0,
+    OBJECT_GENERATOR,
     ContainerObject::Alloc,
     "Ocontainer",
     bmp,
     CONTAINEROBJECT_VERSION);
 }
-
