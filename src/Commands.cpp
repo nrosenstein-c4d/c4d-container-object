@@ -15,11 +15,14 @@
 #include <c4d.h>
 #include <Ocontainer.h>
 #include "res/c4d_symbols.h"
+#include "ContainerObject.h"
 
-static const LONG ID_COMMAND_LOADCONTAINER    = 1030970;
-static const LONG ID_COMMAND_CONVERTCONTAINER = 1030971;
-
-extern Bool ContainerIsProtected(BaseObject* op);
+enum
+{
+  ID_COMMAND_LOADCONTAINER = 1030970,
+  ID_COMMAND_CONVERTCONTAINER = 1030971,
+  CONTAINEROBJECT_PROTECTIONHASH = 1036106,
+};
 
 /// ***************************************************************************
 /// This function copies all branches of an object to another
@@ -232,6 +235,14 @@ public:
     BaseObject* root = BaseObject::Alloc(Ocontainer);
     if (!root) return false;
 
+    BaseContainer* bc = op->GetDataInstance();
+    CriticalAssert(bc != nullptr);
+    String hash = bc->GetString(CONTAINEROBJECT_PROTECTIONHASH);
+    if (hash.Content())
+    {
+      ContainerProtect(root, "", hash, false);
+    }
+
     ReplaceObjects(op, root, doc, at);
     BaseObject::Free(op);
     EventAdd();
@@ -275,12 +286,19 @@ public:
     if (!GetState(doc)) return false;
 
     BaseObject* op = doc->GetActiveObject();
-    if (ContainerIsProtected(op)) return false;
     AliasTrans* at = nullptr; // @FUTURE_EXT_OP
     BaseObject* root = BaseObject::Alloc(Onull);
     if (!root) return false;
 
     ReplaceObjects(op, root, doc, at);
+    String hash = "";
+    if (ContainerIsProtected(op, &hash))
+    {
+      BaseContainer* bc = root->GetDataInstance();
+      CriticalAssert(bc != nullptr);
+      bc->SetString(CONTAINEROBJECT_PROTECTIONHASH, hash);
+    }
+
     BaseObject::Free(op);
     EventAdd();
     return true;
@@ -291,7 +309,6 @@ public:
     if (!doc) return 0;
     BaseObject* op = doc->GetActiveObject();
     if (!op || !op->IsInstanceOf(Ocontainer)) return 0;
-    if (ContainerIsProtected(op)) return 0;
     return CMD_ENABLED;
   }
 

@@ -4,8 +4,8 @@
 /// Licensed under the GNU Lesser General Public License.
 ///
 /// \file ContainerObject.cpp
-/// \lastmodified 2015/07/17
-/// \brief Implements the Cinema 4D Container Object plugin.
+
+#include "ContainerObject.h"
 
 /// Cinema 4D Includes
 #include <c4d.h>
@@ -19,8 +19,6 @@
 #include "Utils/Misc.h"
 #include "Utils/AABB.h"
 
-static const LONG CONTAINEROBJECT_VERSION = 1001;
-static const LONG CONTAINEROBJECT_ICONSIZE = 64;
 
 /// ***************************************************************************
 /// This function recursive hides or unhides a node and all its following
@@ -88,7 +86,8 @@ class ContainerObject : public ObjectData
   BaseBitmap* m_customIcon;
   Bool m_protected;
   String m_protectionHash;
-  friend Bool ContainerIsProtected(BaseObject*);
+  friend Bool ContainerIsProtected(BaseObject*, String*);
+  friend Bool ContainerProtect(BaseObject*, String const&, String, Bool);
 public:
 
   static NodeData* Alloc() { return gNew ContainerObject; }
@@ -246,11 +245,7 @@ public:
       m_protected = true;
       m_protectionHash = hashed;
 
-      HideHierarchy(op->GetDown(), true, doc);
-      if (bc->GetBool(NRCONTAINER_HIDE_TAGS))
-        HideHierarchy(op->GetFirstTag(), true, doc);
-      if (bc->GetBool(NRCONTAINER_HIDE_MATERIALS))
-        HideMaterials(op, true, doc);
+      HideNodes(op, doc, true);
     }
     else
     {
@@ -270,15 +265,34 @@ public:
       if (unlock)
       {
         m_protected = false;
-        HideHierarchy(op->GetDown(), false, doc);
-        HideHierarchy(op->GetFirstTag(), false, doc);
-        HideMaterials(op, false, doc);
+        HideNodes(op, doc, false);
       }
     }
 
     op->Message(MSG_CHANGE);
     op->SetDirty(DIRTYFLAGS_DESCRIPTION);
     EventAdd();
+  }
+
+  /// Called to hide/unhide the container object contents.
+  void HideNodes(BaseObject* op, BaseDocument* doc, Bool hide)
+  {
+    if (hide)
+    {
+      BaseContainer* bc = op->GetDataInstance();
+      CriticalAssert(bc != nullptr);
+      HideHierarchy(op->GetDown(), true, doc);
+      if (bc->GetBool(NRCONTAINER_HIDE_TAGS))
+        HideHierarchy(op->GetFirstTag(), true, doc);
+      if (bc->GetBool(NRCONTAINER_HIDE_MATERIALS))
+        HideMaterials(op, true, doc);
+    }
+    else
+    {
+      HideHierarchy(op->GetDown(), false, doc);
+      HideHierarchy(op->GetFirstTag(), false, doc);
+      HideMaterials(op, false, doc);
+    }
   }
 
   // ObjectData Overrides
@@ -507,12 +521,36 @@ public:
 
 /// ***************************************************************************
 /// ***************************************************************************
-Bool ContainerIsProtected(BaseObject* op)
+Bool ContainerIsProtected(BaseObject* op, String* hash)
 {
   if (!op || op->GetType() != Ocontainer) return false;
   ContainerObject* data = static_cast<ContainerObject*>(op->GetNodeData());
   if (!data) return false;
-  return data->m_protected;
+  if (data->m_protected)
+  {
+    if (hash)
+      *hash = data->m_protectionHash;
+    return true;
+  }
+  return false;
+}
+
+/// ***************************************************************************
+/// ***************************************************************************
+Bool ContainerProtect(BaseObject* op, String const& pass, String hash, Bool packup)
+{
+  if (!op || op->GetType() != Ocontainer) return false;
+  ContainerObject* data = static_cast<ContainerObject*>(op->GetNodeData());
+  if (!data) return false;
+  if (data->m_protected)
+    return false;
+  if (!hash.Content())
+    hash = HashString(pass);
+  data->m_protected = true;
+  data->m_protectionHash = hash;
+  if (packup)
+    data->HideNodes(op, nullptr, packup);
+  return true;
 }
 
 /// ***************************************************************************
@@ -535,9 +573,9 @@ static Int32 _hook_GetInfo(GeListNode* op)
 
 /// ***************************************************************************
 /// ***************************************************************************
-Bool RegisterContainerObject(Bool prePass)
+Bool RegisterContainerObject(Bool menu)
 {
-  if (prePass) {
+  if (menu) {
     BaseContainer* menu = nullptr;
     FindMenuResource("M_EDITOR", "IDS_MENU_OBJECT", &menu);
     if (menu) {
@@ -560,5 +598,5 @@ Bool RegisterContainerObject(Bool prePass)
     ContainerObject::Alloc,
     "Ocontainer",
     bmp,
-    CONTAINEROBJECT_VERSION);
+    CONTAINEROBJECT_DISKLEVEL);
 }

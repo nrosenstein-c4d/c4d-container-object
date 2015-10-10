@@ -10,37 +10,14 @@
 
 #include <c4d.h>
 
+
 /// ***************************************************************************
-/// Hashes a Cinema 4D String into another String.
+/// Hashes a Cinema 4D string and returns a number as a string.
 /// ***************************************************************************
 inline String HashString(const String& input)
 {
-  static const LONG key_length = 128;
-  static const CHAR* key =
-    "GD&oMfP1MS),3SI %-3-ltru(zl(Th5w6/A::K,jI-7vNBU vO$FqmN-g"
-    "uAHc%ny)1r&wnyx62U 6qOMyfjBI9go$;Kblw93NwFX-kv9xq_GbHqkBKKCcY)"
-    "0;R5BcYw:";
-
-  String copy(input);
-  for (LONG i=0; i < input.GetLength(); i++)
-  {
-
-    // Mix the key randomly with the input string.
-    CHAR a = copy[i];
-    CHAR b = key[i % key_length];
-
-    LONG mussle = a + b;
-    for (LONG j=b * a; j < b * b + a * a; j+= 3)
-    {
-      CHAR c = key[j % key_length] + copy[j % input.GetLength()];
-      mussle += a * c + b / input.GetLength() - a;
-    }
-
-    CHAR d = mussle % 128 + 10;
-    copy[i] = d;
-  }
-
-  return copy;
+  Char* str = input.GetCStringCopy();
+  return String::UIntToString(maxon::CStringHash::GetHashCode(str));
 }
 
 /// ***************************************************************************

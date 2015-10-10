@@ -1,5 +1,11 @@
 # Changelog
 
+__v1.1__ (current development)
+
+- __Important__: This version break password compatibility with old containers.
+You can not unlock containers protected with an older version of this plugin.
+- Protected containers can now be converted to protected Null Objects
+
 __v1.0__
 
 - Added "Info" tab that is protected when the Container is protected.
