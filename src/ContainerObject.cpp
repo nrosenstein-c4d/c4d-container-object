@@ -34,7 +34,8 @@
 /// ***************************************************************************
 static void HideHierarchy(BaseList2D* root, Bool hide, BaseDocument* doc, Bool sameLevel=true)
 {
-  while (root) {
+  while (root)
+  {
     if (doc)
       doc->AddUndo(UNDOTYPE_BITS, root);
     const NBITCONTROL control = (hide ? NBITCONTROL_SET : NBITCONTROL_CLEAR);
@@ -44,9 +45,27 @@ static void HideHierarchy(BaseList2D* root, Bool hide, BaseDocument* doc, Bool s
     root->ChangeNBit(NBIT_TL3_HIDE, control);
     root->ChangeNBit(NBIT_TL4_HIDE, control);
     root->ChangeNBit(NBIT_THIDE, control);
-    HideHierarchy(static_cast<BaseList2D*>(root->GetDown()), hide, doc);
-    if (!sameLevel)
-      break;
+    root->DelBit(BIT_ACTIVE);
+
+    Bool hideChildren = true;
+    if (root->IsInstanceOf(Obase))
+    {
+      BaseObject* op = static_cast<BaseObject*>(root);
+      BaseContainer* bc = op->GetDataInstance();
+      CriticalAssert(bc);
+
+      if (bc->GetString(CONTAINEROBJECT_PROTECTIONHASH).Content())
+        // Don't modify the hierarchy of "protected" Null-Objects.
+        hideChildren = false;
+      else if (ContainerIsProtected(op))
+        // Don't modify the hierarchy of protected Containers.
+        hideChildren = false;
+    }
+
+    if (hideChildren)
+      HideHierarchy(static_cast<BaseList2D*>(root->GetDown()), hide, doc);
+
+    if (!sameLevel) break;
     root = root->GetNext();
   }
 }

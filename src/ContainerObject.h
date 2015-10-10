@@ -14,6 +14,7 @@ enum
 {
   CONTAINEROBJECT_DISKLEVEL = 1010,
   CONTAINEROBJECT_ICONSIZE = 64,
+  CONTAINEROBJECT_PROTECTIONHASH = 1036106,
 };
 
 Bool ContainerIsProtected(BaseObject* op, String* hash=nullptr);

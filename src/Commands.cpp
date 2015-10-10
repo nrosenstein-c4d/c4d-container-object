@@ -21,7 +21,6 @@ enum
 {
   ID_COMMAND_LOADCONTAINER = 1030970,
   ID_COMMAND_CONVERTCONTAINER = 1030971,
-  CONTAINEROBJECT_PROTECTIONHASH = 1036106,
 };
 
 /// ***************************************************************************
