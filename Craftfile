@@ -1,53 +1,35 @@
 # craftr_module(nr.container_object)
-#
-# Copyright (C) <Year> <Name>
-# All rights reserved.
 
 import craftr
-import argparse
+append_search_path('..')
+load_module('maxon.c4d')
+load_module('platform')
 
-session.path.append(project_dir + '/..')
-
-P = load_module('platform')
-c4d = load_module('maxon.c4d', build_dir=join(project_dir, 'build'))
-
-setdefault('debug', False)
-build_dir = join(dirname(c4d.build_dir), module.identifier)
-
-c4d.cxx_objects('Objects',
-  sources = glob(join(project_dir, 'src/**/*.cpp')),
-  includes = [
-    project_dir,
-    join(project_dir, 'include'),
-    join(project_dir, 'res/description'),
-  ],
-  legacy_api = True,
+objects = maxon.c4d.objects(
+  sources = glob('src/**/*.cpp'),
+  options = dict(
+    includes = [project_dir, local('include'), local('res/description')],
+    legacy_api = True,
+  )
 )
 
-c4d.cxx_plugin('Plugin',
-  name = module.identifier,
-  inputs = [Objects],
-  libs = [],
-  external_libs = [],
+plugin = maxon.c4d.plugin(
+  filename = local('{}-r{}'.format(module.identifier, maxon.c4d.release)),
+  inputs = [objects],
+  default = True,
 )
 
-def archive(*args):
-  parser = argparse.ArgumentParser(prog='archive')
-  parser.add_argument('output')
-  args = parser.parse_args(args)
-
-  if not args.output.endswith('.zip'):
-    args.output += '.zip'
-
+def archive():
+  outfile = '{}-r{}-{}.zip'.format(module.identifier, maxon.c4d.release, platform.id)
   craftr.utils.build_archive(
     prefix = rmvsuffix(basename(args.output)),
-    filename = args.output,
+    filename = outfile,
     base_dir = project_dir,
     include = [
-      glob('res/**'),
+      'res',
       'README.md',
       'CHANGELOG.md',
       'LICENSE.txt',
-      Plugin.outputs[0],
+      plugin.outputs[0],
     ],
   )
