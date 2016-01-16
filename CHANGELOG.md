@@ -2,8 +2,11 @@
 
 __v1.1__ (current development)
 
-- __Important__: This version break password compatibility with old containers.
+__Important__: This version breaks password compatibility with old containers.
 You can not unlock containers protected with an older version of this plugin.
+Make sure you unlock contains with the old version and protect them again
+with the new version!
+
 - Protected containers can now be converted to protected Null Objects
 
 __v1.0__

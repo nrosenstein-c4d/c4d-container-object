@@ -1,35 +1,33 @@
-# craftr_module(nr.container_object)
+# craftr_module(nr.containerobject)
 
-import craftr
-append_search_path('..')
-load_module('maxon.c4d')
-load_module('platform')
+from craftr import *
+from craftr.ext.maxon import c4d
 
-objects = maxon.c4d.objects(
-  sources = glob('src/**/*.cpp'),
-  options = dict(
-    includes = [project_dir, local('include'), local('res/description')],
-    legacy_api = True,
-  )
+objects = c4d.objects(
+  sources = path.glob('src/**/*.cpp'),
+  include = [project_dir] + path.local(['include', 'res/description']),
+  legacy_api = True,
 )
 
-plugin = maxon.c4d.plugin(
-  filename = local('{}-r{}'.format(module.identifier, maxon.c4d.release)),
+plugin = c4d.link(
+  output = path.local('{}-r{}'.format(project_name, c4d.release)),
   inputs = [objects],
-  default = True,
 )
+
+
+from craftr.ext.git import Git
+from craftr.ext.archive import Archive
+from craftr.ext.platform import name as osname
 
 def archive():
-  outfile = '{}-r{}-{}.zip'.format(module.identifier, maxon.c4d.release, platform.id)
-  craftr.utils.build_archive(
-    prefix = rmvsuffix(basename(args.output)),
-    filename = outfile,
-    base_dir = project_dir,
-    include = [
-      'res',
-      'README.md',
-      'CHANGELOG.md',
-      'LICENSE.txt',
-      plugin.outputs[0],
-    ],
-  )
+  git = Git(project_dir)
+  prefix = '{}-{}-r{}-{}'.format(project_name, git.describe(), c4d.release, osname)
+  archive = Archive(prefix = prefix)
+  archive.add(path.local(['res',
+    'README.md',
+    'CHANGELOG.md',
+    'LICENSE.txt',
+  ]))
+  archive.add(plugin.outputs)
+  archive.save()
+  info(archive.name)
