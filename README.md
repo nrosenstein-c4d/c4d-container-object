@@ -1,5 +1,6 @@
 # Container Object for Cinema 4D
 
+
 This Cinema 4D plugin allows you to collapse complete rigs into a single
 object and give them a nice icon. The rig can also be password protected.
 
