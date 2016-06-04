@@ -8,6 +8,7 @@ Make sure you unlock contains with the old version and protect them again
 with the new version!
 
 - Protected containers can now be converted to protected Null Objects
+- #14: Null2Container/Container2Null only keeps first Tag/Track/etc.
 
 __v1.0__
 
