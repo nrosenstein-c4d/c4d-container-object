@@ -65,12 +65,13 @@ static Bool CopyBranchesTo(GeListNode* src, GeListNode* dst, COPYFLAGS flags,
         if (move_dont_copy)
         {
           GeListNode* node = branch_src.head->GetFirst();
-          if (node)
-          {
+          while (node) {
+            GeListNode* next = node->GetNext();
             if (doc_src) doc_src->AddUndo(UNDOTYPE_DELETE, node);
-            if (doc_dst) doc_dst->AddUndo(UNDOTYPE_NEW, node);
             node->Remove();
             branch_dst.head->InsertLast(node);
+            if (doc_dst) doc_dst->AddUndo(UNDOTYPE_NEW, node);
+            node = next;
           }
         }
         else
