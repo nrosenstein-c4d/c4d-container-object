@@ -1,3 +1,0 @@
-from craftr import *
-session.path.append(path.local('..'))
-session.update()

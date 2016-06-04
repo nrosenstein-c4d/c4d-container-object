@@ -576,7 +576,7 @@ Bool ContainerProtect(BaseObject* op, String const& pass, String hash, Bool pack
 /// Hook to modify the container object info bitmask based on the parameters.
 /// ***************************************************************************
 decltype(C4D_Object::GetInfo) _orig_GetInfo = nullptr;
-static Int32 _hook_GetInfo(GeListNode* op)
+static LONG _hook_GetInfo(GeListNode* op)
 {
   if (op && op->GetType() == Ocontainer) {
     GeData data;
@@ -599,7 +599,7 @@ Bool RegisterContainerObject(Bool menu)
     FindMenuResource("M_EDITOR", "IDS_MENU_OBJECT", &menu);
     if (menu) {
       menu->InsData(MENURESOURCE_SEPERATOR, true);
-      menu->InsData(MENURESOURCE_COMMAND, "PLUGIN_CMD_" + String::IntToString(Ocontainer));
+      menu->InsData(MENURESOURCE_COMMAND, "PLUGIN_CMD_" + LongToString(Ocontainer));
     }
     return true;
   }

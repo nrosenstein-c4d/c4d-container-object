@@ -10,14 +10,19 @@
 
 #include <c4d.h>
 
+#if API_VERSION < 15000
+namespace maxon {
+  using namespace c4d_misc;
+}
+#endif
 
 /// ***************************************************************************
 /// Hashes a Cinema 4D string and returns a number as a string.
 /// ***************************************************************************
 inline String HashString(const String& input)
 {
-  Char* str = input.GetCStringCopy();
-  return String::UIntToString(maxon::CStringHash::GetHashCode(str));
+  CHAR* str = input.GetCStringCopy();
+  return LongToString(maxon::CStringHash::GetHashCode(str));
 }
 
 /// ***************************************************************************

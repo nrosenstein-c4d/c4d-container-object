@@ -1,6 +1,7 @@
 # craftr_module(nr.containerobject)
 
 from craftr import *
+session.path.append(path.local('..'))
 from craftr.ext.maxon import c4d
 
 objects = c4d.objects(
