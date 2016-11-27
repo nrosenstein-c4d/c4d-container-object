@@ -1,6 +1,4 @@
-build.ninja
-.ninja_deps
-.ninja_log
+build/
 
 # Compiled Object files
 *.slo

@@ -1,0 +1,14 @@
+# c4d.nr.container_object
+
+load_module('craftr.lang.cxx.*')
+c4d = load_module('NiklasRosenstein.maxon.c4d')
+
+plugin = cxx_library(
+  link_style = 'shared',
+  inputs = cpp_compile(
+    sources = glob(['src/*.cpp', 'src/Utils/*.cpp']),
+    include = [project_dir, local('res/description')],
+    frameworks = [c4d.legacy_sdk]
+  ),
+  output = local('container-object-r{}'.format(c4d.release))
+)

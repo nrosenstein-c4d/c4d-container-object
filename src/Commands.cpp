@@ -221,7 +221,7 @@ public:
       PLUGINFLAG_COMMAND_HOTKEY,
       bmp,
       GeLoadString(IDS_COMMAND_NULL2CONTAINER_HELP),
-      gNew Null2ContainerCommand);
+      gNew(Null2ContainerCommand));
   }
 
   // CommandData
@@ -276,7 +276,7 @@ public:
       PLUGINFLAG_COMMAND_HOTKEY,
       bmp,
       GeLoadString(IDS_COMMAND_CONTAINER2NULL_HELP),
-      gNew Container2NullCommand);
+      gNew(Container2NullCommand));
   }
 
   // CommandData

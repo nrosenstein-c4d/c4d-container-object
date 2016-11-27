@@ -12,10 +12,10 @@
 /// ***************************************************************************
 void AABB::Expand(const Vector& point)
 {
-  if (is_init) mm.AddPoint(point * translation);
+  if (is_init) mm.AddPoint(translation * point);
   else
   {
-    mm.Init(point * translation);
+    mm.Init(translation * point);
     is_init = true;
   }
 }

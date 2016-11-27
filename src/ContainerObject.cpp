@@ -21,6 +21,18 @@
 
 
 /// ***************************************************************************
+/// ***************************************************************************
+template <typename T>
+static inline T* GetNodeData(GeListNode* node) {
+  #if API_VERSION >= 17000
+    return node->GetNodeData<T>();
+  #else
+    return static_cast<T*>(node->GetNodeData());
+  #endif
+}
+
+
+/// ***************************************************************************
 /// This function recursive hides or unhides a node and all its following
 /// nodes in the same hierarchy level and below object manager and timeline.
 /// Only direct children are hidden or revealed, no other branches.
@@ -109,7 +121,7 @@ class ContainerObject : public ObjectData
   friend Bool ContainerProtect(BaseObject*, String const&, String, Bool);
 public:
 
-  static NodeData* Alloc() { return gNew ContainerObject; }
+  static NodeData* Alloc() { return gNew(ContainerObject); }
 
   /// Called from Message() for MSG_DESCRIPTION_COMMAND.
   void OnDescriptionCommand(BaseObject* op, DescriptionCommand* cmdData)
@@ -543,7 +555,7 @@ public:
 Bool ContainerIsProtected(BaseObject* op, String* hash)
 {
   if (!op || op->GetType() != Ocontainer) return false;
-  ContainerObject* data = static_cast<ContainerObject*>(op->GetNodeData());
+  ContainerObject* data = GetNodeData<ContainerObject>(op);
   if (!data) return false;
   if (data->m_protected)
   {
@@ -559,7 +571,7 @@ Bool ContainerIsProtected(BaseObject* op, String* hash)
 Bool ContainerProtect(BaseObject* op, String const& pass, String hash, Bool packup)
 {
   if (!op || op->GetType() != Ocontainer) return false;
-  ContainerObject* data = static_cast<ContainerObject*>(op->GetNodeData());
+  ContainerObject* data = GetNodeData<ContainerObject>(op);
   if (!data) return false;
   if (data->m_protected)
     return false;
