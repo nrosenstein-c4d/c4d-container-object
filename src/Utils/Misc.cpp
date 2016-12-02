@@ -130,7 +130,7 @@ Bool FindMenuResource(BaseContainer& menu, const String& subtitle, BaseContainer
   LONG index = 0;
   GeData* data = nullptr;
   while ((data = menu.GetIndexData(index++)) != nullptr) {
-    BaseContainer* submenu = data->GetContainer();
+    BaseContainer* submenu = (data->GetType() == DA_CONTAINER ? data->GetContainer() : nullptr);
     if (submenu && FindMenuResource(*submenu, subtitle, bc))
       return true;
   }
