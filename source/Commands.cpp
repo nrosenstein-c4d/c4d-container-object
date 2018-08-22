@@ -13,9 +13,12 @@
 ///   be interesting to know why.
 
 #include <c4d.h>
+#include <c4d_apibridge.h>
 #include <Ocontainer.h>
 #include "res/c4d_symbols.h"
 #include "ContainerObject.h"
+
+using c4d_apibridge::IsEmpty;
 
 enum
 {
@@ -161,7 +164,7 @@ static Bool CopyBitsTo(GeListNode* src, GeListNode* dst, Bool bits=true, Bool nb
 
   if (nbits)
   {
-    for (int bit=NBIT_0; bit < (int) NBIT_MAX; bit++)
+    for (int bit=(int)NBIT_0; bit < (int) NBIT_MAX; bit++)
     {
       NBITCONTROL mode = src->GetNBit((NBIT) bit) ? NBITCONTROL_SET : NBITCONTROL_CLEAR;
       dst->ChangeNBit((NBIT) bit, mode);
@@ -238,7 +241,7 @@ public:
     BaseContainer* bc = op->GetDataInstance();
     CriticalAssert(bc != nullptr);
     String hash = bc->GetString(CONTAINEROBJECT_PROTECTIONHASH);
-    if (hash.Content())
+    if (!IsEmpty(hash))
     {
       ContainerProtect(root, "", hash, false);
     }

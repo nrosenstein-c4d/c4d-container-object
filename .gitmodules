@@ -1,6 +1,6 @@
 [submodule "craftr\\modules\\lib.cxx.maxon.c4d"]
 	path = craftr\\modules\\lib.cxx.maxon.c4d
 	url = https://github.com/craftr-build/lib.cxx.maxon.c4d.git
-[submodule "craftr/modules/NiklasRosenstein.maxon.c4d"]
-	path = craftr/modules/NiklasRosenstein.maxon.c4d
-	url = https://github.com/craftr-build/NiklasRosenstein.maxon.c4d.git
+[submodule "craftr/net.maxon.c4d"]
+	path = craftr/net.maxon.c4d
+	url = https://github.com/craftr-build/net.maxon.c4d.git

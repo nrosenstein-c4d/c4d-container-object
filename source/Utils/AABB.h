@@ -9,6 +9,7 @@
 #pragma once
 
 #include <c4d.h>
+#include <c4d_legacy.h>
 
 static const LONG EXCLUDEOBJECT_0 = 0;
 static const LONG EXCLUDEOBJECT_HIERARCHY = 1;

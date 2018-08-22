@@ -6,8 +6,11 @@
 /// \file Utils/Misc.cpp
 /// \lastmodified 2015/05/06
 
+#include <c4d_apibridge.h>
 #include "Misc.h"
 #include "res/c4d_symbols.h"
+
+using c4d_apibridge::IsEmpty;
 
 /// ***************************************************************************
 /// ***************************************************************************
@@ -41,7 +44,7 @@ public:
   virtual Bool CreateLayout()
   {
     SetTitle(GeLoadString(IDS_PASSWORD_ENTER));
-    GroupBegin(0, BFH_SCALEFIT | BFV_SCALEFIT, 2, 0, "", 0);
+    GroupBegin(0, BFH_SCALEFIT | BFV_SCALEFIT, 2, 0, ""_s, 0);
     {
       AddStaticText(0, 0, 0, 0, GeLoadString(IDS_PASSWORD), 0);
       AddEditText(EDT_PASSWORD, BFH_SCALEFIT, 120, 0, EDITTEXT_PASSWORD);
@@ -53,7 +56,7 @@ public:
       GroupEnd();
     }
 
-    AddStaticText(TEXT_INFO, BFH_CENTER, 0, 0, "", 0);
+    AddStaticText(TEXT_INFO, BFH_CENTER, 0, 0, ""_s, 0);
     HideElement(TEXT_INFO, true);
 
     AddDlgGroup(DLG_OK | DLG_CANCEL);
@@ -71,7 +74,7 @@ public:
         if (!singleField)
         {
           GetString(EDT_PASSWORD_REPEAT, pass2);
-          if (!allowEmpty && !pass1.Content() && !pass2.Content())
+          if (!allowEmpty && (IsEmpty(pass1) || IsEmpty(pass2)))
           {
             SetString(TEXT_INFO, GeLoadString(IDS_PASSWORD_EMPTY));
             HideElement(TEXT_INFO, false);

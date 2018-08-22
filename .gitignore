@@ -27,3 +27,8 @@ build/
 *.exp
 *.ilk
 vc100*
+
+/generated
+
+*.xdl64
+*.xlib

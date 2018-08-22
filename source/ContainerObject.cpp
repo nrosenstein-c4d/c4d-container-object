@@ -9,6 +9,7 @@
 
 /// Cinema 4D Includes
 #include <c4d.h>
+#include <c4d_apibridge.h>
 #include <lib_clipmap.h>
 #include <lib_iconcollection.h>
 
@@ -19,6 +20,9 @@
 #include "Utils/Misc.h"
 #include "Utils/AABB.h"
 
+
+using c4d_apibridge::DescriptionCommandID;
+using c4d_apibridge::IsEmpty;
 
 /// ***************************************************************************
 /// ***************************************************************************
@@ -66,7 +70,7 @@ static void HideHierarchy(BaseList2D* root, Bool hide, BaseDocument* doc, Bool s
       BaseContainer* bc = op->GetDataInstance();
       CriticalAssert(bc);
 
-      if (bc->GetString(CONTAINEROBJECT_PROTECTIONHASH).Content())
+      if (!IsEmpty(bc->GetString(CONTAINEROBJECT_PROTECTIONHASH)))
         // Don't modify the hierarchy of "protected" Null-Objects.
         hideChildren = false;
       else if (ContainerIsProtected(op))
@@ -128,7 +132,7 @@ public:
   {
     BaseDocument* doc = op->GetDocument();
     const AutoUndo au(doc);
-    const LONG id = cmdData->id[0].id;
+    const LONG id = DescriptionCommandID(cmdData)[0].id;
 
     switch (id)
     {
@@ -358,12 +362,12 @@ public:
     bc->SetBool(NRCONTAINER_HIDE_TAGS, false);
     bc->SetBool(NRCONTAINER_HIDE_MATERIALS, true);
     bc->SetBool(NRCONTAINER_GENERATOR_CHECKMARK, true);
-    bc->SetString(NRCONTAINER_INFO_NAME, "");
-    bc->SetString(NRCONTAINER_INFO_VERSION, "");
-    bc->SetString(NRCONTAINER_INFO_URL, "");
-    bc->SetString(NRCONTAINER_INFO_AUTHOR, "");
-    bc->SetString(NRCONTAINER_INFO_AUTHOR_EMAIL, "");
-    bc->SetString(NRCONTAINER_INFO_DESCRIPTION, "");
+    bc->SetString(NRCONTAINER_INFO_NAME, ""_s);
+    bc->SetString(NRCONTAINER_INFO_VERSION, ""_s);
+    bc->SetString(NRCONTAINER_INFO_URL, ""_s);
+    bc->SetString(NRCONTAINER_INFO_AUTHOR, ""_s);
+    bc->SetString(NRCONTAINER_INFO_AUTHOR_EMAIL, ""_s);
+    bc->SetString(NRCONTAINER_INFO_DESCRIPTION, ""_s);
     return true;
   }
 
@@ -499,7 +503,7 @@ public:
   {
     switch (id[0].id) {
       case NRCONTAINER_DEV_INFO:
-        data.SetString("");
+        data.SetString(""_s);
         flags |= DESCFLAGS_GET_PARAM_GET;
         return true;
     }
@@ -542,7 +546,7 @@ public:
     return super::GetDEnabling(node, id, t_data, flags, itemdesc);
   }
 
-  virtual void GetBubbleHelp(GeListNode* node, String& str) override
+  virtual void GetBubbleHelp(GeListNode* node, c4d_apibridge::String& str) override
   {
     super::GetBubbleHelp(node, str);
   }
@@ -575,7 +579,7 @@ Bool ContainerProtect(BaseObject* op, String const& pass, String hash, Bool pack
   if (!data) return false;
   if (data->m_protected)
     return false;
-  if (!hash.Content())
+  if (IsEmpty(hash))
     hash = HashString(pass);
   data->m_protected = true;
   data->m_protectionHash = hash;
@@ -627,7 +631,7 @@ Bool RegisterContainerObject(Bool menu)
     GeLoadString(IDS_OCONTAINER),
     OBJECT_GENERATOR,
     ContainerObject::Alloc,
-    "Ocontainer",
+    "Ocontainer"_s,
     bmp,
     CONTAINEROBJECT_DISKLEVEL);
 }

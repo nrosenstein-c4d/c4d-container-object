@@ -9,6 +9,7 @@
 #pragma once
 
 #include <c4d.h>
+#include <c4d_legacy.h>
 
 #if API_VERSION < 15000
 namespace maxon {
@@ -22,7 +23,11 @@ namespace maxon {
 inline String HashString(const String& input)
 {
   CHAR* str = input.GetCStringCopy();
-  return LongToString(maxon::CStringHash::GetHashCode(str));
+  #if API_VERSION < 20000
+    return LongToString(maxon::CStringHash::GetHashCode(str));
+  #else
+    return String::UIntToString(maxon::DefaultCompare::GetHashCode(str));
+  #endif
 }
 
 /// ***************************************************************************

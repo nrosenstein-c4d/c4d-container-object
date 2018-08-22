@@ -7,7 +7,11 @@
 /// \lastmodified 2015/05/06
 
 #include <c4d.h>
+#include <c4d_apibridge.h>
+#include <c4d_legacy.h>
 #include "Utils/Misc.h"
+
+using c4d_apibridge::GlobalResource;
 
 extern Bool RegisterContainerObject(Bool prePass);
 extern Bool RegisterCommands();
@@ -24,7 +28,7 @@ Bool PluginMessage(LONG msgType, void* pData)
   switch (msgType)
   {
     case C4DPL_INIT_SYS:
-      return ::resource.Init();
+      return GlobalResource().Init();
     case C4DPL_BUILDMENU:
       RegisterContainerObject(true);
       break;

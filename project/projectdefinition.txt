@@ -1,0 +1,4 @@
+ModuleId=com.niklasrosenstein.c4d-prototype-converter
+Platform=Win64;OSX
+Type=Dll
+stylecheck=false

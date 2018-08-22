@@ -6,6 +6,7 @@
 /// \file ContainerObject.h
 
 #include <c4d.h>
+#include <c4d_legacy.h>
 
 #ifndef _CONTAINEROBJECT_H
 #define _CONTAINEROBJECT_H

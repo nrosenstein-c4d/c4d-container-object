@@ -1,0 +1,17 @@
+import * from 'craftr'
+project('com.niklasrosenstein.c4d-container-object', '1.1-0')
+link_module('./craftr/net.maxon.c4d')
+
+import c4d from 'net.maxon.c4d'
+target('plugin')
+depends(['net.maxon.c4d:sdk', 'net.maxon.c4d:addons'])
+properties({
+  'cxx.srcs': glob('source/**/*.cpp'),
+  'cxx.type': 'library',
+  'cxx.defines': ['__LEGACY_API'],
+  'cxx.includes': ['.', 'res/description'],
+  'cxx.preferredLinkage': 'shared',
+  'cxx.productName': 'c4d-container-object' + c4d.plugin_suffix,
+  'cxx.productDirectory': '.',
+})
+c4d.build()
