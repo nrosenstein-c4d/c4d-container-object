@@ -1,4 +1,8 @@
 ModuleId=com.niklasrosenstein.c4d-prototype-converter
 Platform=Win64;OSX
-Type=Dll
+Type=DLL
+APIS=cinema.framework;core.framework;network.framework
+C4D=true
 stylecheck=false
+StrictIncludeDirectories=true
+AdditionalIncludeDirectories=../craftr/net.maxon.c4d/include;..

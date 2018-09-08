@@ -12,6 +12,6 @@ properties({
   'cxx.includes': ['.', 'res/description'],
   'cxx.preferredLinkage': 'shared',
   'cxx.productName': 'c4d-container-object' + c4d.plugin_suffix,
-  'cxx.productDirectory': '.',
+  'cxx.productDirectory': '.'
 })
 c4d.build()
