@@ -1,6 +1,10 @@
 # Changelog
 
-__v1.1__ (current development)
+__v1.2__
+
+- R20 Update
+
+__v1.1__
 
 __Important__: This version breaks password compatibility with old containers.
 You can not unlock containers protected with an older version of this plugin.
