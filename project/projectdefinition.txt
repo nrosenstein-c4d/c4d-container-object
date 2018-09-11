@@ -1,4 +1,4 @@
-ModuleId=com.niklasrosenstein.c4d-prototype-converter
+ModuleId=com.niklasrosenstein.c4d-container-object
 Platform=Win64;OSX
 Type=DLL
 APIS=cinema.framework;core.framework;network.framework
