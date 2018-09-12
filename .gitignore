@@ -28,7 +28,9 @@ build/
 *.ilk
 vc100*
 
-/generated
+generated/
+project/*
+!project/projectdefinition.txt
 
 *.xdl64
 *.xlib
