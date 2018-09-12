@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "sha256.h"
 #include <c4d.h>
 #include <c4d_legacy.h>
 
@@ -17,17 +18,22 @@ namespace maxon {
 }
 #endif
 
+#if API_VERSION >= 20000
+  #define STRINENCODING_UTF8 STRINGENCODING::UTF8
+#endif
+
 /// ***************************************************************************
 /// Hashes a Cinema 4D string and returns a number as a string.
 /// ***************************************************************************
 inline String HashString(const String& input)
 {
-  CHAR* str = input.GetCStringCopy();
-  #if API_VERSION < 20000
-    return LongToString(maxon::CStringHash::GetHashCode(str));
-  #else
-    return String::UIntToString(maxon::DefaultCompare::GetHashCode(str));
-  #endif
+  SHA256 sha256;
+  if (input.GetLength() > 0) {
+    CHAR* str = input.GetCStringCopy(STRINENCODING_UTF8);
+    sha256.add(str, input.GetCStringLen(STRINENCODING_UTF8));
+    DeleteMem(str);
+  }
+  return String(sha256.getHash().c_str());
 }
 
 /// ***************************************************************************

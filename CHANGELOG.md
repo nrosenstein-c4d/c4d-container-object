@@ -1,8 +1,20 @@
 # Changelog
 
+__v1.3__
+
+__Important__: THis version breaks password compatibility with old containers.
+You can not unlock containers protected with an older version of this plugin.
+Make sure you unlock contains with the old version and protect them again
+with the new version!
+
+- Updated password hashing method to use SHA256 (using [hash-library](https://github.com/stbrumme/hash-library))
+- Fix memory leak in `HashString()`
+
 __v1.2__
 
 - R20 Update
+- *Do not use, broken due to `maxon::DefaultCompare::GetHashCode()` returning
+  different values for the same string with every call*
 
 __v1.1__
 

@@ -4,3 +4,6 @@
 [submodule "craftr/net.maxon.c4d"]
 	path = craftr/net.maxon.c4d
 	url = https://github.com/craftr-build/net.maxon.c4d.git
+[submodule "vendor/hash-library"]
+	path = vendor/hash-library
+	url = https://github.com/stbrumme/hash-library.git

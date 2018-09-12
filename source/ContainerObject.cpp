@@ -21,7 +21,7 @@
 #include "Utils/AABB.h"
 
 
-using c4d_apibridge::DescriptionCommandID;
+using c4d_apibridge::GetDescriptionID;
 using c4d_apibridge::IsEmpty;
 
 /// ***************************************************************************
@@ -132,7 +132,7 @@ public:
   {
     BaseDocument* doc = op->GetDocument();
     const AutoUndo au(doc);
-    const LONG id = DescriptionCommandID(cmdData)[0].id;
+    const LONG id = GetDescriptionID(cmdData)[0].id;
 
     switch (id)
     {
