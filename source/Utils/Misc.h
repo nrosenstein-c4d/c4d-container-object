@@ -19,7 +19,7 @@ namespace maxon {
 #endif
 
 #if API_VERSION >= 20000
-  #define STRINENCODING_UTF8 STRINGENCODING::UTF8
+  #define STRINGENCODING_UTF8 STRINGENCODING::UTF8
 #endif
 
 /// ***************************************************************************
@@ -29,8 +29,8 @@ inline String HashString(const String& input)
 {
   SHA256 sha256;
   if (input.GetLength() > 0) {
-    CHAR* str = input.GetCStringCopy(STRINENCODING_UTF8);
-    sha256.add(str, input.GetCStringLen(STRINENCODING_UTF8));
+    CHAR* str = input.GetCStringCopy(STRINGENCODING_UTF8);
+    sha256.add(str, input.GetCStringLen(STRINGENCODING_UTF8));
     DeleteMem(str);
   }
   return String(sha256.getHash().c_str());
