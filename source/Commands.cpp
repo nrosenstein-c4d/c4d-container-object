@@ -26,6 +26,14 @@ enum
   ID_COMMAND_CONVERTCONTAINER = 1030971,
 };
 
+static Bool GetState(CommandData* dat, BaseDocument* doc, GeDialog* parentManager) {
+  #ifdef API_VERSION >= 21000
+    return dat->GetState(doc, parentManager);
+  #else
+    return data->GetState(doc);
+  #endif
+}
+
 /// ***************************************************************************
 /// This function copies all branches of an object to another
 /// object, assuming it can find matching branches.
@@ -229,9 +237,9 @@ public:
 
   // CommandData
 
-  virtual Bool Execute(BaseDocument* doc)
+  C4D_APIBRIDGE_COMMANDDATA_EXECUTE(doc)
   {
-    if (!GetState(doc)) return false;
+    if (!::GetState(this, doc, C4D_APIBRIDGE_COMMANDDATA_GETPARENTMANAGER())) return false;
 
     BaseObject* op = doc->GetActiveObject();
     AliasTrans* at = nullptr; // @FUTURE_EXT_OP
@@ -252,7 +260,7 @@ public:
     return true;
   }
 
-  virtual LONG GetState(BaseDocument* doc)
+  C4D_APIBRIDGE_COMMANDDATA_GETSTATE(doc)
   {
     if (!doc) return 0;
     BaseObject* op = doc->GetActiveObject();
@@ -284,9 +292,9 @@ public:
 
   // CommandData
 
-  virtual Bool Execute(BaseDocument* doc)
+  C4D_APIBRIDGE_COMMANDDATA_EXECUTE(doc)
   {
-    if (!GetState(doc)) return false;
+    if (!::GetState(this, doc, C4D_APIBRIDGE_COMMANDDATA_GETPARENTMANAGER())) return false;
 
     BaseObject* op = doc->GetActiveObject();
     AliasTrans* at = nullptr; // @FUTURE_EXT_OP
@@ -307,7 +315,7 @@ public:
     return true;
   }
 
-  virtual LONG GetState(BaseDocument* doc)
+  C4D_APIBRIDGE_COMMANDDATA_GETSTATE(doc)
   {
     if (!doc) return 0;
     BaseObject* op = doc->GetActiveObject();
