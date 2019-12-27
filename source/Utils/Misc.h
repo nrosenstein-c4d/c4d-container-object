@@ -11,15 +11,12 @@
 #include "sha256.h"
 #include <c4d.h>
 #include <c4d_legacy.h>
+#include <c4d_apibridge.h>
 
 #if API_VERSION < 15000
 namespace maxon {
   using namespace c4d_misc;
 }
-#endif
-
-#if API_VERSION >= 20000
-  #define STRINGENCODING_UTF8 STRINGENCODING::UTF8
 #endif
 
 /// ***************************************************************************

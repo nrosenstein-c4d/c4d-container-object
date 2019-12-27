@@ -1,6 +1,6 @@
 import * from 'craftr'
 project('com.niklasrosenstein.c4d-container-object', '1.1-0')
-link_module('./craftr/net.maxon.c4d')
+link_module('./vendor/net.maxon.c4d')
 
 import c4d from 'net.maxon.c4d'
 target('plugin')
