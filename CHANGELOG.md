@@ -1,5 +1,9 @@
 # Changelog
 
+__v1.3.1__
+
+- Slight changes to compile with the R21 SDK.
+
 __v1.3__
 
 __Important__: THis version breaks password compatibility with old containers.
